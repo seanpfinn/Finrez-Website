@@ -113,4 +113,14 @@
     document.head.appendChild(style);
   }
 
+  /* ── Custom cursor ── */
+  const cursorEl = document.getElementById('cursor');
+  if (cursorEl) {
+    document.addEventListener('mousemove', (e) => {
+      cursorEl.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
+      cursorEl.classList.add('visible');
+    });
+    document.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
+  }
+
 })();

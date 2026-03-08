@@ -24,7 +24,26 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: none;
 }
+
+/* ── Custom cursor ── */
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #ff401a;
+  border-radius: 50%;
+  pointer-events: none;
+  /* offset handled in JS */
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+#cursor.visible { opacity: 1; }
+@media (hover: none) { #cursor { display: none; } body { cursor: auto; } }
 
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
@@ -594,6 +613,7 @@ ul { list-style: none; }
   background: #fff;
   flex-shrink: 0;
 }
+.pct-opt:not(.pct-opt--on) .pct-dot { display: none; }
 
 .pc-tagline {
   font-family: 'Figtree', sans-serif;

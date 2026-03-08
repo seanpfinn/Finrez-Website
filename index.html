@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finrez — your "anything" design partner</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'><rect width='1' height='1' fill='%23FF401A'/></svg>" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +33,8 @@
       </button>
     </div>
   </header>
+
+  <div id="cursor" aria-hidden="true"></div>
 
   <main>
 
@@ -229,24 +232,27 @@
         <div class="pricing-cards">
 
           <!-- Card 1: Monthly Retainer -->
-          <div class="pc">
+          <div class="pc" data-pc="retainer">
             <div class="pc-top">
               <div class="pc-title-row">
                 <h3 class="pc-name">Monthly Retainer</h3>
                 <div class="pc-toggle">
-                  <span class="pct-opt pct-opt--on">
+                  <span class="pct-opt pct-opt--on" data-plan="pro">
                     <span class="pct-dot"></span>Pro
                   </span>
-                  <span class="pct-opt">Basic</span>
+                  <span class="pct-opt" data-plan="basic">
+                    <span class="pct-dot"></span>Basic
+                  </span>
                 </div>
               </div>
               <p class="pc-tagline">Expert design support without the hassle of hiring.</p>
-              <div class="pc-desc-box">For ongoing design support.</div>
+              <div class="pc-desc-box" data-show="pro">For ongoing design support.</div>
+              <div class="pc-desc-box" data-show="basic" hidden>Ideal if you're just getting started.</div>
             </div>
 
             <div class="pc-divider"></div>
 
-            <ul class="pc-features">
+            <ul class="pc-features" data-show="pro">
               <li>
                 <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 3 active design projects at a time
@@ -273,10 +279,38 @@
               </li>
             </ul>
 
+            <ul class="pc-features" data-show="basic" hidden>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                1 active design project at a time
+              </li>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Up to 45 hours of design work per month
+              </li>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                72 hour turnaround time
+              </li>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Up to 2 revision rounds
+              </li>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Weekly check-ins
+              </li>
+              <li>
+                <svg class="pc-check" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="#e0e0e0"/><path d="M5.5 9l2.5 2.5 4.5-5" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Work and feedback shared async via Slack, Loom
+              </li>
+            </ul>
+
             <div class="pc-footer">
               <div class="pc-price-wrap">
                 <span class="pc-price-label">Per month</span>
-                <span class="pc-price">$4,999</span>
+                <span class="pc-price" data-show="pro">$4,999</span>
+                <span class="pc-price" data-show="basic" hidden>$2,999</span>
               </div>
               <a href="mailto:support@finrez.xyz" class="btn-dark pc-cta">Select plan</a>
             </div>
