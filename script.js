@@ -113,6 +113,20 @@
     document.head.appendChild(style);
   }
 
+  /* ── Retainer plan toggle ── */
+  document.querySelectorAll('[data-pc="retainer"] .pct-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const card = opt.closest('[data-pc="retainer"]');
+      const plan = opt.dataset.plan;
+      opt.closest('.pc-toggle').querySelectorAll('.pct-opt').forEach(o => {
+        o.classList.toggle('pct-opt--on', o === opt);
+      });
+      card.querySelectorAll('[data-show]').forEach(el => {
+        el.hidden = el.dataset.show !== plan;
+      });
+    });
+  });
+
   /* ── Custom cursor ── */
   const cursorEl = document.getElementById('cursor');
   if (cursorEl) {
