@@ -118,11 +118,9 @@
     opt.addEventListener('click', () => {
       const card = opt.closest('[data-pc="retainer"]');
       const plan = opt.dataset.plan;
+      card.dataset.planActive = plan;
       opt.closest('.pc-toggle').querySelectorAll('.pct-opt').forEach(o => {
         o.classList.toggle('pct-opt--on', o === opt);
-      });
-      card.querySelectorAll('[data-show]').forEach(el => {
-        el.hidden = el.dataset.show !== plan;
       });
     });
   });

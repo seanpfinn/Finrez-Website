@@ -616,6 +616,10 @@ ul { list-style: none; }
 }
 .pct-opt:not(.pct-opt--on) .pct-dot { display: none; }
 
+/* Show only the active plan's content */
+[data-plan-active="pro"]  [data-show="basic"] { display: none !important; }
+[data-plan-active="basic"] [data-show="pro"]  { display: none !important; }
+
 .pc-tagline {
   font-family: 'Figtree', sans-serif;
   font-size: 0.9rem;
