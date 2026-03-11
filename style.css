@@ -308,17 +308,15 @@ ul { list-style: none; }
    WORK — full-width stacked panels
    ════════════════════════════════════════ */
 .work-panel {
+  display: block;
   position: relative;
   width: 100%;
   aspect-ratio: 1440 / 840;
   overflow: hidden;
   border-top: 1px solid var(--gray-200);
+  text-decoration: none;
 }
 
-.work-panel--tall {
-  aspect-ratio: unset;
-  height: 700px;
-}
 
 .work-panel-img {
   width: 100%;
@@ -740,8 +738,6 @@ ul { list-style: none; }
 
   .pricing-cards { gap: 16px; }
 
-  .work-panel--tall { height: 500px; }
-
   .faq-q { font-size: 1.2rem; }
 }
 
@@ -795,7 +791,6 @@ ul { list-style: none; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 4/3; }
-  .work-panel--tall { height: 300px; aspect-ratio: unset; }
 
   /* Testimonials */
   .testimonials { padding-block: 40px; }
