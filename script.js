@@ -11,45 +11,41 @@
   const navLinks   = document.getElementById('navLinks');
 
   /* ── Scroll: add shadow to header ── */
-  const onScroll = () => {
-    if (window.scrollY > 10) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run once on load
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   /* ── Mobile menu toggle ── */
-  menuToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    menuToggle.classList.toggle('open', isOpen);
-    menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-
-  /* ── Close menu when a nav link is clicked ── */
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      menuToggle.classList.remove('open');
-      menuToggle.setAttribute('aria-label', 'Open menu');
-      document.body.style.overflow = '';
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.classList.toggle('open', isOpen);
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-  });
 
-  /* ── Close menu on resize to desktop ── */
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 809) {
-      navLinks.classList.remove('open');
-      menuToggle.classList.remove('open');
-      menuToggle.setAttribute('aria-label', 'Open menu');
-      document.body.style.overflow = '';
-    }
-  });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+        document.body.style.overflow = '';
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 809) {
+        navLinks.classList.remove('open');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 
   /* ── FAQ accordion ── */
   document.querySelectorAll('.faq-q').forEach(btn => {
