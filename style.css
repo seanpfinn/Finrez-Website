@@ -316,7 +316,6 @@ ul { list-style: none; }
   width: 100%;
   aspect-ratio: 1440 / 840;
   overflow: hidden;
-  border-top: 1px solid var(--gray-200);
   text-decoration: none;
 }
 
