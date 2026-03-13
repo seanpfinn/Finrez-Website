@@ -755,16 +755,12 @@ ul { list-style: none; }
   border: 1px solid var(--gray-200);
 }
 
-.booking-cal::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: #fff;
-  pointer-events: none;
+#cal-booking,
+#cal-booking iframe {
+  width: 100% !important;
+  display: block;
 }
+
 
 /* ════════════════════════════════════════
    FOOTER — orange/red with large logo
