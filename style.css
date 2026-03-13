@@ -725,7 +725,6 @@ ul { list-style: none; }
    ════════════════════════════════════════ */
 .booking {
   padding-block: 100px;
-  border-top: 1px solid var(--gray-200);
 }
 
 .booking-header {
@@ -753,11 +752,15 @@ ul { list-style: none; }
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--gray-200);
+  aspect-ratio: 16 / 10;
 }
 
 #cal-booking,
 #cal-booking iframe {
+  position: absolute;
+  inset: 0;
   width: 100% !important;
+  height: 100% !important;
   display: block;
 }
 
