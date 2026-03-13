@@ -61,20 +61,20 @@
     });
   });
 
-  /* ── Work panel label animation (fade up, matching finrez.xyz) ── */
+  /* ── Work panel label animation ── */
   if ('IntersectionObserver' in window) {
     const labelObs = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('labels-visible');
+            entry.target.closest('.work-panel').classList.add('labels-visible');
             labelObs.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.5 }
     );
-    document.querySelectorAll('.work-panel').forEach(panel => labelObs.observe(panel));
+    document.querySelectorAll('.work-panel-labels').forEach(el => labelObs.observe(el));
   }
 
   /* ── Smooth reveal on scroll (Intersection Observer) ── */

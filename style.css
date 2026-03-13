@@ -349,13 +349,12 @@ ul { list-style: none; }
 .work-panel.labels-visible .work-label-name {
   opacity: 1;
   transform: translateX(0);
-  transition-delay: 0.4s;
 }
 
 .work-panel.labels-visible .work-label-desc {
   opacity: 1;
   transform: translateX(0);
-  transition-delay: 0.52s;
+  transition-delay: 0.12s;
 }
 
 .work-label-name {
