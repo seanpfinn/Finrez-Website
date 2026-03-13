@@ -720,6 +720,46 @@ ul { list-style: none; }
 .pc-cta { flex-shrink: 0; }
 
 /* ════════════════════════════════════════
+   BOOKING
+   ════════════════════════════════════════ */
+.booking {
+  padding-block: 100px;
+  border-top: 1px solid var(--gray-200);
+}
+
+.booking-inner {
+  max-width: 900px;
+  margin-inline: auto;
+  padding-inline: 48px;
+}
+
+.booking-header {
+  margin-bottom: 48px;
+}
+
+.booking-title {
+  font-family: 'VG5000', monospace;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.booking-sub {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1rem;
+  color: #5e5e5e;
+  line-height: 1.6;
+}
+
+.booking-cal {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+/* ════════════════════════════════════════
    FOOTER — orange/red with large logo
    ════════════════════════════════════════ */
 .footer {
@@ -954,6 +994,11 @@ ul { list-style: none; }
   .pricing-cards { grid-template-columns: 1fr; }
   .pc-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .pc-cta { width: 100%; justify-content: center; }
+
+  /* Booking */
+  .booking { padding-block: 60px; }
+  .booking-inner { padding-inline: 20px; }
+  .booking-cal .calendly-inline-widget { height: 580px !important; }
 
   /* Footer */
   .footer { min-height: 280px; padding-block: 48px; }
