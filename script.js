@@ -51,10 +51,11 @@
   const workToggle  = document.getElementById('workToggle');
   const workSubmenu = document.getElementById('workSubmenu');
   if (workToggle && workSubmenu) {
+    workSubmenu.removeAttribute('hidden');
     workToggle.addEventListener('click', () => {
       const isOpen = workToggle.getAttribute('aria-expanded') === 'true';
-      workToggle.setAttribute('aria-expanded', !isOpen);
-      workSubmenu.hidden = isOpen;
+      workToggle.setAttribute('aria-expanded', String(!isOpen));
+      workSubmenu.classList.toggle('is-open', !isOpen);
     });
   }
 
