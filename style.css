@@ -728,12 +728,6 @@ ul { list-style: none; }
   border-top: 1px solid var(--gray-200);
 }
 
-.booking-inner {
-  max-width: 900px;
-  margin-inline: auto;
-  padding-inline: 48px;
-}
-
 .booking-header {
   margin-bottom: 48px;
 }
@@ -755,9 +749,21 @@ ul { list-style: none; }
 }
 
 .booking-cal {
+  position: relative;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--gray-200);
+}
+
+.booking-cal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #fff;
+  pointer-events: none;
 }
 
 /* ════════════════════════════════════════

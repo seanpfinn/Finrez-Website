@@ -183,6 +183,15 @@
       cursorEl.classList.add('visible');
     });
     document.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
+
+    // Keep cursor visible when hovering over the Cal.com iframe
+    const calWrap = document.querySelector('.booking-cal');
+    if (calWrap) {
+      calWrap.addEventListener('mouseenter', () => cursorEl.classList.add('visible'));
+      calWrap.addEventListener('mouseleave', () => {
+        // mousemove will re-add 'visible' on next move; no action needed
+      });
+    }
   }
 
 })();
