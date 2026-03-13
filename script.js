@@ -184,12 +184,17 @@
     });
     document.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
 
-    // Keep cursor visible when hovering over the Cal.com iframe
-    const calWrap = document.querySelector('.booking-cal');
-    if (calWrap) {
-      calWrap.addEventListener('mouseenter', () => cursorEl.classList.add('visible'));
-      calWrap.addEventListener('mouseleave', () => {
-        // mousemove will re-add 'visible' on next move; no action needed
+    // Transparent overlay over Cal.com iframe — tracks cursor & passes clicks through
+    const calOverlay = document.getElementById('cal-overlay');
+    if (calOverlay) {
+      calOverlay.addEventListener('mousemove', (e) => {
+        cursorEl.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
+        cursorEl.classList.add('visible');
+      });
+      calOverlay.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
+      calOverlay.addEventListener('mousedown', () => {
+        calOverlay.style.pointerEvents = 'none';
+        setTimeout(() => { calOverlay.style.pointerEvents = ''; }, 50);
       });
     }
   }

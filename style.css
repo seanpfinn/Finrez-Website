@@ -748,10 +748,18 @@ ul { list-style: none; }
 }
 
 .booking-cal {
+  position: relative;
   overflow: hidden;
   max-width: var(--max-w);
   margin-inline: auto;
   padding-inline: 80px;
+}
+
+#cal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: none;
 }
 
 #cal-booking,
