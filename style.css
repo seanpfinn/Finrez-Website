@@ -125,14 +125,14 @@ ul { list-style: none; }
 .logo { flex-shrink: 0; display: flex; align-items: center; }
 .logo-img { height: 25px; width: auto; }
 
-.nav-links {
+.nav-links-desktop {
   display: flex;
   align-items: center;
   gap: 32px;
 }
 
-/* Mobile Work section hidden on desktop */
-.nav-work-mobile { display: none; }
+/* Mobile nav hidden on desktop */
+.nav-links { display: none; }
 
 .nav-link {
   font-size: 0.9375rem;
@@ -751,6 +751,7 @@ ul { list-style: none; }
 
   /* Nav */
   .menu-toggle { display: flex; }
+  .nav-links-desktop { display: none; }
 
   .nav-links {
     display: none;
@@ -776,9 +777,7 @@ ul { list-style: none; }
     color: var(--dark);
   }
 
-  /* Desktop Work link hidden on mobile; mobile Work toggle shown */
-  .nav-work-desktop { display: none; }
-  .nav-work-mobile  { display: block; border-bottom: 1px solid var(--gray-100); }
+  .nav-work-mobile { display: block; border-bottom: 1px solid var(--gray-100); }
 
   .nav-work-btn {
     display: flex;
