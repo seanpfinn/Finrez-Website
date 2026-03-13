@@ -55,7 +55,15 @@
     workToggle.addEventListener('click', () => {
       const isOpen = workToggle.getAttribute('aria-expanded') === 'true';
       workToggle.setAttribute('aria-expanded', String(!isOpen));
-      workSubmenu.classList.toggle('is-open', !isOpen);
+      if (isOpen) {
+        // Play exit animation, then hide
+        workSubmenu.classList.add('is-closing');
+        setTimeout(() => {
+          workSubmenu.classList.remove('is-open', 'is-closing');
+        }, 360);
+      } else {
+        workSubmenu.classList.add('is-open');
+      }
     });
   }
 
