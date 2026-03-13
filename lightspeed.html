@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightspeed — Finrez</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'><rect width='1' height='1' fill='%23FF401A'/></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/vg5000" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .cs-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      padding-inline: 48px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .cs-nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .cs-nav-links a {
+      font-family: 'Figtree', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .cs-nav-links a:hover { opacity: 1; }
+
+    .cs-intro {
+      display: flex;
+      align-items: center;
+      height: 140px;
+    }
+
+    .cs-intro-title {
+      width: 47%;
+      padding-inline: 48px;
+      font-family: 'VG5000', monospace;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .cs-intro-sub {
+      width: 53%;
+      padding-inline: 48px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 14.4px;
+      font-weight: 400;
+      color: #5e5e5e;
+      line-height: 1.6;
+      border-left: 1px solid var(--gray-200);
+    }
+
+    .cs-hero {
+      width: 100%;
+      aspect-ratio: 1440 / 840;
+      display: block;
+      object-fit: cover;
+    }
+
+    .cs-panel {
+      width: 100%;
+      height: 700px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .cs-hero,
+    .cs-panel {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+      transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cs-hero.in-view,
+    .cs-panel.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @media (max-width: 767px) {
+      .cs-nav { padding-inline: 20px; height: 56px; }
+      .cs-intro { flex-direction: column; height: auto; padding-block: 32px; }
+      .cs-intro-title { width: 100%; padding-inline: 20px; font-size: 28px; margin-bottom: 16px; }
+      .cs-intro-sub { width: auto; margin-inline: 20px; padding-inline: 0; border-left: none; border-top: 1px solid var(--gray-200); padding-top: 16px; }
+      .cs-panel { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor" aria-hidden="true"></div>
+
+  <!-- ── NAV ── -->
+  <nav class="cs-nav">
+    <a href="index.html" class="logo">
+      <img src="images/finrez-logo.svg" alt="Finrez" class="logo-img" />
+    </a>
+    <div class="cs-nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <!-- ── INTRO ── -->
+  <div class="cs-intro">
+    <h1 class="cs-intro-title">Lightspeed</h1>
+    <p class="cs-intro-sub">A brand design language for high-speed internet — building a bold visual identity that communicates speed, reliability, and modernity.</p>
+  </div>
+
+  <!-- ── HERO ── -->
+  <img src="images/lightspeed.png" alt="Lightspeed" class="cs-hero" />
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <img src="images/finrez-logo-light.svg" alt="Finrez" class="footer-logo-img" />
+    <p class="footer-copy">© 2026 Finrez. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const imgs = document.querySelectorAll('.cs-hero, .cs-panel');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      imgs.forEach(img => obs.observe(img));
+    } else {
+      imgs.forEach(img => img.classList.add('in-view'));
+    }
+  </script>
+</body>
+</html>
