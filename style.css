@@ -776,6 +776,11 @@ ul { list-style: none; }
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes navItemOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(12px); }
+  }
+
   @keyframes wsubItemIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -788,8 +793,13 @@ ul { list-style: none; }
 
   /* Nav label animations */
   .nav-links.open > *:nth-child(1) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
-  .nav-links.open > *:nth-child(2) { animation: navItemIn 0.4s ease-in-out 0.12s both; }
-  .nav-links.open > *:nth-child(3) { animation: navItemIn 0.4s ease-in-out 0.20s both; }
+  .nav-links.open > *:nth-child(2) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
+  .nav-links.open > *:nth-child(3) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
+
+  /* Nav label exit animations (listed after open for cascade priority) */
+  .nav-links.is-closing > *:nth-child(1) { animation: navItemOut 0.3s ease-in-out 0s both; }
+  .nav-links.is-closing > *:nth-child(2) { animation: navItemOut 0.3s ease-in-out 0s both; }
+  .nav-links.is-closing > *:nth-child(3) { animation: navItemOut 0.3s ease-in-out 0s both; }
 
   .nav-link {
     font-family: 'Figtree', sans-serif;

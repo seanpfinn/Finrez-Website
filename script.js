@@ -21,29 +21,37 @@
 
   /* ── Mobile menu toggle ── */
   if (menuToggle && navLinks) {
+    const closeMenu = (instant = false) => {
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+      if (instant) {
+        navLinks.classList.remove('open', 'is-closing');
+      } else {
+        navLinks.classList.add('is-closing');
+        setTimeout(() => navLinks.classList.remove('open', 'is-closing'), 340);
+      }
+    };
+
     menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuToggle.classList.toggle('open', isOpen);
-      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      const isOpen = navLinks.classList.contains('open');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        navLinks.classList.remove('is-closing');
+        navLinks.classList.add('open');
+        menuToggle.classList.add('open');
+        menuToggle.setAttribute('aria-label', 'Close menu');
+        document.body.style.overflow = 'hidden';
+      }
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuToggle.classList.remove('open');
-        menuToggle.setAttribute('aria-label', 'Open menu');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', () => closeMenu());
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 809) {
-        navLinks.classList.remove('open');
-        menuToggle.classList.remove('open');
-        menuToggle.setAttribute('aria-label', 'Open menu');
-        document.body.style.overflow = '';
-      }
+      if (window.innerWidth > 809) closeMenu(true);
     });
   }
 
@@ -130,11 +138,37 @@
   }
 
   /* ── Retainer plan toggle ── */
+  const countPrice = (el, from, to, duration = 480) => {
+    const startTime = performance.now();
+    const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+    const tick = (now) => {
+      const t = Math.min((now - startTime) / duration, 1);
+      // ease-in-out cubic
+      const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      el.textContent = fmt(from + (to - from) * ease);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
   document.querySelectorAll('[data-pc="retainer"] .pct-opt').forEach(opt => {
     opt.addEventListener('click', () => {
       const card = opt.closest('[data-pc="retainer"]');
       const plan = opt.dataset.plan;
-      card.dataset.planActive = plan;
+      if (card.dataset.planActive === plan) return;
+
+      // Animate visible price element
+      const visiblePrice = card.querySelector(`.pc-price[data-show="${card.dataset.planActive}"]`);
+      const targetPrice  = card.querySelector(`.pc-price[data-show="${plan}"]`);
+      if (visiblePrice && targetPrice) {
+        const from = parseInt(visiblePrice.textContent.replace(/\D/g, ''), 10);
+        const to   = parseInt(targetPrice.textContent.replace(/\D/g, ''), 10);
+        card.dataset.planActive = plan;
+        countPrice(targetPrice, from, to);
+      } else {
+        card.dataset.planActive = plan;
+      }
+
       opt.closest('.pc-toggle').querySelectorAll('.pct-opt').forEach(o => {
         o.classList.toggle('pct-opt--on', o === opt);
       });
