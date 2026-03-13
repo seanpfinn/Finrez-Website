@@ -748,9 +748,7 @@ ul { list-style: none; }
 }
 
 .booking-cal {
-  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--gray-200);
 }
 
 #cal-booking,
