@@ -131,6 +131,9 @@ ul { list-style: none; }
   gap: 32px;
 }
 
+/* Mobile Work section hidden on desktop */
+.nav-work-mobile { display: none; }
+
 .nav-link {
   font-size: 0.9375rem;
   font-weight: 500;
@@ -760,17 +763,89 @@ ul { list-style: none; }
     gap: 4px;
     overflow-y: auto;
     border-top: 1px solid var(--gray-100);
-    z-index: 800;
+    z-index: 901;
   }
 
   .nav-links.open { display: flex; }
 
   .nav-link {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    padding: 14px 0;
+    padding: 16px 0;
     border-bottom: 1px solid var(--gray-100);
     color: var(--dark);
+  }
+
+  /* Desktop Work link hidden on mobile; mobile Work toggle shown */
+  .nav-work-desktop { display: none; }
+  .nav-work-mobile  { display: block; border-bottom: 1px solid var(--gray-100); }
+
+  .nav-work-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark);
+    padding: 16px 0;
+    border-bottom: none;
+    background: none;
+    border-radius: 0;
+  }
+
+  .nav-work-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .nav-work-btn[aria-expanded="true"] .nav-work-chevron {
+    transform: rotate(180deg);
+  }
+
+  .work-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 8px;
+  }
+
+  .wsub-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    text-decoration: none;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .wsub-thumb {
+    width: 60px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .wsub-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wsub-title {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .wsub-desc {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--gray-700);
+    line-height: 1.4;
   }
 
   /* Container */

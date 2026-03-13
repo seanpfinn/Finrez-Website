@@ -47,6 +47,17 @@
     });
   }
 
+  /* ── Mobile Work submenu toggle ── */
+  const workToggle  = document.getElementById('workToggle');
+  const workSubmenu = document.getElementById('workSubmenu');
+  if (workToggle && workSubmenu) {
+    workToggle.addEventListener('click', () => {
+      const isOpen = workToggle.getAttribute('aria-expanded') === 'true';
+      workToggle.setAttribute('aria-expanded', !isOpen);
+      workSubmenu.hidden = isOpen;
+    });
+  }
+
   /* ── FAQ accordion ── */
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
