@@ -755,22 +755,23 @@ ul { list-style: none; }
   .nav-links {
     display: none;
     position: fixed;
-    inset: var(--nav-h) 0 0;
+    inset: 0;
     background: #fff;
     flex-direction: column;
     align-items: stretch;
-    padding: 24px 24px 40px;
-    gap: 4px;
+    padding: calc(var(--nav-h) + 32px) 24px 40px;
+    gap: 0;
     overflow-y: auto;
-    border-top: 1px solid var(--gray-100);
     z-index: 901;
+    height: 100vh;
   }
 
   .nav-links.open { display: flex; }
 
   .nav-link {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-family: 'Figtree', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
     padding: 16px 0;
     border-bottom: 1px solid var(--gray-100);
     color: var(--dark);
@@ -785,8 +786,9 @@ ul { list-style: none; }
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-family: 'Figtree', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
     color: var(--dark);
     padding: 16px 0;
     border-bottom: none;
