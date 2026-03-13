@@ -749,12 +749,23 @@ ul { list-style: none; }
 
 .booking-cal {
   overflow: hidden;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 80px;
 }
 
 #cal-booking,
 #cal-booking iframe {
   width: 100% !important;
   display: block;
+}
+
+@media (max-width: 1024px) {
+  .booking-cal { padding-inline: 40px; }
+}
+
+@media (max-width: 767px) {
+  .booking-cal { padding-inline: 20px; }
 }
 
 
