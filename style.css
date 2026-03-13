@@ -763,7 +763,6 @@ ul { list-style: none; }
     gap: 0;
     overflow-y: auto;
     z-index: 901;
-    height: 100vh;
   }
 
   .nav-links.open { display: flex; }
