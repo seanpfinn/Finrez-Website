@@ -753,6 +753,9 @@ ul { list-style: none; }
   .menu-toggle { display: flex; }
   .nav-links-desktop { display: none; }
 
+  /* Header stays above the menu overlay so logo + close button are always reachable */
+  .header { z-index: 902; }
+
   .nav-links {
     display: none;
     position: fixed;
@@ -767,6 +770,17 @@ ul { list-style: none; }
   }
 
   .nav-links.open { display: flex; }
+
+  /* Label slide-in animation */
+  .nav-links > * {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .nav-links.open > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
+  .nav-links.open > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+  .nav-links.open > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.19s; }
 
   .nav-link {
     font-family: 'Figtree', sans-serif;
@@ -795,7 +809,7 @@ ul { list-style: none; }
   }
 
   .nav-work-chevron {
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease;
     flex-shrink: 0;
   }
 
@@ -813,17 +827,17 @@ ul { list-style: none; }
   .wsub-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 0;
+    gap: 16px;
+    padding: 14px 0;
     text-decoration: none;
     border-top: 1px solid var(--gray-100);
   }
 
   .wsub-thumb {
-    width: 60px;
-    height: 44px;
+    width: 88px;
+    height: 66px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     flex-shrink: 0;
   }
 
