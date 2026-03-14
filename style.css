@@ -136,7 +136,7 @@ ul { list-style: none; }
 
 /* ── Desktop Work dropdown ── */
 .nav-work-desktop {
-  position: relative;
+  position: static;
 }
 
 .nav-work-btn-desktop {
@@ -150,7 +150,7 @@ ul { list-style: none; }
 }
 
 .nav-work-chevron-desktop {
-  transition: transform 0.2s ease;
+  transition: transform 0.22s ease;
   margin-top: 1px;
 }
 
@@ -159,35 +159,36 @@ ul { list-style: none; }
 }
 
 .work-dropdown {
-  position: absolute;
-  top: calc(100% + 20px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px);
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
   background: #fff;
-  border: 1px solid var(--gray-200);
-  border-radius: 16px;
-  padding: 6px;
-  min-width: 300px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px 48px;
+  display: flex;
+  gap: 4px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transform: translateY(-8px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
   z-index: 200;
 }
 
 .work-dropdown.is-open {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 
 .wdrop-item {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 12px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
   border-radius: 10px;
   text-decoration: none;
+  flex: 1;
   transition: background 0.15s ease;
 }
 
@@ -196,10 +197,33 @@ ul { list-style: none; }
 }
 
 .wdrop-thumb {
-  width: 72px;
-  height: 54px;
-  border-radius: 6px;
-  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Shared title/desc typography (used in both desktop dropdown and mobile submenu) */
+.wsub-title {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.wsub-desc {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+
+.wsub-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .nav-link {
