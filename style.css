@@ -904,7 +904,11 @@ ul { list-style: none; }
 }
 
 
-#cal-booking,
+#cal-booking {
+  max-width: 900px;
+  display: block;
+}
+
 #cal-booking iframe {
   width: 100% !important;
   display: block;
