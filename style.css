@@ -460,7 +460,7 @@ ul { list-style: none; }
   background: transparent;
   border-right: 1px solid var(--gray-200);
   border-radius: 0;
-  padding: 32px;
+  padding: 40px 48px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -603,20 +603,27 @@ ul { list-style: none; }
 .pricing-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 0;
   align-items: start;
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 /* Individual card */
 .pc {
-  background: #fff;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  padding: 20px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--gray-200);
+  border-radius: 0;
+  padding: 40px 48px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
+}
+
+.pc:last-child {
+  border-right: none;
 }
 
 /* Card top block */
@@ -739,6 +746,9 @@ ul { list-style: none; }
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 20px;
+  margin-top: auto;
 }
 
 .pc-price-wrap {
@@ -1044,7 +1054,7 @@ ul { list-style: none; }
   /* Testimonials */
   .testimonials { padding-block: 40px; }
   .testi-grid { grid-template-columns: 1fr; }
-  .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 24px 0; }
+  .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 28px 20px; }
   .testi-card:last-child { border-bottom: none; }
 
   /* Process */
@@ -1057,6 +1067,8 @@ ul { list-style: none; }
   /* Pricing */
   .pricing { padding-block: 40px 60px; }
   .pricing-cards { grid-template-columns: 1fr; }
+  .pc { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 32px 20px; }
+  .pc:last-child { border-bottom: none; }
   .pc-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .pc-cta { width: 100%; justify-content: center; }
 
