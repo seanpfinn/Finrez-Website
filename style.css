@@ -134,6 +134,74 @@ ul { list-style: none; }
 /* Mobile nav hidden on desktop */
 .nav-links { display: none; }
 
+/* ── Desktop Work dropdown ── */
+.nav-work-desktop {
+  position: relative;
+}
+
+.nav-work-btn-desktop {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-work-chevron-desktop {
+  transition: transform 0.2s ease;
+  margin-top: 1px;
+}
+
+.nav-work-btn-desktop[aria-expanded="true"] .nav-work-chevron-desktop {
+  transform: rotate(180deg);
+}
+
+.work-dropdown {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 6px;
+  min-width: 300px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 200;
+}
+
+.work-dropdown.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.wdrop-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.wdrop-item:hover {
+  background: var(--gray-100);
+}
+
+.wdrop-thumb {
+  width: 72px;
+  height: 54px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
 .nav-link {
   font-size: 0.9375rem;
   font-weight: 500;
@@ -333,7 +401,7 @@ ul { list-style: none; }
    MISSION
    ════════════════════════════════════════ */
 .mission {
-  padding-block: 100px;
+  padding-block: 80px;
   overflow: hidden;
 }
 
@@ -444,7 +512,7 @@ ul { list-style: none; }
    TESTIMONIALS — 3-column row
    ════════════════════════════════════════ */
 .testimonials {
-  padding-block: 60px;
+  padding-block: 80px;
   background: #fff;
 }
 
@@ -595,7 +663,7 @@ ul { list-style: none; }
    PRICING
    ════════════════════════════════════════ */
 .pricing {
-  padding-block: 60px 80px;
+  padding-block: 80px;
   background: #fff;
 }
 
@@ -778,7 +846,7 @@ ul { list-style: none; }
    BOOKING
    ════════════════════════════════════════ */
 .booking {
-  padding-block: 100px;
+  padding-block: 80px;
 }
 
 .booking-header {
@@ -804,9 +872,6 @@ ul { list-style: none; }
 .booking-cal {
   position: relative;
   overflow: hidden;
-  max-width: var(--max-w);
-  margin-inline: auto;
-  padding-inline: 80px;
 }
 
 #cal-overlay {
@@ -822,13 +887,6 @@ ul { list-style: none; }
   display: block;
 }
 
-@media (max-width: 1024px) {
-  .booking-cal { padding-inline: 40px; }
-}
-
-@media (max-width: 767px) {
-  .booking-cal { padding-inline: 20px; }
-}
 
 
 /* ════════════════════════════════════════
@@ -1045,27 +1103,27 @@ ul { list-style: none; }
   .ticker-item { width: 480px; height: 314px; }
 
   /* Mission */
-  .mission { padding-block: 60px; }
+  .mission { padding-block: 48px; }
   .mission-text { padding-inline: 20px; font-size: 1.625rem; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 4/3; }
 
   /* Testimonials */
-  .testimonials { padding-block: 40px; }
+  .testimonials { padding-block: 48px; }
   .testi-grid { grid-template-columns: 1fr; }
   .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 28px 20px; }
   .testi-card:last-child { border-bottom: none; }
 
   /* Process */
-  .process { padding-block: 60px; }
+  .process { padding-block: 48px; }
   .faq-grid { flex-direction: column; gap: 0; }
   .faq-col + .faq-col .faq-item:first-child { border-top: none; }
   .faq-q { font-size: 1.1rem; }
   .process-heading { font-size: 2rem; }
 
   /* Pricing */
-  .pricing { padding-block: 40px 60px; }
+  .pricing { padding-block: 48px; }
   .pricing-cards { grid-template-columns: 1fr; }
   .pc { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 32px 20px; }
   .pc:last-child { border-bottom: none; }
@@ -1073,7 +1131,7 @@ ul { list-style: none; }
   .pc-cta { width: 100%; justify-content: center; }
 
   /* Booking */
-  .booking { padding-block: 60px; }
+  .booking { padding-block: 48px; }
   .booking-inner { padding-inline: 20px; }
 
 

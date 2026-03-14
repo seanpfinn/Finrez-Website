@@ -25,7 +25,51 @@
 
       <!-- Desktop nav (inside header) -->
       <div class="nav-links-desktop">
-        <a href="#work" class="nav-link">Work</a>
+        <div class="nav-work-desktop">
+          <button class="nav-link nav-work-btn-desktop" aria-expanded="false" aria-haspopup="true">
+            Work
+            <svg class="nav-work-chevron-desktop" width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5.5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="work-dropdown" id="workDropdown">
+            <a href="minded.html" class="wdrop-item">
+              <img src="images/minded-app.png" alt="" class="wsub-thumb wdrop-thumb" />
+              <div class="wsub-info">
+                <span class="wsub-title">Minded</span>
+                <span class="wsub-desc">Branding a migraine relief supplement.</span>
+              </div>
+            </a>
+            <a href="vesperia-films.html" class="wdrop-item">
+              <img src="images/vesperia-films.png" alt="" class="wsub-thumb wdrop-thumb" />
+              <div class="wsub-info">
+                <span class="wsub-title">Vesperia Films</span>
+                <span class="wsub-desc">A web experience for an independent film studio.</span>
+              </div>
+            </a>
+            <a href="lightspeed.html" class="wdrop-item">
+              <img src="images/lightspeed.png" alt="" class="wsub-thumb wdrop-thumb" />
+              <div class="wsub-info">
+                <span class="wsub-title">Lightspeed</span>
+                <span class="wsub-desc">A brand design language for high-speed internet.</span>
+              </div>
+            </a>
+            <a href="rockbridge.html" class="wdrop-item">
+              <img src="images/rockbridge-card.png" alt="" class="wsub-thumb wdrop-thumb" />
+              <div class="wsub-info">
+                <span class="wsub-title">RockBridge</span>
+                <span class="wsub-desc">Bringing a trusted brand to property management.</span>
+              </div>
+            </a>
+            <a href="benchmark.html" class="wdrop-item">
+              <img src="images/benchmark-signin.png" alt="" class="wsub-thumb wdrop-thumb" />
+              <div class="wsub-info">
+                <span class="wsub-title">Benchmark Independent</span>
+                <span class="wsub-desc">A brand that simplifies life care planning.</span>
+              </div>
+            </a>
+          </div>
+        </div>
         <a href="#pricing" class="nav-link">Pricing</a>
       </div>
 
@@ -417,15 +461,17 @@
         <p class="booking-sub">Pick a time and let's talk about your project.</p>
       </div>
     </div>
-    <div class="booking-cal">
-      <div id="cal-booking"></div>
-      <div id="cal-overlay"></div>
-      <script type="text/javascript">
-        (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
-        Cal("init", { origin: "https://cal.com" });
-        Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/15min" });
-        Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true });
-      </script>
+    <div class="container">
+      <div class="booking-cal">
+        <div id="cal-booking"></div>
+        <div id="cal-overlay"></div>
+        <script type="text/javascript">
+          (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
+          Cal("init", { origin: "https://cal.com" });
+          Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/15min" });
+          Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true, layout: "month_view" });
+        </script>
+      </div>
     </div>
   </section>
 

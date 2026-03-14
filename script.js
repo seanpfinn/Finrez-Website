@@ -55,6 +55,22 @@
     });
   }
 
+  /* ── Desktop Work dropdown ── */
+  const workDropdownBtn = document.querySelector('.nav-work-btn-desktop');
+  const workDropdown    = document.getElementById('workDropdown');
+  if (workDropdownBtn && workDropdown) {
+    workDropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = workDropdown.classList.toggle('is-open');
+      workDropdownBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    document.addEventListener('click', () => {
+      workDropdown.classList.remove('is-open');
+      workDropdownBtn.setAttribute('aria-expanded', 'false');
+    });
+    workDropdown.addEventListener('click', (e) => e.stopPropagation());
+  }
+
   /* ── Mobile Work submenu toggle ── */
   const workToggle  = document.getElementById('workToggle');
   const workSubmenu = document.getElementById('workSubmenu');
