@@ -879,12 +879,6 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
-#cal-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  cursor: none;
-}
 
 #cal-booking,
 #cal-booking iframe {
