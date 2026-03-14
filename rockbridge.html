@@ -18,7 +18,8 @@
       display: flex;
       flex-direction: column;
       height: auto;
-      padding-block: 48px;
+      padding-top: calc(var(--nav-h) + 64px);
+      padding-bottom: 48px;
       padding-inline: 48px;
       gap: 16px;
     }
@@ -69,7 +70,7 @@
     }
 
     @media (max-width: 767px) {
-      .cs-intro { padding-block: 32px; padding-inline: 20px; }
+      .cs-intro { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 32px; padding-inline: 20px; }
       .cs-intro-title { font-size: 31px; }
       .cs-intro-sub { max-width: 100%; }
       .cs-panel { height: 280px; }
