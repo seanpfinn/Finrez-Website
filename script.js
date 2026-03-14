@@ -137,6 +137,21 @@
     document.head.appendChild(style);
   }
 
+  /* ── Mission text blur reveal ── */
+  const missionText = document.querySelector('.mission-text');
+  if (missionText && 'IntersectionObserver' in window) {
+    missionText.classList.add('blur-reveal');
+    const missionObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          missionObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    missionObs.observe(missionText);
+  }
+
   /* ── Retainer plan toggle ── */
   const countPrice = (el, from, to, duration = 480) => {
     const startTime = performance.now();

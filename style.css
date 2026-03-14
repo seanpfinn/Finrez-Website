@@ -354,6 +354,17 @@ ul { list-style: none; }
   color: var(--accent);
 }
 
+.mission-text.blur-reveal {
+  opacity: 0;
+  filter: blur(16px);
+  transition: opacity 1s ease, filter 1s ease;
+}
+
+.mission-text.blur-reveal.in-view {
+  opacity: 1;
+  filter: blur(0);
+}
+
 /* ════════════════════════════════════════
    WORK — full-width stacked panels
    ════════════════════════════════════════ */
@@ -440,18 +451,24 @@ ul { list-style: none; }
 .testi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 0;
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .testi-card {
-  background: #fff;
-  border: 1px solid var(--gray-100);
-  border-radius: var(--radius-lg);
-  padding: 20px;
+  background: transparent;
+  border-right: 1px solid var(--gray-200);
+  border-radius: 0;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 0 12px rgba(130,130,130,.15);
+  gap: 0;
+  box-shadow: none;
+}
+
+.testi-card:last-child {
+  border-right: none;
 }
 
 .testi-text {
@@ -468,6 +485,9 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 20px;
+  margin-top: 24px;
 }
 
 .testi-name {
@@ -1024,6 +1044,8 @@ ul { list-style: none; }
   /* Testimonials */
   .testimonials { padding-block: 40px; }
   .testi-grid { grid-template-columns: 1fr; }
+  .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 24px 0; }
+  .testi-card:last-child { border-bottom: none; }
 
   /* Process */
   .process { padding-block: 60px; }
