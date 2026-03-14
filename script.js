@@ -206,6 +206,30 @@
     });
   });
 
+  /* ── Hero cycle: separate then cycle ── */
+  const heroCycle = document.querySelector('.hero-cycle');
+  if (heroCycle) {
+    // Measure natural width using an offscreen clone
+    const clone = heroCycle.cloneNode(true);
+    clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;display:grid;left:-9999px;top:-9999px';
+    document.body.appendChild(clone);
+    const naturalWidth = clone.scrollWidth;
+    document.body.removeChild(clone);
+
+    // Expand after a short pause (separation effect)
+    setTimeout(() => {
+      heroCycle.style.transition = 'width 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
+      heroCycle.style.width = naturalWidth + 'px';
+
+      // Start cycling once expansion is done
+      setTimeout(() => {
+        heroCycle.style.transition = '';
+        heroCycle.style.width = 'auto';
+        heroCycle.classList.add('cycling');
+      }, 900);
+    }, 500);
+  }
+
   /* ── Custom cursor ── */
   const cursorEl = document.getElementById('cursor');
   if (cursorEl) {
