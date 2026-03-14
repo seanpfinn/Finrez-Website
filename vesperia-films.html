@@ -16,29 +16,28 @@
   <style>
     .cs-intro {
       display: flex;
-      align-items: center;
-      height: 140px;
+      flex-direction: column;
+      height: auto;
+      padding-block: 48px;
+      padding-inline: 48px;
+      gap: 16px;
     }
 
     .cs-intro-title {
-      width: 47%;
-      padding-inline: 48px;
       font-family: 'VG5000', monospace;
-      font-size: 40px;
+      font-size: 45px;
       font-weight: 400;
       color: var(--ink);
       line-height: 1;
     }
 
     .cs-intro-sub {
-      width: 53%;
-      padding-inline: 48px;
       font-family: 'Figtree', sans-serif;
-      font-size: 14.4px;
+      font-size: 16.1px;
       font-weight: 400;
       color: #5e5e5e;
       line-height: 1.6;
-      border-left: 1px solid var(--gray-200);
+      max-width: 640px;
     }
 
     .cs-hero {
@@ -70,9 +69,9 @@
     }
 
     @media (max-width: 767px) {
-      .cs-intro { flex-direction: column; height: auto; padding-block: 32px; }
-      .cs-intro-title { width: 100%; padding-inline: 20px; font-size: 28px; margin-bottom: 16px; }
-      .cs-intro-sub { width: auto; margin-inline: 20px; padding-inline: 0; border-left: none; border-top: 1px solid var(--gray-200); padding-top: 16px; }
+      .cs-intro { padding-block: 32px; padding-inline: 20px; }
+      .cs-intro-title { font-size: 31px; }
+      .cs-intro-sub { max-width: 100%; }
       .cs-panel { height: 280px; }
     }
   </style>
