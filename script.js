@@ -215,19 +215,6 @@
     });
     document.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
 
-    // Transparent overlay over Cal.com iframe — tracks cursor & passes clicks through
-    const calOverlay = document.getElementById('cal-overlay');
-    if (calOverlay) {
-      calOverlay.addEventListener('mousemove', (e) => {
-        cursorEl.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
-        cursorEl.classList.add('visible');
-      });
-      calOverlay.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
-      calOverlay.addEventListener('mousedown', () => {
-        calOverlay.style.pointerEvents = 'none';
-        setTimeout(() => { calOverlay.style.pointerEvents = ''; }, 50);
-      });
-    }
   }
 
 })();
