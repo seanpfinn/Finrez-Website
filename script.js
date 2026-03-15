@@ -212,8 +212,8 @@
     const isMobile = window.matchMedia('(max-width: 809px)').matches;
 
     if (isMobile) {
-      // On mobile the title animates in as one unit — just start cycling after the title fades in
-      setTimeout(() => heroCycle.classList.add('cycling'), 700);
+      // On mobile start cycling once the title blur-in finishes (0.2s delay + 0.8s duration)
+      setTimeout(() => heroCycle.classList.add('cycling'), 1000);
     } else {
       // Desktop: wipe separation effect — measure natural width via offscreen clone
       const clone = heroCycle.cloneNode(true);
