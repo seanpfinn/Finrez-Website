@@ -971,18 +971,25 @@ ul { list-style: none; }
 @media (min-width: 810px) {
   .avail-badge,
   .hero-title,
-  .hero-sub,
-  .hero-btns {
+  .hero-sub {
     animation: hero-fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
   .avail-badge { animation-delay: 0.05s; }
   .hero-title  { animation-delay: 0.18s; }
   .hero-sub    { animation-delay: 0.3s;  }
-  .hero-btns   { animation-delay: 0.42s; }
+
+  .hero-btns {
+    animation: hero-fade-in 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.42s both;
+  }
 
   @keyframes hero-fade-up {
     from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
     to   { opacity: 1; filter: blur(0);   transform: translateY(0);    }
+  }
+
+  @keyframes hero-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 }
 
@@ -1178,18 +1185,23 @@ ul { list-style: none; }
   /* Staggered blur-in for each hero element */
   .avail-badge,
   .hero-title,
-  .hero-sub,
-  .hero-btns {
+  .hero-sub {
     animation: hero-blur-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   .avail-badge  { animation-delay: 0.05s; }
   .hero-title   { animation-delay: 0.2s;  }
   .hero-sub     { animation-delay: 0.35s; }
-  .hero-btns    { animation-delay: 0.5s;  }
+
+  .hero-btns { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
 
   @keyframes hero-blur-in {
     from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
     to   { opacity: 1; filter: blur(0);    transform: translateY(0);    }
+  }
+
+  @keyframes hero-blur-fade {
+    from { opacity: 0; filter: blur(12px); }
+    to   { opacity: 1; filter: blur(0);    }
   }
 
   /* Ticker */
