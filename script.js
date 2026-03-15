@@ -223,15 +223,15 @@
       document.body.removeChild(clone);
 
       setTimeout(() => {
-        heroCycle.style.transition = 'width 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
+        heroCycle.style.transition = 'width 0.9s cubic-bezier(0.25, 0, 0, 1)';
         heroCycle.style.width = naturalWidth + 'px';
 
         setTimeout(() => {
           heroCycle.style.transition = '';
           heroCycle.style.width = 'auto';
           heroCycle.classList.add('cycling');
-        }, 900);
-      }, 500);
+        }, 950);
+      }, 300);
     }
   }
 

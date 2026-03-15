@@ -378,11 +378,11 @@ ul { list-style: none; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay:  4.83s; }
 
 @keyframes cycle-word {
-  0%, 5%  { opacity: 0; transform: translateY(0.2em); }
+  0%, 5%  { opacity: 0; transform: translateY(0.1em); }
   13%     { opacity: 1; transform: translateY(0); }
   30%     { opacity: 1; transform: translateY(0); }
-  38%     { opacity: 0; transform: translateY(-0.2em); }
-  100%    { opacity: 0; transform: translateY(0.2em); }
+  38%     { opacity: 0; transform: translateY(-0.1em); }
+  100%    { opacity: 0; transform: translateY(0.1em); }
 }
 
 .hero-sub {
@@ -963,6 +963,27 @@ ul { list-style: none; }
   color: #fff;
   letter-spacing: 0.01em;
   text-align: center;
+}
+
+/* ════════════════════════════════════════
+   HERO — Desktop entrance (≥ 810px)
+   ════════════════════════════════════════ */
+@media (min-width: 810px) {
+  .avail-badge,
+  .hero-title,
+  .hero-sub,
+  .hero-btns {
+    animation: hero-fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  .avail-badge { animation-delay: 0.05s; }
+  .hero-title  { animation-delay: 0.18s; }
+  .hero-sub    { animation-delay: 0.3s;  }
+  .hero-btns   { animation-delay: 0.42s; }
+
+  @keyframes hero-fade-up {
+    from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
+    to   { opacity: 1; filter: blur(0);   transform: translateY(0);    }
+  }
 }
 
 /* ════════════════════════════════════════
