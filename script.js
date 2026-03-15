@@ -226,10 +226,11 @@
         heroCycle.style.transition = 'width 0.9s cubic-bezier(0.25, 0, 0, 1)';
         heroCycle.style.width = naturalWidth + 'px';
 
+        // Wait for wipe to fully settle, then start cycling
         setTimeout(() => {
           heroCycle.style.transition = '';
           heroCycle.style.width = 'auto';
-          heroCycle.classList.add('cycling');
+          setTimeout(() => heroCycle.classList.add('cycling'), 150);
         }, 950);
       }, 300);
     }

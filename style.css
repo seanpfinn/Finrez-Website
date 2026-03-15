@@ -362,20 +362,13 @@ ul { list-style: none; }
   opacity: 0;
 }
 
-/* First word is visible during the expansion wipe */
-.hero-cycle-word:nth-child(1) {
-  opacity: 1;
-}
-
 /* Cycling begins once JS adds .cycling after the expansion */
 .hero-cycle.cycling .hero-cycle-word {
   animation: cycle-word 9s ease-in-out infinite;
 }
-/* Word 1: negative delay places it at 13% (fully visible) — matches the wipe end state.
-   Words 2 & 3: shifted by the same −1.17s to keep 3s spacing between words. */
-.hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation-delay: -1.17s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay:  1.83s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay:  4.83s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation-delay: 0s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 3s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 6s; }
 
 @keyframes cycle-word {
   0%, 5%  { opacity: 0; transform: translateY(0.1em); }
