@@ -288,14 +288,13 @@ ul { list-style: none; }
   align-items: center;
   gap: 8px;
   background: #fff;
-  border: 1px solid var(--gray-100);
+  border: 1px solid var(--gray-200);
   border-radius: 999px;
   padding: 8px 16px;
   font-family: 'Figtree', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: var(--dark);
-  box-shadow: 0 0 12px rgba(0,0,0,.07);
   letter-spacing: -0.32px;
 }
 
