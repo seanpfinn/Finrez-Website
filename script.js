@@ -227,17 +227,16 @@
       const naturalWidth = clone.scrollWidth;
       document.body.removeChild(clone);
 
+      // Start after the title blur-in finishes (0.18s delay + 0.65s duration)
       setTimeout(() => {
-        heroCycle.style.transition = 'width 0.9s cubic-bezier(0.25, 0, 0, 1)';
+        heroCycle.style.transition = 'width 1.1s cubic-bezier(0.33, 1, 0.68, 1)';
         heroCycle.style.width = naturalWidth + 'px';
 
-        // Wait for wipe to fully settle, then start cycling
-        setTimeout(() => {
-          heroCycle.style.transition = '';
-          heroCycle.style.width = 'auto';
-          setTimeout(() => heroCycle.classList.add('cycling'), 150);
-        }, 950);
-      }, 300);
+        // Use transitionend so cycling starts at exactly the right moment
+        heroCycle.addEventListener('transitionend', () => {
+          heroCycle.classList.add('cycling');
+        }, { once: true });
+      }, 850);
     }
   }
 
