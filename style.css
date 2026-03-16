@@ -697,6 +697,25 @@ ul { list-style: none; }
 .faq-a[hidden] { display: none; }
 
 /* ════════════════════════════════════════
+   FULL STACK BANNER
+   ════════════════════════════════════════ */
+.fullstack-banner {
+  padding-block: 80px;
+  padding-inline: 48px;
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  text-align: center;
+}
+
+.fullstack-title {
+  font-family: 'VG5000', monospace;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ════════════════════════════════════════
    PRICING
    ════════════════════════════════════════ */
 .pricing {
@@ -1190,6 +1209,9 @@ ul { list-style: none; }
     from { opacity: 0; filter: blur(12px); }
     to   { opacity: 1; filter: blur(0);    }
   }
+
+  /* Full stack banner */
+  .fullstack-banner { padding-block: 48px; padding-inline: 20px; }
 
   /* Ticker */
   .ticker-item { width: 480px; height: 314px; }
