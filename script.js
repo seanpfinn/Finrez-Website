@@ -220,12 +220,19 @@
       // On mobile start cycling once the title blur-in finishes (0.2s delay + 0.8s duration)
       setTimeout(() => heroCycle.classList.add('cycling'), 1000);
     } else {
-      // Desktop: wipe separation effect — measure natural width via offscreen clone
-      const clone = heroCycle.cloneNode(true);
-      clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;display:grid;left:-9999px;top:-9999px';
-      document.body.appendChild(clone);
-      const naturalWidth = clone.scrollWidth;
-      document.body.removeChild(clone);
+      // Desktop: measure the true rendered width of the widest word.
+      // scrollWidth on the actual element works because overflow:hidden clips
+      // visually but doesn't affect the scrollable content size.
+      let naturalWidth = heroCycle.scrollWidth;
+
+      // Fallback: clone inside hero-title so it inherits the correct font size.
+      if (!naturalWidth) {
+        const clone = heroCycle.cloneNode(true);
+        clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;pointer-events:none';
+        heroCycle.parentElement.appendChild(clone);
+        naturalWidth = clone.scrollWidth;
+        heroCycle.parentElement.removeChild(clone);
+      }
 
       // Start after the title blur-in finishes (0.18s delay + 0.65s duration)
       setTimeout(() => {
