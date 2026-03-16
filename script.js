@@ -153,19 +153,24 @@
     document.head.appendChild(style);
   }
 
-  /* ── Mission text blur reveal ── */
-  const missionText = document.querySelector('.mission-text');
-  if (missionText && 'IntersectionObserver' in window) {
-    missionText.classList.add('blur-reveal');
-    const missionObs = new IntersectionObserver((entries) => {
+  /* ── Blur reveal: mission text + section headings/copy ── */
+  if ('IntersectionObserver' in window) {
+    const blurObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-          missionObs.unobserve(entry.target);
+          blurObs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.2 });
-    missionObs.observe(missionText);
+    }, { threshold: 0.15 });
+
+    const missionText = document.querySelector('.mission-text');
+    if (missionText) {
+      missionText.classList.add('blur-reveal');
+      blurObs.observe(missionText);
+    }
+
+    document.querySelectorAll('.sect-blur').forEach(el => blurObs.observe(el));
   }
 
   /* ── Retainer plan toggle ── */
