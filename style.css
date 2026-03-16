@@ -730,19 +730,24 @@ ul { list-style: none; }
   margin-inline: -48px;
 }
 
-.tools-list {
+.tools-track {
   display: flex;
   width: max-content;
-  gap: 20px;
-  padding: 24px 6px;
-  animation: tools-scroll 18s linear infinite;
+  animation: tools-scroll 26s linear infinite;
 }
 
-.tools-list:hover { animation-play-state: paused; }
+.tools-track:hover { animation-play-state: paused; }
+
+.tools-set {
+  display: flex;
+  gap: 24px;
+  padding: 24px 12px; /* 12px = half of gap — seam spacing matches internal spacing */
+  flex-shrink: 0;
+}
 
 @keyframes tools-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-33.333%); }
 }
 
 .tool-chip {
@@ -754,9 +759,9 @@ ul { list-style: none; }
 }
 
 .tool-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
+  width: 84px;
+  height: 84px;
+  border-radius: 20px;
   border: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
