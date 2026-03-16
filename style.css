@@ -727,7 +727,7 @@ ul { list-style: none; }
 
 .fullstack-title {
   font-family: 'VG5000', monospace;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.5rem;
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
@@ -1006,7 +1006,7 @@ ul { list-style: none; }
 
 .booking-title {
   font-family: 'VG5000', monospace;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.5rem;
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
@@ -1331,7 +1331,9 @@ ul { list-style: none; }
   .faq-grid { flex-direction: column; gap: 0; }
   .faq-col + .faq-col .faq-item:first-child { border-top: none; }
   .faq-q { font-size: 1.1rem; }
-  .process-heading { font-size: 2rem; }
+  .process-heading { font-size: 2.25rem; }
+  .fullstack-title { font-size: 2.25rem; }
+  .booking-title   { font-size: 2.25rem; }
 
   /* Pricing */
   .pricing { padding-block: 48px; }
