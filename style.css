@@ -779,9 +779,9 @@ ul { list-style: none; }
 }
 
 .tool-icon {
-  width: 84px;
-  height: 84px;
-  border-radius: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 26px;
   border: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
