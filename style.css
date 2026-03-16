@@ -652,7 +652,7 @@ ul { list-style: none; }
 
 .process-heading {
   font-family: 'VG5000', 'Courier New', monospace;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 400;
   color: var(--dark);
   letter-spacing: -0.8px;
@@ -727,7 +727,7 @@ ul { list-style: none; }
 
 .fullstack-title {
   font-family: 'VG5000', monospace;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
@@ -1006,7 +1006,7 @@ ul { list-style: none; }
 
 .booking-title {
   font-family: 'VG5000', monospace;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
