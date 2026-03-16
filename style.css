@@ -700,19 +700,90 @@ ul { list-style: none; }
    FULL STACK BANNER
    ════════════════════════════════════════ */
 .fullstack-banner {
-  padding-block: 80px;
+  padding-top: 80px;
   padding-inline: 48px;
-  border-top: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
   text-align: center;
 }
 
 .fullstack-title {
   font-family: 'VG5000', monospace;
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
+  margin-bottom: 16px;
+}
+
+.fullstack-sub {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1rem;
+  color: #5e5e5e;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Tools ticker */
+.tools-ticker {
+  overflow: hidden;
+  margin-top: 48px;
+  margin-inline: -48px;
+}
+
+.tools-list {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  padding: 24px 6px;
+  animation: tools-scroll 22s linear infinite;
+}
+
+.tools-list:hover { animation-play-state: paused; }
+
+@keyframes tools-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.tool-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.tool-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 800;
+  overflow: hidden;
+}
+
+.tool-icon svg { width: 72%; height: 72%; display: block; }
+
+.ti-figma  { background: #fff; }
+.ti-html   { background: #E44D26; color: #fff; font-size: 0.7rem; letter-spacing: -0.5px; }
+.ti-css    { background: #1572B6; color: #fff; font-size: 0.75rem; }
+.ti-js     { background: #F7DF1E; color: #1a1a1a; font-size: 0.95rem; }
+.ti-react  { background: #20232A; }
+.ti-swiftui { background: linear-gradient(140deg, #FA7343 0%, #F05138 100%); color: #fff; font-size: 0.6rem; letter-spacing: -0.3px; }
+.ti-claude { background: #CC785C; color: #fff; font-size: 0.6rem; letter-spacing: -0.3px; }
+.ti-framer { background: #0d0d0d; color: #fff; font-size: 0.95rem; }
+.ti-webflow { background: #4353FF; color: #fff; font-size: 0.7rem; letter-spacing: -0.5px; }
+
+.tool-name {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  white-space: nowrap;
 }
 
 /* ════════════════════════════════════════
@@ -1211,7 +1282,8 @@ ul { list-style: none; }
   }
 
   /* Full stack banner */
-  .fullstack-banner { padding-block: 48px; padding-inline: 20px; }
+  .fullstack-banner { padding-top: 48px; padding-inline: 20px; }
+  .tools-ticker { margin-inline: -20px; }
 
   /* Ticker */
   .ticker-item { width: 480px; height: 314px; }
