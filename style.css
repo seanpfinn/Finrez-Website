@@ -1053,10 +1053,17 @@ ul { list-style: none; }
   padding-inline: 48px;
 }
 
+.logo-strip-item {
+  display: flex;
+  align-items: center;
+}
+
 .logo-strip-item img {
   height: 28px;
   width: auto;
+  max-width: 160px;
   display: block;
+  object-fit: contain;
   filter: grayscale(1) opacity(0.5);
   transition: filter 0.25s ease;
 }
