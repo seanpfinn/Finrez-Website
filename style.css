@@ -958,7 +958,7 @@ ul { list-style: none; }
 /* Price + button footer */
 .pc-footer {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
@@ -1355,9 +1355,6 @@ ul { list-style: none; }
 /* ════════════════════════════════════════
    PRICING — 3-column grid + custom card
    ════════════════════════════════════════ */
-.pc-price--custom {
-  font-size: 1.25rem;
-}
 
 /* ════════════════════════════════════════
    FOOTER — orange/red with large logo
