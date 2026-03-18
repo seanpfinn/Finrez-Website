@@ -979,18 +979,15 @@ ul { list-style: none; }
 }
 
 .booking-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 }
 
 .booking-header {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  position: sticky;
-  top: calc(var(--nav-h) + 24px);
 }
 
 .booking-title {
@@ -1233,7 +1230,7 @@ ul { list-style: none; }
 
 .service-name {
   font-family: 'VG5000', monospace;
-  font-size: 1.375rem;
+  font-size: 1.75rem;
   font-weight: 400;
   color: var(--dark);
   line-height: 1.2;
@@ -1714,8 +1711,7 @@ ul { list-style: none; }
 
   /* Booking */
   .booking { padding-block: 48px; }
-  .booking-inner { grid-template-columns: 1fr; gap: 40px; }
-  .booking-header { position: static; }
+  .booking-inner { gap: 32px; }
 
 
   /* Logo strip */
