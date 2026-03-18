@@ -255,7 +255,34 @@
       cursorEl.classList.add('visible');
     });
     document.addEventListener('mouseleave', () => cursorEl.classList.remove('visible'));
+  }
 
+  /* ── Work panel cursor pill ── */
+  const workCursor = document.getElementById('work-cursor');
+  if (workCursor) {
+    let rafId;
+    const panels = document.querySelectorAll('.work-panel');
+
+    const onMove = (e) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        workCursor.style.left = e.clientX + 'px';
+        workCursor.style.top  = e.clientY + 'px';
+      });
+    };
+
+    panels.forEach(panel => {
+      panel.addEventListener('mouseenter', (e) => {
+        workCursor.style.left = e.clientX + 'px';
+        workCursor.style.top  = e.clientY + 'px';
+        workCursor.classList.add('visible');
+        document.addEventListener('mousemove', onMove);
+      });
+      panel.addEventListener('mouseleave', () => {
+        workCursor.classList.remove('visible');
+        document.removeEventListener('mousemove', onMove);
+      });
+    });
   }
 
 })();

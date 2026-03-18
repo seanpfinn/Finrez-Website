@@ -437,7 +437,7 @@ ul { list-style: none; }
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--dark);
-  text-align: left;
+  text-align: center;
   padding-inline: 48px;
 }
 
@@ -1277,33 +1277,32 @@ ul { list-style: none; }
 /* ════════════════════════════════════════
    WORK PANEL — hover CTA
    ════════════════════════════════════════ */
-.work-panel-cta {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(8px);
+#work-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
   background: #fff;
   color: var(--dark);
   font-family: 'Figtree', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 12px 24px;
-  opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  padding: 10px 20px;
+  border-radius: 999px;
   pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s ease;
   white-space: nowrap;
-  z-index: 2;
+  z-index: 9999;
+  will-change: transform;
 }
 
-.work-panel:hover .work-panel-cta {
+#work-cursor.visible {
   opacity: 1;
-  transform: translate(-50%, -50%) translateY(0);
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.work-panel:hover .work-panel-img {
-  filter: brightness(0.7);
-  transition: filter 0.3s ease;
-}
+.work-panel { cursor: none; }
 
 /* ════════════════════════════════════════
    BOOKING FRAMING
