@@ -606,7 +606,6 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-top: 1px solid var(--gray-200);
   padding-top: 20px;
   margin-top: 24px;
 }
