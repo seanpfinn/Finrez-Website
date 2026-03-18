@@ -275,6 +275,7 @@
 
     <!-- ───────────── TESTIMONIALS ───────────── -->
     <section class="testimonials">
+      <h2 class="testi-title sect-blur">Don't take our word for it</h2>
       <div class="testi-grid">
 
           <div class="testi-card">
@@ -638,6 +639,32 @@
         </div>
     </section>
 
+  <!-- ───────────── BOOKING ───────────── -->
+  <section class="booking" id="booking">
+    <div class="container">
+      <div class="booking-inner">
+        <div class="booking-header">
+          <h2 class="booking-title sect-blur">Book a call</h2>
+          <p class="booking-sub sect-blur" data-delay="1">30 minutes. No pitch — just a real conversation about your project.</p>
+          <ul class="booking-framing sect-blur" data-delay="2">
+            <li>I'll review your project before we talk</li>
+            <li>For founders, startups, and teams ready to invest in design</li>
+            <li>We'll align on goals, timeline, and fit</li>
+          </ul>
+        </div>
+        <div class="booking-cal">
+          <div id="cal-booking"></div>
+          <script type="text/javascript">
+            (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
+            Cal("init", { origin: "https://cal.com" });
+            Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/15min" });
+            Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true, layout: "month_view" });
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
     <!-- ───────────── FAQ ───────────── -->
     <section class="process" id="contact">
       <div class="container">
@@ -699,32 +726,6 @@
         </div>
       </div>
     </section>
-
-  <!-- ───────────── BOOKING ───────────── -->
-  <section class="booking" id="booking">
-    <div class="container">
-      <div class="booking-header">
-        <h2 class="booking-title sect-blur">Book a call</h2>
-        <p class="booking-sub sect-blur" data-delay="1">30 minutes. No pitch — just a real conversation about your project.</p>
-        <ul class="booking-framing sect-blur" data-delay="2">
-          <li>I'll review your project before we talk</li>
-          <li>For founders, startups, and teams ready to invest in design</li>
-          <li>We'll align on goals, timeline, and fit</li>
-        </ul>
-      </div>
-    </div>
-    <div class="container">
-      <div class="booking-cal">
-        <div id="cal-booking"></div>
-        <script type="text/javascript">
-          (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
-          Cal("init", { origin: "https://cal.com" });
-          Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/15min" });
-          Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true, layout: "month_view" });
-        </script>
-      </div>
-    </div>
-  </section>
 
   </main>
 

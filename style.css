@@ -559,6 +559,16 @@ ul { list-style: none; }
   background: #fff;
 }
 
+.testi-title {
+  font-family: 'VG5000', monospace;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--dark);
+  padding-inline: 48px;
+  margin-bottom: 48px;
+}
+
 .testi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -807,7 +817,7 @@ ul { list-style: none; }
   border: none;
   border-right: 1px solid var(--gray-200);
   border-radius: 0;
-  padding: 40px 48px;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -968,8 +978,19 @@ ul { list-style: none; }
   padding-block: 80px;
 }
 
+.booking-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
 .booking-header {
-  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
 }
 
 .booking-title {
@@ -978,7 +999,6 @@ ul { list-style: none; }
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
-  margin-bottom: 12px;
 }
 
 .booking-sub {
@@ -993,9 +1013,7 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
-
 #cal-booking {
-  max-width: 900px;
   display: block;
 }
 
@@ -1074,7 +1092,7 @@ ul { list-style: none; }
 }
 
 .about-photo {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--gray-200);
 }
@@ -1696,7 +1714,8 @@ ul { list-style: none; }
 
   /* Booking */
   .booking { padding-block: 48px; }
-  .booking-inner { padding-inline: 20px; }
+  .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+  .booking-header { position: static; }
 
 
   /* Logo strip */
