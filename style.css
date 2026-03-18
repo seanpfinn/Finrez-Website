@@ -824,8 +824,11 @@ ul { list-style: none; }
   box-shadow: none;
 }
 
+.pc:first-child { padding-left: 48px; }
+
 .pc:last-child {
   border-right: none;
+  padding-right: 48px;
 }
 
 /* Card top block */
