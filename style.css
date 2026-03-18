@@ -73,7 +73,7 @@ ul { list-style: none; }
 .container {
   max-width: var(--max-w);
   margin-inline: auto;
-  padding-inline: 80px;
+  padding-inline: 48px;
 }
 
 /* ── Buttons ── */
@@ -277,7 +277,7 @@ ul { list-style: none; }
   align-items: center;
   gap: 20px;
   max-width: 900px;
-  padding-inline: 40px;
+  padding-inline: 48px;
 }
 
 /* Availability badge */
@@ -442,7 +442,7 @@ ul { list-style: none; }
   text-align: center;
   max-width: 1000px;
   margin-inline: auto;
-  padding-inline: 80px;
+  padding-inline: 48px;
 }
 
 .mission-brand {
@@ -640,10 +640,6 @@ ul { list-style: none; }
   background: #fff;
 }
 
-.process .container,
-.booking .container {
-  padding-inline: 48px;
-}
 
 .faq-heading {
   font-family: 'VG5000', 'Courier New', monospace;
