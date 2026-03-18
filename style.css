@@ -1492,6 +1492,7 @@ ul { list-style: none; }
 @media (max-width: 809px) {
 
   /* Nav */
+  .nav-wrap { padding-inline: 20px; }
   .menu-toggle { display: flex; }
   .nav-links-desktop { display: none; }
 
