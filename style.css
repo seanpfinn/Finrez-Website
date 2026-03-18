@@ -830,7 +830,6 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
 .pc-name {
@@ -1052,11 +1051,26 @@ ul { list-style: none; }
   background: #fff;
 }
 
-.about-inner {
+.about-section-title {
+  font-family: 'VG5000', monospace;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--dark);
+  margin-bottom: 56px;
+}
+
+.about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-person {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .about-photo {
@@ -1072,32 +1086,33 @@ ul { list-style: none; }
   display: block;
 }
 
-.about-text {
+.about-person-text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
 }
 
-.about-eyebrow {
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gray-700);
-}
-
-.about-heading {
+.about-name {
   font-family: 'VG5000', monospace;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--dark);
+}
+
+.about-role {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 8px;
 }
 
 .about-body {
   font-family: 'Figtree', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--gray-700);
 }
@@ -1444,7 +1459,7 @@ ul { list-style: none; }
 
   .pricing-cards { gap: 0; }
 
-  .about-inner { gap: 48px; }
+  .about-grid { gap: 32px; }
   .results-grid { grid-template-columns: repeat(4, 1fr); }
   .steps-list { grid-template-columns: repeat(2, 1fr); }
 
@@ -1690,9 +1705,8 @@ ul { list-style: none; }
 
   /* About */
   .about { padding-block: 64px; }
-  .about-inner { grid-template-columns: 1fr; gap: 40px; }
-  .about-photo { aspect-ratio: 4/3; }
-  .about-heading { font-size: 2.25rem; }
+  .about-section-title { font-size: 2.25rem; margin-bottom: 40px; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
 
   /* Results */
   .results { padding-block: 48px; }
