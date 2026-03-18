@@ -113,9 +113,7 @@ ul { list-style: none; }
 .header.scrolled { box-shadow: var(--shadow-sm); }
 
 .nav-wrap {
-  max-width: var(--max-w);
-  margin-inline: auto;
-  padding-inline: 18px;
+  padding-inline: 48px;
   height: var(--nav-h);
   display: flex;
   align-items: center;
@@ -1271,7 +1269,7 @@ ul { list-style: none; }
 
 .step-name {
   font-family: 'VG5000', monospace;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: 400;
   color: var(--dark);
   line-height: 1.2;
