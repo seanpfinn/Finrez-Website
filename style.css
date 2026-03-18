@@ -931,10 +931,7 @@ ul { list-style: none; }
 }
 
 /* Divider */
-.pc-divider {
-  height: 1px;
-  background: var(--gray-200);
-}
+.pc-divider { display: none; }
 
 /* Feature list */
 .pc-features {
@@ -1070,7 +1067,7 @@ ul { list-style: none; }
 
 .logo-strip-item img:hover { filter: grayscale(0) opacity(1); }
 
-.logo-strip-item img.logo-sm { height: 18px; }
+.logo-strip-item img.logo-sm { height: 24px; }
 
 /* ════════════════════════════════════════
    ABOUT
@@ -1078,7 +1075,6 @@ ul { list-style: none; }
 .about {
   padding-block: 100px;
   background: #fff;
-  border-bottom: 1px solid var(--gray-200);
 }
 
 .about-inner {
