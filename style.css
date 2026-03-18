@@ -1070,6 +1070,8 @@ ul { list-style: none; }
 
 .logo-strip-item img:hover { filter: grayscale(0) opacity(1); }
 
+.logo-strip-item img.logo-sm { height: 18px; }
+
 /* ════════════════════════════════════════
    ABOUT
    ════════════════════════════════════════ */
