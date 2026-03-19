@@ -1130,7 +1130,7 @@ ul { list-style: none; }
 .logo-strip-item img:hover { filter: grayscale(0) opacity(1); }
 
 .logo-strip-item img.logo-lg { height: 38px; }
-.logo-strip-item img.logo-xs { height: 18px; }
+.logo-strip-item img.logo-xs { height: 24px; }
 
 /* ════════════════════════════════════════
    ABOUT
@@ -1716,8 +1716,9 @@ ul { list-style: none; }
   }
 
   .nav-links .nav-cta {
-    align-self: flex-start;
     margin-top: 8px;
+    font-size: 1.3125rem;
+    justify-content: center;
   }
 
   /* Container enter/exit */
