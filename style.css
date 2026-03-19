@@ -520,6 +520,14 @@ ul { list-style: none; }
   transform: translateY(0);
 }
 
+.sect-sub {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
 /* ════════════════════════════════════════
    WORK — full-width stacked panels
    ════════════════════════════════════════ */
