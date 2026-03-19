@@ -102,13 +102,18 @@ ul { list-style: none; }
   position: fixed;
   inset: 0 0 auto;
   z-index: 900;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+}
+
+.header.scrolled {
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
 }
-
-.header.scrolled { box-shadow: var(--shadow-sm); }
 
 .nav-wrap {
   padding-inline: 48px;
@@ -1435,7 +1440,6 @@ ul { list-style: none; }
 
 .vs-header {
   margin-bottom: 56px;
-  max-width: 640px;
 }
 
 .vs-header h2 {
