@@ -1004,7 +1004,19 @@ ul { list-style: none; }
   line-height: 1.4;
 }
 
-.pc-check { flex-shrink: 0; }
+.pc-check { display: none; }
+
+.pc-features li::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url('images/F Blocks.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
 
 /* Price + button footer */
 .pc-footer {
@@ -1442,15 +1454,21 @@ ul { list-style: none; }
   font-family: 'Figtree', sans-serif;
   font-size: 0.95rem;
   color: var(--gray-700);
-  padding-left: 20px;
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .booking-framing li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  color: var(--gray-700);
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url('images/F Blocks.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
 }
 
 /* ════════════════════════════════════════
