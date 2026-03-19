@@ -743,13 +743,27 @@ ul { list-style: none; }
 }
 
 .faq-a {
-  padding: 0 0 20px;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-a > div {
+  overflow: hidden;
   font-size: 0.9375rem;
   color: var(--gray-500);
   line-height: 1.65;
+  padding-bottom: 0;
+  transition: padding-bottom 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.faq-a[hidden] { display: none; }
+.faq-a.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-a.is-open > div {
+  padding-bottom: 20px;
+}
 
 /* ════════════════════════════════════════
    FULL STACK BANNER
@@ -1539,7 +1553,7 @@ ul { list-style: none; }
   margin-top: 40px;
   font-family: 'Figtree', sans-serif;
   font-size: 1.125rem;
-  color: var(--gray-500);
+  color: var(--gray-700);
   line-height: 1.7;
 }
 

@@ -92,16 +92,20 @@
   }
 
   /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-a').forEach(el => {
+    const inner = document.createElement('div');
+    inner.innerHTML = el.innerHTML;
+    el.innerHTML = '';
+    el.appendChild(inner);
+    el.removeAttribute('hidden');
+  });
+
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
-      const answer  = btn.nextElementSibling;
-      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !isOpen);
-      if (isOpen) {
-        answer.hidden = true;
-      } else {
-        answer.hidden = false;
-      }
+      const answer = btn.nextElementSibling;
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      answer.classList.toggle('is-open', !isOpen);
     });
   });
 
