@@ -1004,19 +1004,7 @@ ul { list-style: none; }
   line-height: 1.4;
 }
 
-.pc-check { display: none; }
-
-.pc-features li::before {
-  content: '';
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  background-image: url('images/F Blocks.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  flex-shrink: 0;
-}
+.pc-check { flex-shrink: 0; }
 
 /* Price + button footer */
 .pc-footer {
@@ -1462,8 +1450,8 @@ ul { list-style: none; }
 .booking-framing li::before {
   content: '';
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   background-image: url('images/F Blocks.png');
   background-size: contain;
   background-repeat: no-repeat;
