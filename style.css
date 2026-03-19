@@ -1549,7 +1549,7 @@ ul { list-style: none; }
 
 .vs-cell--ft {
   color: var(--gray-500);
-  background: #f4f4f4;
+  background: #e8e8e8;
 }
 
 .vs-cell--ft.vs-cell--head {
