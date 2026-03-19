@@ -1532,7 +1532,8 @@ ul { list-style: none; }
 }
 
 .vs-cell--ft.vs-cell--head {
-  background: var(--gray-100);
+  background: var(--gray-700);
+  color: #fff;
 }
 
 .vs-cell--finrez {
