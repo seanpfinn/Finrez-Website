@@ -1141,6 +1141,27 @@ ul { list-style: none; }
   display: block;
 }
 
+/* Hover swap for Sean's photo */
+.about-photo--hover {
+  position: relative;
+}
+
+.about-photo--hover .about-photo-hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.about-photo--hover:hover .about-photo-default {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.about-photo--hover:hover .about-photo-hover {
+  opacity: 1;
+}
+
 .about-person-text {
   display: flex;
   flex-direction: column;
