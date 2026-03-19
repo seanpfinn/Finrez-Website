@@ -563,6 +563,7 @@ ul { list-style: none; }
   position: absolute;
   bottom: 0;
   left: 0;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -1934,7 +1935,7 @@ ul { list-style: none; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 4/3; }
-  .work-panel-labels { left: 48px; }
+  .work-panel-labels { left: 0; padding-left: 0; }
 
   /* Testimonials */
   .testimonials { padding-block: 48px; }
