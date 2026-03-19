@@ -1435,20 +1435,22 @@ ul { list-style: none; }
 
 .vs-header {
   margin-bottom: 56px;
-  max-width: 600px;
+  max-width: 640px;
 }
 
 .vs-header h2 {
-  font-family: 'VG5000', sans-serif;
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  line-height: 1.1;
+  font-family: 'VG5000', monospace;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--dark);
   margin-bottom: 16px;
 }
 
 .vs-header p {
   font-family: 'Figtree', sans-serif;
-  font-size: 1rem;
-  color: var(--gray-700);
+  font-size: 1.125rem;
+  color: var(--gray-600);
   line-height: 1.6;
 }
 
@@ -1456,7 +1458,7 @@ ul { list-style: none; }
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
   border: 1px solid var(--gray-200);
-  border-radius: 4px;
+  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -1466,20 +1468,44 @@ ul { list-style: none; }
 }
 
 .vs-row {
-  padding: 14px 20px;
+  padding: 18px 24px;
   font-family: 'Figtree', sans-serif;
   font-size: 0.9375rem;
   border-bottom: 1px solid var(--gray-200);
   line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .vs-row--head {
   font-family: 'Figtree', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 16px 20px;
+  padding: 20px 24px;
+  min-height: 64px;
+  color: var(--gray-500);
+  background: var(--gray-100);
+}
+
+.vs-col--label .vs-row {
+  background: var(--gray-100);
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.vs-col--label .vs-row--head {
+  background: var(--gray-100);
+}
+
+.vs-col--ft .vs-row {
+  color: var(--gray-500);
+  background: #fff;
+}
+
+.vs-col--ft .vs-row--head {
   background: var(--gray-100);
   color: var(--gray-500);
 }
@@ -1488,14 +1514,22 @@ ul { list-style: none; }
   background: var(--dark);
 }
 
+.vs-col--finrez .vs-row:not(.vs-row--head)::before {
+  content: '✓';
+  color: rgba(255,255,255,0.35);
+  font-size: 0.8125rem;
+  flex-shrink: 0;
+}
+
 .vs-col--finrez .vs-row {
   color: #fff;
   border-bottom-color: rgba(255,255,255,0.08);
+  font-weight: 500;
 }
 
 .vs-col--finrez .vs-row--head {
   background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.6);
 }
 
 .vs-footnote {
@@ -1921,7 +1955,8 @@ ul { list-style: none; }
 
   /* VS section */
   .vs-section { padding: 64px 20px; }
-  .vs-table { grid-template-columns: 1fr; }
+  .vs-header h2 { font-size: 2.25rem; }
+  .vs-table { grid-template-columns: 1fr; border-radius: 12px; }
   .vs-col--label { display: none; }
 }
 
