@@ -563,7 +563,6 @@ ul { list-style: none; }
   position: absolute;
   bottom: 0;
   left: 0;
-  padding-left: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -592,7 +591,7 @@ ul { list-style: none; }
   font-family: 'VG5000', 'Courier New', monospace;
   font-size: 1rem;
   font-weight: 400;
-  padding: 8px 20px;
+  padding: 8px 20px 8px 48px;
   line-height: 1.2;
   white-space: nowrap;
   width: fit-content;
@@ -604,7 +603,7 @@ ul { list-style: none; }
   font-family: 'Figtree', sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
-  padding: 6px 20px;
+  padding: 6px 20px 6px 48px;
   line-height: 1.2;
   white-space: nowrap;
 }
@@ -1550,7 +1549,7 @@ ul { list-style: none; }
 
 .vs-cell--ft {
   color: var(--gray-500);
-  background: #fff;
+  background: #f4f4f4;
 }
 
 .vs-cell--ft.vs-cell--head {
@@ -1935,7 +1934,9 @@ ul { list-style: none; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 4/3; }
-  .work-panel-labels { left: 0; padding-left: 0; }
+  .work-panel-labels { left: 0; }
+  .work-label-name { padding-left: 20px; }
+  .work-label-desc { padding-left: 20px; }
 
   /* Testimonials */
   .testimonials { padding-block: 48px; }
