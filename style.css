@@ -1466,12 +1466,7 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
-.vs-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.vs-row {
+.vs-cell {
   padding: 18px 24px;
   font-family: 'Figtree', sans-serif;
   font-size: 0.9375rem;
@@ -1482,8 +1477,7 @@ ul { list-style: none; }
   gap: 10px;
 }
 
-.vs-row--head {
-  font-family: 'Figtree', sans-serif;
+.vs-cell--head {
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.07em;
@@ -1494,46 +1488,39 @@ ul { list-style: none; }
   background: var(--gray-100);
 }
 
-.vs-col--label .vs-row {
+.vs-cell--label {
   background: var(--gray-100);
   color: var(--gray-500);
   font-size: 0.875rem;
 }
 
-.vs-col--label .vs-row--head {
-  background: var(--gray-100);
-}
-
-.vs-col--ft .vs-row {
+.vs-cell--ft {
   color: var(--gray-500);
   background: #fff;
 }
 
-.vs-col--ft .vs-row--head {
+.vs-cell--ft.vs-cell--head {
   background: var(--gray-100);
-  color: var(--gray-500);
 }
 
-.vs-col--finrez {
-  background: var(--dark);
+.vs-cell--finrez {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
-.vs-col--finrez .vs-row:not(.vs-row--head)::before {
+.vs-cell--finrez:not(.vs-cell--head)::before {
   content: '✓';
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.5);
   font-size: 0.8125rem;
   flex-shrink: 0;
 }
 
-.vs-col--finrez .vs-row {
-  color: #fff;
-  border-bottom-color: rgba(255,255,255,0.08);
-  font-weight: 500;
-}
-
-.vs-col--finrez .vs-row--head {
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.6);
+.vs-cell--finrez.vs-cell--head {
+  background: #c73214;
+  color: rgba(255,255,255,0.85);
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
 .vs-footnote {
