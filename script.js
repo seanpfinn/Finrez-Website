@@ -19,6 +19,18 @@
     onScroll();
   }
 
+  /* ── Nav CTA: slide in once hero CTA leaves viewport ── */
+  const heroCta   = document.querySelector('.hero-btns .btn-dark');
+  const desktopNavCta = document.querySelector('.nav-links-desktop .nav-cta');
+  if (heroCta && desktopNavCta) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        desktopNavCta.classList.toggle('nav-cta--visible', !entry.isIntersecting);
+      });
+    }, { threshold: 0 });
+    obs.observe(heroCta);
+  }
+
   /* ── Mobile menu toggle ── */
   if (menuToggle && navLinks) {
     const closeMenu = (instant = false) => {

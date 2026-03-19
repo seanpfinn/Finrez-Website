@@ -239,6 +239,20 @@ ul { list-style: none; }
 
 .nav-cta:hover { opacity: 0.82; }
 
+/* Desktop nav CTA: hidden until hero CTA scrolls out of view */
+.nav-links-desktop .nav-cta {
+  opacity: 0;
+  transform: translateY(-5px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.nav-links-desktop .nav-cta.nav-cta--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.nav-links-desktop .nav-cta.nav-cta--visible:hover { opacity: 0.82; }
+
 /* Hamburger */
 .menu-toggle {
   display: none;
