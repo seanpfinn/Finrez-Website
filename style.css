@@ -240,20 +240,22 @@ ul { list-style: none; }
 .nav-cta {
   display: inline-flex;
   align-items: center;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--dark);
-  border: 1.5px solid var(--dark);
-  padding: 7px 16px;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: background var(--transition), color var(--transition);
-}
-
-.nav-cta:hover {
+  justify-content: center;
   background: var(--dark);
   color: #fff;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(204,204,204,.2);
+  box-shadow: 0 1px 4px rgba(0,0,0,.25);
+  text-decoration: none;
+  transition: opacity var(--transition);
+  white-space: nowrap;
 }
+
+.nav-cta:hover { opacity: 0.82; }
 
 /* Hamburger */
 .menu-toggle {
@@ -1526,10 +1528,9 @@ ul { list-style: none; }
 .vs-footnote {
   margin-top: 40px;
   font-family: 'Figtree', sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   color: var(--gray-500);
   line-height: 1.7;
-  max-width: 600px;
 }
 
 /* ════════════════════════════════════════
@@ -1947,8 +1948,8 @@ ul { list-style: none; }
   /* VS section */
   .vs-section { padding: 64px 20px; }
   .vs-header h2 { font-size: 2.25rem; }
-  .vs-table { grid-template-columns: 1fr; border-radius: 12px; }
-  .vs-col--label { display: none; }
+  .vs-table { grid-template-columns: 1fr 1fr; border-radius: 12px; }
+  .vs-cell--label { display: none; }
 }
 
 /* ════════════════════════════════════════
