@@ -1715,6 +1715,11 @@ ul { list-style: none; }
     pointer-events: none;
   }
 
+  .nav-links .nav-cta {
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+
   /* Container enter/exit */
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-12px); }
