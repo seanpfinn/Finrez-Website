@@ -286,3 +286,57 @@
   }
 
 })();
+
+/* ── ASCII Waveform Hero ── */
+(function () {
+  const canvas = document.getElementById('ascii-waveform');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const chars = '░▒▓█▄▀·:;,.\'"` ~-_=+*#@%&FINREZ';
+
+  const COL_SIZE = 14;
+  const ROW_SIZE = 18;
+
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const cols = Math.ceil(W / COL_SIZE);
+    const rows = Math.ceil(H / ROW_SIZE);
+
+    ctx.font = `${ROW_SIZE * 0.7}px "IBM Plex Mono", monospace`;
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const nx = col / cols;
+        const ny = row / rows;
+
+        const wave1 = Math.sin(nx * 8  + t * 0.8)               * 0.5 + 0.5;
+        const wave2 = Math.sin(ny * 6  - t * 0.5 + nx * 4)      * 0.5 + 0.5;
+        const wave3 = Math.sin((nx + ny) * 10 + t * 1.2)         * 0.5 + 0.5;
+
+        const combined = wave1 * 0.4 + wave2 * 0.4 + wave3 * 0.2;
+
+        const charIdx = Math.floor(combined * (chars.length - 1));
+        const alpha   = combined * 0.12 + 0.02;
+
+        ctx.fillStyle = `rgba(17, 17, 17, ${alpha})`;
+        ctx.fillText(chars[charIdx], col * COL_SIZE, row * ROW_SIZE + ROW_SIZE * 0.75);
+      }
+    }
+
+    t += 0.015;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  draw();
+})();

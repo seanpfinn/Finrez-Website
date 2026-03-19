@@ -231,6 +231,25 @@ ul { list-style: none; }
 
 .nav-link:hover { color: var(--dark); }
 
+/* Nav CTA button */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--dark);
+  border: 1.5px solid var(--dark);
+  padding: 7px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.nav-cta:hover {
+  background: var(--dark);
+  color: #fff;
+}
+
 /* Hamburger */
 .menu-toggle {
   display: none;
@@ -267,6 +286,24 @@ ul { list-style: none; }
   flex-direction: column;
   align-items: center;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ASCII waveform canvas */
+#ascii-waveform {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure hero content sits above canvas */
+.hero > *:not(canvas) {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
@@ -1369,6 +1406,87 @@ ul { list-style: none; }
    ════════════════════════════════════════ */
 
 /* ════════════════════════════════════════
+   VS SECTION — Finrez vs. Full-Time
+   ════════════════════════════════════════ */
+.vs-section {
+  padding: 100px 48px;
+}
+
+.vs-header {
+  margin-bottom: 56px;
+  max-width: 600px;
+}
+
+.vs-header h2 {
+  font-family: 'VG5000', sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.vs-header p {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1rem;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+
+.vs-table {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vs-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-row {
+  padding: 14px 20px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid var(--gray-200);
+  line-height: 1.4;
+}
+
+.vs-row--head {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+
+.vs-col--finrez {
+  background: var(--dark);
+}
+
+.vs-col--finrez .vs-row {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+.vs-col--finrez .vs-row--head {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+}
+
+.vs-footnote {
+  margin-top: 40px;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--gray-500);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* ════════════════════════════════════════
    FOOTER — orange/red with large logo
    ════════════════════════════════════════ */
 .footer {
@@ -1709,9 +1827,13 @@ ul { list-style: none; }
   .pricing { padding-block: 48px; }
   .pricing-cards { grid-template-columns: 1fr; }
   .pc { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 32px 20px; }
-  .pc:last-child { border-bottom: none; }
+  .pc:first-child { padding-left: 20px; }
+  .pc:last-child { border-bottom: none; padding-right: 20px; }
   .pc-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .pc-cta { width: 100%; justify-content: center; }
+
+  /* Testimonials */
+  .testi-title { padding-inline: 20px; }
 
   /* Booking */
   .booking { padding-block: 48px; }
@@ -1756,6 +1878,11 @@ ul { list-style: none; }
   .footer-inner { flex-direction: column; gap: 40px; padding-inline: 20px; }
   .footer-logo-img { width: min(70vw, 280px); }
   .footer-nav { gap: 40px; }
+
+  /* VS section */
+  .vs-section { padding: 64px 20px; }
+  .vs-table { grid-template-columns: 1fr; }
+  .vs-col--label { display: none; }
 }
 
 /* ════════════════════════════════════════
