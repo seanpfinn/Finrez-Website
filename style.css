@@ -1651,17 +1651,36 @@ ul { list-style: none; }
     z-index: 901;
   }
 
-  .nav-links.open { display: flex; }
+  .nav-links.open {
+    display: flex;
+    animation: menuIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
 
-  /* Keyframe animations — reliable after display:none→flex */
-  @keyframes navItemIn {
-    from { opacity: 0; transform: translateY(12px); }
+  .nav-links.is-closing {
+    animation: menuOut 0.28s cubic-bezier(0.55, 0, 1, 0.45) both;
+    pointer-events: none;
+  }
+
+  /* Container enter/exit */
+  @keyframes menuIn {
+    from { opacity: 0; transform: translateY(-12px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes menuOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-10px); }
+  }
+
+  /* Item keyframes */
+  @keyframes navItemIn {
+    from { opacity: 0; transform: translateY(16px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
   }
 
   @keyframes navItemOut {
     from { opacity: 1; transform: translateY(0); }
-    to   { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 0; transform: translateY(-8px); }
   }
 
   @keyframes wsubItemIn {
@@ -1674,15 +1693,15 @@ ul { list-style: none; }
     to   { opacity: 0; transform: translateY(6px); }
   }
 
-  /* Nav label animations */
-  .nav-links.open > *:nth-child(1) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
-  .nav-links.open > *:nth-child(2) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
-  .nav-links.open > *:nth-child(3) { animation: navItemIn 0.4s ease-in-out 0.04s both; }
+  /* Nav item staggered enter */
+  .nav-links.open > *:nth-child(1) { animation: navItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both; }
+  .nav-links.open > *:nth-child(2) { animation: navItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+  .nav-links.open > *:nth-child(3) { animation: navItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
 
-  /* Nav label exit animations (listed after open for cascade priority) */
-  .nav-links.is-closing > *:nth-child(1) { animation: navItemOut 0.3s ease-in-out 0s both; }
-  .nav-links.is-closing > *:nth-child(2) { animation: navItemOut 0.3s ease-in-out 0s both; }
-  .nav-links.is-closing > *:nth-child(3) { animation: navItemOut 0.3s ease-in-out 0s both; }
+  /* Nav item staggered exit — reverse order, faster */
+  .nav-links.is-closing > *:nth-child(1) { animation: navItemOut 0.18s cubic-bezier(0.55, 0, 1, 0.45) 0.04s both; }
+  .nav-links.is-closing > *:nth-child(2) { animation: navItemOut 0.18s cubic-bezier(0.55, 0, 1, 0.45) 0.02s both; }
+  .nav-links.is-closing > *:nth-child(3) { animation: navItemOut 0.18s cubic-bezier(0.55, 0, 1, 0.45) 0s    both; }
 
   .nav-link {
     font-family: 'Figtree', sans-serif;

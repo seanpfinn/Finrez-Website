@@ -29,7 +29,7 @@
         navLinks.classList.remove('open', 'is-closing');
       } else {
         navLinks.classList.add('is-closing');
-        setTimeout(() => navLinks.classList.remove('open', 'is-closing'), 340);
+        setTimeout(() => navLinks.classList.remove('open', 'is-closing'), 300);
       }
     };
 
