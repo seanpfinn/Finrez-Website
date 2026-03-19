@@ -282,6 +282,49 @@
 })();
 
 /* ── ASCII Waveform Hero ── */
+/* ── Mobile VS accordion ── */
+if (window.matchMedia('(max-width: 809px)').matches) {
+  document.querySelectorAll('.vs-row-group').forEach(group => {
+    const label  = group.querySelector('.vs-cell--label');
+    const ft     = group.querySelector('.vs-cell--ft');
+    const finrez = group.querySelector('.vs-cell--finrez');
+
+    // Chevron icon
+    const chevron = document.createElement('span');
+    chevron.className = 'vs-accordion-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    chevron.innerHTML = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    label.appendChild(chevron);
+
+    // Column labels inside value cells
+    const ftLbl = document.createElement('span');
+    ftLbl.className = 'vs-cell-col-label';
+    ftLbl.textContent = 'Full-Time Senior Designer';
+    ft.prepend(ftLbl);
+
+    const finrezLbl = document.createElement('span');
+    finrezLbl.className = 'vs-cell-col-label';
+    finrezLbl.textContent = 'Finrez';
+    finrez.prepend(finrezLbl);
+
+    // Wrap value cells in animated container
+    const valuesWrap  = document.createElement('div');
+    valuesWrap.className = 'vs-accordion-values';
+    const valuesInner = document.createElement('div');
+    valuesInner.className = 'vs-accordion-values-inner';
+    valuesWrap.appendChild(valuesInner);
+    valuesInner.appendChild(ft);
+    valuesInner.appendChild(finrez);
+    group.appendChild(valuesWrap);
+
+    // Toggle
+    label.addEventListener('click', () => {
+      group.classList.toggle('is-open');
+    });
+  });
+}
+
+/* ── ASCII Waveform Hero ── */
 (function () {
   const canvas = document.getElementById('ascii-waveform');
   if (!canvas) return;
