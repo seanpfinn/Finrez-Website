@@ -301,13 +301,6 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     const ft     = group.querySelector('.vs-cell--ft');
     const finrez = group.querySelector('.vs-cell--finrez');
 
-    // Chevron icon
-    const chevron = document.createElement('span');
-    chevron.className = 'vs-accordion-chevron';
-    chevron.setAttribute('aria-hidden', 'true');
-    chevron.innerHTML = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    label.appendChild(chevron);
-
     // Column labels inside value cells
     const ftLbl = document.createElement('span');
     ftLbl.className = 'vs-cell-col-label';
@@ -319,7 +312,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     finrezLbl.textContent = 'Finrez';
     finrez.prepend(finrezLbl);
 
-    // Wrap value cells in animated container
+    // Wrap value cells in container (always open)
     const valuesWrap  = document.createElement('div');
     valuesWrap.className = 'vs-accordion-values';
     const valuesInner = document.createElement('div');
@@ -329,10 +322,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     valuesInner.appendChild(finrez);
     group.appendChild(valuesWrap);
 
-    // Toggle
-    label.addEventListener('click', () => {
-      group.classList.toggle('is-open');
-    });
+    // Always open
+    group.classList.add('is-open');
   });
 }
 

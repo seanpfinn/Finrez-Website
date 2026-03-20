@@ -2033,10 +2033,9 @@ ul { list-style: none; }
   }
   .vs-row-group:last-child { border-bottom: none; }
 
-  /* Factor label = accordion toggle */
+  /* Factor label */
   .vs-row-group .vs-cell--label {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background: #fff;
     color: var(--dark);
@@ -2046,8 +2045,6 @@ ul { list-style: none; }
     letter-spacing: 0;
     padding: 16px;
     border-bottom: none;
-    cursor: pointer;
-    user-select: none;
   }
 
   .vs-accordion-chevron {
