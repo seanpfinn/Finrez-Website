@@ -608,46 +608,27 @@ ul { list-style: none; }
   white-space: nowrap;
 }
 
-/* Work panel context pills */
-.work-panel-pills {
-  position: absolute;
-  top: 28px;
-  right: 36px;
+/* Case study context pills */
+.cs-pills {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  z-index: 2;
+  gap: 8px;
 }
 
-.work-pill {
+.cs-pill {
   display: inline-flex;
   align-items: center;
   padding: 5px 12px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  color: var(--dark);
   font-family: 'Figtree', sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
 }
-
-.work-panel.labels-visible .work-pill {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.work-panel.labels-visible .work-pill:nth-child(1) { transition-delay: 0.05s; }
-.work-panel.labels-visible .work-pill:nth-child(2) { transition-delay: 0.12s; }
-.work-panel.labels-visible .work-pill:nth-child(3) { transition-delay: 0.19s; }
 
 /* ════════════════════════════════════════
    TESTIMONIALS — 3-column row
