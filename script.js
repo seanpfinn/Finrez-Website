@@ -169,7 +169,51 @@
     document.head.appendChild(style);
   }
 
-  /* ── Blur reveal: mission text + section headings/copy ── */
+  /* ── Mission text: scroll-driven word fill ── */
+  const missionText = document.querySelector('.mission-text');
+  if (missionText) {
+    const nodes = Array.from(missionText.childNodes);
+    const fragments = [];
+    nodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        node.textContent.split(/(\s+)/).forEach(part => {
+          if (part.trim()) {
+            const span = document.createElement('span');
+            span.className = 'mission-word';
+            span.textContent = part;
+            fragments.push(span);
+          } else if (part) {
+            fragments.push(document.createTextNode(part));
+          }
+        });
+      } else {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'mission-word';
+        wrapper.appendChild(node.cloneNode(true));
+        fragments.push(wrapper);
+      }
+    });
+    missionText.innerHTML = '';
+    fragments.forEach(f => missionText.appendChild(f));
+
+    const wordSpans = Array.from(missionText.querySelectorAll('.mission-word'));
+    const missionSection = missionText.closest('.mission');
+
+    const revealWords = () => {
+      const rect     = missionSection.getBoundingClientRect();
+      const vh       = window.innerHeight;
+      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height + vh * 0.4)));
+      const count    = Math.round(progress * wordSpans.length);
+      wordSpans.forEach((span, i) => {
+        span.classList.toggle('mission-word--lit', i < count);
+      });
+    };
+
+    window.addEventListener('scroll', revealWords, { passive: true });
+    revealWords();
+  }
+
+  /* ── Blur reveal: section headings/copy ── */
   if ('IntersectionObserver' in window) {
     const blurObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -179,12 +223,6 @@
         }
       });
     }, { threshold: 0.15 });
-
-    const missionText = document.querySelector('.mission-text');
-    if (missionText) {
-      missionText.classList.add('blur-reveal');
-      blurObs.observe(missionText);
-    }
 
     document.querySelectorAll('.sect-blur').forEach(el => blurObs.observe(el));
   }

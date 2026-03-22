@@ -479,29 +479,35 @@ ul { list-style: none; }
 }
 
 .mission-text {
-  font-family: 'Geist', sans-serif;
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
-  font-weight: 600;
+  font-family: 'VG5000', monospace;
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--dark);
   text-align: center;
   padding-inline: 48px;
+  max-width: 680px;
+  margin-inline: auto;
 }
 
 .mission-brand {
   color: var(--accent);
 }
 
-.mission-text.blur-reveal {
-  opacity: 0;
-  filter: blur(16px);
-  transition: opacity 1s ease, filter 1s ease;
+/* Scroll-driven word fill */
+.mission-word {
+  display: inline;
+  color: var(--gray-200);
+  transition: color 0.35s ease;
 }
 
-.mission-text.blur-reveal.in-view {
-  opacity: 1;
-  filter: blur(0);
+.mission-word--lit {
+  color: var(--dark);
+}
+
+.mission-word--lit .mission-brand {
+  color: var(--accent);
 }
 
 /* Section heading / copy blur reveal */
@@ -1971,7 +1977,7 @@ ul { list-style: none; }
 
   /* Mission */
   .mission { padding-block: 48px; }
-  .mission-text { padding-inline: 20px; font-size: 1.625rem; }
+  .mission-text { padding-inline: 20px; max-width: 100%; font-size: 1.625rem; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 4/3; }
@@ -2037,7 +2043,7 @@ ul { list-style: none; }
   /* Process */
   .steps-section { padding-block: 64px; }
   .steps-heading { font-size: 2.25rem; margin-bottom: 12px; }
-  .steps-list { grid-template-columns: 1fr 1fr; }
+  .steps-list { grid-template-columns: repeat(4, 1fr); }
   .step { padding: 28px 24px; }
 
   /* Pricing — stack to 1 column */
