@@ -612,7 +612,24 @@ ul { list-style: none; }
 .cs-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 16px;
+}
+
+.cs-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cs-pill-label {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  white-space: nowrap;
 }
 
 .cs-pill {
