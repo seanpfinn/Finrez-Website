@@ -2039,7 +2039,7 @@ ul { list-style: none; }
   /* Process */
   .steps-section { padding-block: 64px; }
   .steps-heading { font-size: 2.25rem; margin-bottom: 12px; }
-  .steps-list { grid-template-columns: repeat(4, 1fr); }
+  .steps-list { grid-template-columns: 1fr; }
   .step { padding: 28px 24px; }
 
   /* Pricing — stack to 1 column */
