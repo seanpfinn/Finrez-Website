@@ -1216,15 +1216,21 @@ ul { list-style: none; }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 48px;
   align-items: start;
 }
 
 .about-person {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  flex-direction: row;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.about-photo {
+  flex-shrink: 0;
+  width: 45%;
 }
 
 .about-photo {
@@ -1265,6 +1271,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
 }
 
 .about-name {
@@ -2024,6 +2031,8 @@ ul { list-style: none; }
   .about { padding-block: 64px; }
   .about-section-title { font-size: 2.25rem; margin-bottom: 12px; }
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-person { flex-direction: column; }
+  .about-photo { width: 100%; }
 
   /* Results */
   .results { padding-block: 48px; }
