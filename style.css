@@ -1480,7 +1480,7 @@ ul { list-style: none; }
   border-radius: 999px;
   pointer-events: none;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.85);
+  transform: translate(var(--cx, 0px), var(--cy, 0px)) translate(-50%, -50%) scale(0.85);
   transition: opacity 0.2s ease, transform 0.2s ease;
   white-space: nowrap;
   z-index: 9999;
@@ -1489,7 +1489,7 @@ ul { list-style: none; }
 
 #work-cursor.visible {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(var(--cx, 0px), var(--cy, 0px)) translate(-50%, -50%) scale(1);
 }
 
 .work-panel { cursor: none; }

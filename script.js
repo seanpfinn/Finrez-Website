@@ -307,18 +307,19 @@
     let rafId;
     const panels = document.querySelectorAll('.work-panel');
 
+    const setCursorPos = (x, y) => {
+      workCursor.style.setProperty('--cx', x + 'px');
+      workCursor.style.setProperty('--cy', y + 'px');
+    };
+
     const onMove = (e) => {
       cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        workCursor.style.left = e.clientX + 'px';
-        workCursor.style.top  = e.clientY + 'px';
-      });
+      rafId = requestAnimationFrame(() => setCursorPos(e.clientX, e.clientY));
     };
 
     panels.forEach(panel => {
       panel.addEventListener('mouseenter', (e) => {
-        workCursor.style.left = e.clientX + 'px';
-        workCursor.style.top  = e.clientY + 'px';
+        setCursorPos(e.clientX, e.clientY);
         workCursor.classList.add('visible');
         document.addEventListener('mousemove', onMove);
       });
