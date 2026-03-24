@@ -1225,7 +1225,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: row;
   gap: 48px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .about-photo {
