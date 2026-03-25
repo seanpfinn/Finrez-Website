@@ -1299,6 +1299,26 @@ ul { list-style: none; }
   color: var(--gray-700);
 }
 
+.about-social {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.about-social-link {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.about-social-link:hover {
+  color: var(--dark);
+}
+
 .about-tags {
   display: flex;
   gap: 10px;
