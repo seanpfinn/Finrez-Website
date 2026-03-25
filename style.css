@@ -1126,6 +1126,8 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 16px;
+  align-items: center;
+  text-align: center;
 }
 
 .booking-title {
@@ -1529,8 +1531,10 @@ ul { list-style: none; }
   padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
 }
 
 .booking-framing li {
@@ -2076,7 +2080,8 @@ ul { list-style: none; }
   .pc--custom { border-right: none; border-bottom: 1px solid var(--gray-200); }
 
   /* Booking framing */
-  .booking-framing { margin-top: 8px; }
+  .booking-framing { flex-direction: column; gap: 8px; margin-top: 8px; }
+  .booking-header { align-items: flex-start; text-align: left; }
 
   /* Footer */
   .footer { padding-block: 56px 40px; gap: 48px; }
