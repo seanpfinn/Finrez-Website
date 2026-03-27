@@ -301,18 +301,19 @@
     }
   }
 
-  /* ── Footer logo progressive blur ── */
-  const footerLogoImg = document.querySelector('.footer-logo-img');
-  if (footerLogoImg) {
-    const footerEl = footerLogoImg.closest('.footer');
-    const applyFooterBlur = () => {
-      const rect = footerEl.getBoundingClientRect();
-      const vh   = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, (vh - rect.top) / rect.height));
-      footerLogoImg.style.setProperty('--footer-logo-blur', (progress * 20) + 'px');
+  /* ── Footer logo: reveal with gradient blur on page-end reached ── */
+  const footerLogoWrap = document.querySelector('.footer-logo-wrap');
+  if (footerLogoWrap) {
+    const checkPageEnd = () => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total    = document.documentElement.scrollHeight;
+      if (scrolled >= total - 4) {
+        footerLogoWrap.classList.add('logo-revealed');
+        window.removeEventListener('scroll', checkPageEnd);
+      }
     };
-    window.addEventListener('scroll', applyFooterBlur, { passive: true });
-    applyFooterBlur();
+    window.addEventListener('scroll', checkPageEnd, { passive: true });
+    checkPageEnd();
   }
 
   /* ── Work panel cursor pill ── */
