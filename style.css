@@ -1321,6 +1321,11 @@ ul { list-style: none; }
   color: var(--dark);
 }
 
+.about-social-link--underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .about-tags {
   display: flex;
   gap: 10px;
