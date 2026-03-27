@@ -839,6 +839,7 @@ ul { list-style: none; }
    ════════════════════════════════════════ */
 .fullstack-banner {
   padding-top: 80px;
+  padding-bottom: 120px;
   padding-inline: 48px;
   text-align: center;
 }
@@ -925,6 +926,7 @@ ul { list-style: none; }
 .pricing-header {
   padding-inline: 48px;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .pricing-title {
