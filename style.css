@@ -1682,16 +1682,14 @@ ul { list-style: none; }
 .footer-inner {
   width: 100%;
   padding-inline: 48px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 48px;
 }
 
 .footer-logo-img {
-  width: min(40vw, 360px);
+  width: 100%;
   height: auto;
-  flex-shrink: 0;
+  display: block;
+  filter: blur(var(--footer-logo-blur, 0px));
+  transition: filter 0.1s linear;
 }
 
 .footer-nav {
@@ -2090,8 +2088,8 @@ ul { list-style: none; }
 
   /* Footer */
   .footer { padding-block: 56px 40px; gap: 48px; }
-  .footer-inner { flex-direction: column; gap: 40px; padding-inline: 20px; }
-  .footer-logo-img { width: min(70vw, 280px); }
+  .footer-inner { padding-inline: 20px; }
+  .footer-logo-img { width: 100%; }
   .footer-nav { gap: 40px; }
 
   /* VS section */
