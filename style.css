@@ -1675,7 +1675,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-block: 80px 48px;
+  padding-block: 80px 0;
   gap: 64px;
 }
 
@@ -1687,6 +1687,7 @@ ul { list-style: none; }
 .footer-logo-wrap {
   width: 100%;
   position: relative;
+  margin-top: auto;
   opacity: 0;
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
