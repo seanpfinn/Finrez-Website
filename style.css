@@ -2010,7 +2010,7 @@ ul { list-style: none; }
   }
 
   /* Full stack banner */
-  .fullstack-banner { padding-top: 48px; padding-inline: 20px; }
+  .fullstack-banner { padding-top: 48px; padding-inline: 20px; text-align: left; }
   .tools-ticker { margin-inline: -20px; }
 
   /* Ticker */
@@ -2043,7 +2043,7 @@ ul { list-style: none; }
 
   /* Pricing */
   .pricing { padding-block: 48px; }
-  .pricing-header { padding-inline: 20px; margin-bottom: 32px; }
+  .pricing-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }
   .pricing-title { font-size: 2.25rem; }
   .pricing-cards { grid-template-columns: 1fr; }
   .pc { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 32px 20px; }
@@ -2098,9 +2098,9 @@ ul { list-style: none; }
   .booking-header { align-items: flex-start; text-align: left; }
 
   /* Footer */
-  .footer { padding-block: 56px 40px; gap: 48px; }
+  .footer { padding-block: 56px 0; gap: 48px; }
   .footer-inner { padding-inline: 20px; }
-  .footer-nav { gap: 16px 28px; justify-content: flex-start; }
+  .footer-nav { gap: 16px 28px; justify-content: center; }
   .footer-logo-wrap { opacity: 1; }
 
   /* VS section */
