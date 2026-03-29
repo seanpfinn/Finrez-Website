@@ -454,12 +454,14 @@ ul { list-style: none; }
 .ticker-item {
   flex-shrink: 0;
   width: 700px;
+  aspect-ratio: 1440 / 800;
   overflow: hidden;
 }
 
 .ticker-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -485,7 +487,7 @@ ul { list-style: none; }
   color: var(--dark);
   text-align: center;
   padding-inline: 48px;
-  max-width: 680px;
+  max-width: 960px;
   margin-inline: auto;
 }
 
@@ -544,7 +546,7 @@ ul { list-style: none; }
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 1440 / 840;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   text-decoration: none;
 }
@@ -1981,7 +1983,7 @@ ul { list-style: none; }
   .hero-title { font-size: 2.7rem; }
   .hero-sub { font-size: 1rem; text-align: left; }
   .hero-btns { width: 100%; }
-  .hero .btn-dark { width: 100%; }
+  .hero .btn-dark { width: 100%; font-size: 1.3125rem; }
   /* Skip the desktop wipe — cycle container starts at full width on mobile */
   .hero-cycle { width: auto !important; transition: none !important; }
 
@@ -2019,7 +2021,7 @@ ul { list-style: none; }
   .mission-text { padding-inline: 20px; max-width: 100%; font-size: 1.875rem; }
 
   /* Work panels */
-  .work-panel { aspect-ratio: 4/3; }
+  .work-panel { aspect-ratio: 16/9; }
   .work-panel-labels { left: 0; }
   .work-label-name { padding-left: 20px; }
   .work-label-desc { padding-left: 20px; }
