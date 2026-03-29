@@ -764,6 +764,7 @@ ul { list-style: none; }
   letter-spacing: -0.8px;
   margin-bottom: 12px;
   line-height: 1.2;
+  text-align: center;
 }
 
 .faq-grid {
@@ -1218,6 +1219,7 @@ ul { list-style: none; }
   line-height: 1.15;
   color: var(--dark);
   margin-bottom: 12px;
+  text-align: center;
 }
 
 .about-grid {
@@ -1400,6 +1402,7 @@ ul { list-style: none; }
   color: var(--dark);
   margin-bottom: 12px;
   line-height: 1;
+  text-align: center;
 }
 
 .services-grid {
@@ -1457,6 +1460,7 @@ ul { list-style: none; }
   color: var(--dark);
   margin-bottom: 12px;
   line-height: 1;
+  text-align: center;
 }
 
 .steps-list {
@@ -2040,7 +2044,7 @@ ul { list-style: none; }
   .faq-grid { flex-direction: column; gap: 0; }
   .faq-col + .faq-col .faq-item:first-child { border-top: none; }
   .faq-q { font-size: 1.1rem; }
-  .faq-heading { font-size: 2.25rem; }
+  .faq-heading { font-size: 2.25rem; text-align: left; }
   .fullstack-title { font-size: 2.25rem; }
   .booking-title   { font-size: 2.25rem; }
 
@@ -2056,7 +2060,7 @@ ul { list-style: none; }
   .pc-cta { width: 100%; justify-content: center; }
 
   /* Testimonials */
-  .testi-header { padding-inline: 20px; margin-bottom: 32px; }
+  .testi-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }
   .testi-title { font-size: 2.25rem; }
 
   /* Booking */
@@ -2070,7 +2074,7 @@ ul { list-style: none; }
 
   /* About */
   .about { padding-block: 64px; }
-  .about-section-title { font-size: 2.25rem; margin-bottom: 12px; }
+  .about-section-title { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-person { flex-direction: column; }
   .about-photo { width: 100%; }
@@ -2082,19 +2086,22 @@ ul { list-style: none; }
 
   /* Services */
   .services { padding-block: 64px; }
-  .services-heading { font-size: 2.25rem; margin-bottom: 12px; }
+  .services-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { padding: 32px 24px; }
 
   /* Process */
   .steps-section { padding-block: 64px; }
-  .steps-heading { font-size: 2.25rem; margin-bottom: 12px; }
+  .steps-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .steps-list { grid-template-columns: 1fr; }
   .step { padding: 28px 24px; }
 
   /* Pricing — stack to 1 column */
   .pricing-cards { grid-template-columns: 1fr; }
   .pc--custom { border-right: none; border-bottom: 1px solid var(--gray-200); }
+
+  /* Section subtitles */
+  .sect-sub { text-align: left; }
 
   /* Booking framing */
   .booking-framing { flex-direction: column; gap: 8px; margin-top: 8px; }
@@ -2108,6 +2115,7 @@ ul { list-style: none; }
 
   /* VS section */
   .vs-section { padding: 64px 20px; }
+  .vs-header { text-align: left; }
   .vs-header h2 { font-size: 2.25rem; }
 
   .vs-table {
