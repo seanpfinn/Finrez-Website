@@ -548,6 +548,7 @@ ul { list-style: none; }
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 800px;
   overflow: hidden;
   text-decoration: none;
 }
