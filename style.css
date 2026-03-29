@@ -537,6 +537,7 @@ ul { list-style: none; }
   line-height: 1.6;
   margin-top: 16px;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 /* ════════════════════════════════════════
@@ -666,6 +667,7 @@ ul { list-style: none; }
 .testi-header {
   padding-inline: 48px;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .testi-title {
@@ -1578,6 +1580,7 @@ ul { list-style: none; }
 
 .vs-header {
   margin-bottom: 56px;
+  text-align: center;
 }
 
 .vs-header h2 {
