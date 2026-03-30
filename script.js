@@ -390,16 +390,33 @@
 
 })();
 
-/* ── Tool chips: mobile tap to reveal label ── */
-if (!window.matchMedia('(hover: hover)').matches) {
-  document.querySelectorAll('.tool-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const isActive = chip.classList.contains('is-active');
-      document.querySelectorAll('.tool-chip.is-active').forEach(c => c.classList.remove('is-active'));
-      if (!isActive) chip.classList.add('is-active');
+/* ── Tool orbit: hover pauses spin; mobile tap reveals label ── */
+(function () {
+  const orbit = document.querySelector('.tools-orbit');
+  const chips = document.querySelectorAll('.tool-chip');
+  if (!orbit) return;
+
+  if (window.matchMedia('(hover: hover)').matches) {
+    // Desktop: pause orbit while hovering any chip
+    chips.forEach(chip => {
+      chip.addEventListener('mouseenter', () => {
+        orbit.style.animationPlayState = 'paused';
+      });
+      chip.addEventListener('mouseleave', () => {
+        orbit.style.animationPlayState = 'running';
+      });
     });
-  });
-}
+  } else {
+    // Mobile: tap to toggle label, one at a time
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const isActive = chip.classList.contains('is-active');
+        chips.forEach(c => c.classList.remove('is-active'));
+        if (!isActive) chip.classList.add('is-active');
+      });
+    });
+  }
+})();
 
 /* ── ASCII Waveform Hero ── */
 /* ── Mobile VS accordion ── */

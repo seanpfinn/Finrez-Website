@@ -866,26 +866,42 @@ ul { list-style: none; }
   margin: 0 auto;
 }
 
-/* Tools grid */
-.tools-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
+/* Tools orbit */
+.tools-stage {
+  perspective: 900px;
+  height: 380px;
   margin-top: 56px;
-  max-width: 900px;
-  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.tools-orbit {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  animation: orbit-spin 32s linear infinite;
+}
+
+@keyframes orbit-spin {
+  from { transform: rotateX(-20deg) rotateY(0deg); }
+  to   { transform: rotateX(-20deg) rotateY(360deg); }
 }
 
 .tool-chip {
+  position: absolute;
+  top: 0; left: 0;
+  width: 72px;
+  height: 72px;
+  margin-left: -36px;
+  margin-top: -36px;
+  transform: rotateY(calc(var(--i) * 24deg)) translateZ(240px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
-  cursor: default;
-  /* reserve space for label so grid doesn't shift */
-  padding-bottom: 24px;
-  position: relative;
+  cursor: pointer;
 }
 
 .tool-circle {
@@ -907,30 +923,27 @@ ul { list-style: none; }
   font-weight: 500;
   color: var(--gray-700);
   white-space: nowrap;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 8px;
   opacity: 0;
   transition: opacity 0.18s ease;
   pointer-events: none;
 }
 
-/* Desktop hover */
+/* Desktop hover — pause orbit and scale chip */
 @media (hover: hover) {
   .tool-chip:hover .tool-circle {
-    transform: scale(1.25);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: scale(1.35);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
   }
   .tool-chip:hover .tool-name {
     opacity: 1;
   }
 }
 
-/* Mobile tap (active class toggled by JS) */
+/* Mobile tap */
 .tool-chip.is-active .tool-circle {
-  transform: scale(1.25);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: scale(1.35);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.15);
 }
 .tool-chip.is-active .tool-name {
   opacity: 1;
@@ -2044,8 +2057,10 @@ ul { list-style: none; }
 
   /* Full stack banner */
   .fullstack-banner { padding-top: 48px; padding-inline: 20px; text-align: left; }
-  .tools-grid { gap: 16px; margin-top: 40px; }
-  .tool-circle { width: 60px; height: 60px; }
+  .tools-stage { height: 280px; }
+  .tools-orbit { --r: 160px; }
+  .tool-chip { width: 56px; height: 56px; margin-left: -28px; margin-top: -28px; transform: rotateY(calc(var(--i) * 24deg)) translateZ(160px); }
+  .tool-circle { width: 56px; height: 56px; }
 
   /* Ticker */
   .ticker-item { width: 480px; }
