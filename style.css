@@ -1146,7 +1146,7 @@ ul { list-style: none; }
 
 .booking-sub {
   font-family: 'Geist', sans-serif;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--gray-700);
   line-height: 1.6;
 }
@@ -1998,7 +1998,8 @@ ul { list-style: none; }
   .hero-title { font-size: 2.7rem; }
   .hero-sub { font-size: 1rem; text-align: left; }
   .hero-btns { width: 100%; }
-  .hero .btn-dark { width: 100%; font-size: 1.3125rem; }
+  .hero .btn-dark { width: 100%; }
+  .btn-dark { font-size: 1.3125rem; }
   /* Skip the desktop wipe — cycle container starts at full width on mobile */
   .hero-cycle { width: auto !important; transition: none !important; }
 

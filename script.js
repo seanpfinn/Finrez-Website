@@ -301,6 +301,49 @@
     }
   }
 
+  /* ── Ticker: touch swipe with seamless resume ── */
+  const tickerList = document.querySelector('.ticker-list');
+  if (tickerList) {
+    const ANIM_DURATION = 28; // must match ticker-scroll CSS duration
+    let touchStartX  = 0;
+    let dragStartPx  = 0;
+    let dragging     = false;
+
+    const readTranslateX = () =>
+      new DOMMatrix(getComputedStyle(tickerList).transform).m41;
+
+    const wrapPx = (px) => {
+      const half = tickerList.scrollWidth / 2;
+      return px - Math.floor(px / (-half)) * (-half);
+    };
+
+    tickerList.addEventListener('touchstart', (e) => {
+      dragging    = true;
+      touchStartX = e.touches[0].clientX;
+      dragStartPx = readTranslateX();
+      tickerList.style.animationPlayState = 'paused';
+      tickerList.style.transform = `translateX(${dragStartPx}px)`;
+    }, { passive: true });
+
+    tickerList.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      const delta = e.touches[0].clientX - touchStartX;
+      tickerList.style.transform =
+        `translateX(${wrapPx(dragStartPx + delta)}px)`;
+    }, { passive: true });
+
+    tickerList.addEventListener('touchend', () => {
+      if (!dragging) return;
+      dragging = false;
+      const half     = tickerList.scrollWidth / 2;
+      const endPx    = wrapPx(readTranslateX());
+      const progress = Math.abs(endPx) / half;
+      tickerList.style.transform          = '';
+      tickerList.style.animationDelay     = `${-(progress * ANIM_DURATION)}s`;
+      tickerList.style.animationPlayState = 'running';
+    });
+  }
+
   /* ── Footer logo: reveal with gradient blur on page-end reached ── */
   const footerLogoWrap = document.querySelector('.footer-logo-wrap');
   if (footerLogoWrap) {
