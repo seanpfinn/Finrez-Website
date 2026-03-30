@@ -390,6 +390,17 @@
 
 })();
 
+/* ── Tool chips: mobile tap to reveal label ── */
+if (!window.matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('.tool-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const isActive = chip.classList.contains('is-active');
+      document.querySelectorAll('.tool-chip.is-active').forEach(c => c.classList.remove('is-active'));
+      if (!isActive) chip.classList.add('is-active');
+    });
+  });
+}
+
 /* ── ASCII Waveform Hero ── */
 /* ── Mobile VS accordion ── */
 if (window.matchMedia('(max-width: 809px)').matches) {
