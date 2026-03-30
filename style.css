@@ -1650,28 +1650,28 @@ ul { list-style: none; }
 }
 
 .vs-cell--ft.vs-cell--head {
-  background: var(--gray-500);
+  background: #909090;
   color: #fff;
 }
 
 .vs-cell--finrez {
-  background: var(--dark);
+  background: var(--accent);
   color: #fff;
   font-weight: 500;
-  border-bottom-color: rgba(255,255,255,0.1);
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
 .vs-cell--finrez:not(.vs-cell--head)::before {
   content: '✓';
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.5);
   font-size: 0.8125rem;
   flex-shrink: 0;
 }
 
 .vs-cell--finrez.vs-cell--head {
-  background: #000;
-  color: rgba(255,255,255,0.85);
-  border-bottom-color: rgba(255,255,255,0.1);
+  background: #cc3210;
+  color: rgba(255,255,255,0.9);
+  border-bottom-color: rgba(255,255,255,0.15);
 }
 
 /* Desktop: row groups are transparent to the grid */
@@ -1699,10 +1699,10 @@ ul { list-style: none; }
 }
 
 .footer-logo-wrap {
-  width: 100%;
+  width: calc(100% - 96px);
+  margin-inline: 48px;
   position: relative;
   margin-top: auto;
-  padding-inline: 48px;
   opacity: 0;
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2119,7 +2119,7 @@ ul { list-style: none; }
   .footer { padding-block: 56px 0; gap: 48px; }
   .footer-inner { padding-inline: 20px; }
   .footer-nav { gap: 16px 28px; justify-content: flex-start; }
-  .footer-logo-wrap { opacity: 1; padding-inline: 20px; }
+  .footer-logo-wrap { width: calc(100% - 40px); margin-inline: 20px; opacity: 1; }
   .footer-copy { padding-inline: 20px; }
 
   /* VS section */
