@@ -485,7 +485,7 @@ ul { list-style: none; }
   line-height: 1.08;
   letter-spacing: -0.01em;
   color: var(--dark);
-  text-align: center;
+  text-align: left;
   padding-inline: 48px;
   max-width: 1200px;
   margin-inline: auto;
@@ -1223,6 +1223,8 @@ ul { list-style: none; }
   text-align: center;
 }
 
+.about .sect-sub { text-align: center; }
+
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1403,8 +1405,10 @@ ul { list-style: none; }
   color: var(--dark);
   margin-bottom: 12px;
   line-height: 1;
-  text-align: center;
+  text-align: left;
 }
+
+.services .sect-sub { text-align: left; }
 
 .services-grid {
   display: grid;
@@ -1729,7 +1733,7 @@ ul { list-style: none; }
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px 36px;
 }
 
@@ -1751,7 +1755,7 @@ ul { list-style: none; }
   font-weight: 700;
   color: rgba(255,255,255,0.45);
   letter-spacing: 0.01em;
-  text-align: center;
+  text-align: left;
 }
 
 /* ════════════════════════════════════════
@@ -2111,7 +2115,7 @@ ul { list-style: none; }
   /* Footer */
   .footer { padding-block: 56px 0; gap: 48px; }
   .footer-inner { padding-inline: 20px; }
-  .footer-nav { gap: 16px 28px; justify-content: center; }
+  .footer-nav { gap: 16px 28px; justify-content: flex-start; }
   .footer-logo-wrap { opacity: 1; }
 
   /* VS section */
