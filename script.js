@@ -390,24 +390,122 @@
 
 })();
 
-/* ── Tool orbit: hover pauses spin; mobile tap reveals label ── */
+/* ── Screensaver ── */
+(function () {
+  const screen   = document.getElementById('screensaver');
+  const logo     = document.getElementById('screensaver-logo');
+  if (!screen || !logo) return;
+
+  const IDLE_MS   = 15000;
+  const SPEED     = 1.4; // px per frame
+  let idleTimer, rafId;
+  let active = false;
+
+  let x, y, vx, vy;
+
+  function startBounce() {
+    const lw = logo.offsetWidth  || 120;
+    const lh = logo.offsetHeight || 96;
+    x  = Math.random() * (window.innerWidth  - lw);
+    y  = Math.random() * (window.innerHeight - lh);
+    vx = (Math.random() < 0.5 ? 1 : -1) * SPEED;
+    vy = (Math.random() < 0.5 ? 1 : -1) * SPEED;
+    logo.style.left = '0';
+    logo.style.top  = '0';
+    tick();
+  }
+
+  function tick() {
+    const lw = logo.offsetWidth;
+    const lh = logo.offsetHeight;
+    x += vx;
+    y += vy;
+    if (x <= 0)                         { x = 0;                         vx =  Math.abs(vx); }
+    if (x >= window.innerWidth  - lw)   { x = window.innerWidth  - lw;   vx = -Math.abs(vx); }
+    if (y <= 0)                         { y = 0;                         vy =  Math.abs(vy); }
+    if (y >= window.innerHeight - lh)   { y = window.innerHeight - lh;   vy = -Math.abs(vy); }
+    logo.style.transform = `translate(${x}px, ${y}px)`;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function show() {
+    if (active) return;
+    active = true;
+    screen.classList.add('is-visible');
+    startBounce();
+  }
+
+  function hide() {
+    if (!active) return;
+    active = false;
+    screen.classList.remove('is-visible');
+    cancelAnimationFrame(rafId);
+  }
+
+  function resetTimer() {
+    hide();
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(show, IDLE_MS);
+  }
+
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'wheel'].forEach(evt => {
+    window.addEventListener(evt, resetTimer, { passive: true });
+  });
+  screen.addEventListener('click', hide);
+
+  resetTimer();
+})();
+
+/* ── Tool cluster: honeycomb layout + hover/tap ── */
 (function () {
   const orbit = document.querySelector('.tools-orbit');
-  const chips = document.querySelectorAll('.tool-chip');
-  if (!orbit) return;
+  const chips = Array.from(document.querySelectorAll('.tool-chip'));
+  if (!orbit || !chips.length) return;
 
-  if (window.matchMedia('(hover: hover)').matches) {
-    // Desktop: pause orbit while hovering any chip
+  const isMobile = !window.matchMedia('(hover: hover)').matches;
+
+  // Honeycomb positions — 15 icons arranged like Apple Watch app grid
+  // Row sizes: 3, 4, 4, 3, 1 = 15 total
+  const SIZE    = isMobile ? 54 : 72;
+  const GAP     = isMobile ? 6  : 8;
+  const STEP    = SIZE + GAP;
+  const ROW_H   = STEP * 0.866; // equilateral triangle height
+  const rows    = [3, 4, 4, 3, 1];
+  const maxCols = Math.max(...rows);
+  const positions = [];
+
+  rows.forEach((count, rowIdx) => {
+    const offsetX = (maxCols - count) / 2 * STEP;
+    // Every other row nudged right by half a step (honeycomb stagger)
+    const stagger = (rowIdx % 2 === 1) ? STEP / 2 : 0;
+    for (let col = 0; col < count; col++) {
+      positions.push({
+        x: offsetX + stagger + col * STEP,
+        y: rowIdx * ROW_H,
+      });
+    }
+  });
+
+  // Size the orbit container to the cluster bounds
+  const totalW = maxCols * STEP - GAP;
+  const totalH = (rows.length - 1) * ROW_H + SIZE;
+  orbit.style.width  = totalW + 'px';
+  orbit.style.height = totalH + 'px';
+
+  chips.forEach((chip, i) => {
+    const pos = positions[i] || positions[positions.length - 1];
+    chip.style.left = pos.x + 'px';
+    chip.style.top  = pos.y + 'px';
+  });
+
+  // Hover: pause drift animation
+  if (!isMobile) {
     chips.forEach(chip => {
-      chip.addEventListener('mouseenter', () => {
-        orbit.style.animationPlayState = 'paused';
-      });
-      chip.addEventListener('mouseleave', () => {
-        orbit.style.animationPlayState = 'running';
-      });
+      chip.addEventListener('mouseenter', () => { orbit.style.animationPlayState = 'paused'; });
+      chip.addEventListener('mouseleave', () => { orbit.style.animationPlayState = 'running'; });
     });
   } else {
-    // Mobile: tap to toggle label, one at a time
+    // Mobile: tap to toggle label
     chips.forEach(chip => {
       chip.addEventListener('click', () => {
         const isActive = chip.classList.contains('is-active');

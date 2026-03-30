@@ -866,10 +866,9 @@ ul { list-style: none; }
   margin: 0 auto;
 }
 
-/* Tools orbit */
+/* Tools cluster (Apple Watch style) */
 .tools-stage {
-  perspective: 900px;
-  height: 380px;
+  height: 420px;
   margin-top: 56px;
   display: flex;
   align-items: center;
@@ -879,29 +878,24 @@ ul { list-style: none; }
 
 .tools-orbit {
   position: relative;
-  width: 0;
-  height: 0;
-  transform-style: preserve-3d;
-  animation: orbit-spin 32s linear infinite;
+  /* JS sets width/height to match cluster bounds */
+  animation: cluster-drift 18s ease-in-out infinite alternate;
+  flex-shrink: 0;
 }
 
-@keyframes orbit-spin {
-  from { transform: rotateX(-20deg) rotateY(0deg); }
-  to   { transform: rotateX(-20deg) rotateY(360deg); }
+@keyframes cluster-drift {
+  0%   { transform: rotate(-4deg) scale(1);    }
+  50%  { transform: rotate(2deg)  scale(1.03); }
+  100% { transform: rotate(-2deg) scale(0.98); }
 }
 
 .tool-chip {
   position: absolute;
-  top: 0; left: 0;
-  width: 72px;
-  height: 72px;
-  margin-left: -36px;
-  margin-top: -36px;
-  transform: rotateY(calc(var(--i) * 24deg)) translateZ(240px);
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  /* top/left set by JS */
 }
 
 .tool-circle {
@@ -910,7 +904,7 @@ ul { list-style: none; }
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
               box-shadow 0.22s ease;
 }
@@ -923,31 +917,27 @@ ul { list-style: none; }
   font-weight: 500;
   color: var(--gray-700);
   white-space: nowrap;
-  margin-top: 8px;
+  margin-top: 6px;
   opacity: 0;
   transition: opacity 0.18s ease;
   pointer-events: none;
 }
 
-/* Desktop hover — pause orbit and scale chip */
+/* Desktop hover */
 @media (hover: hover) {
   .tool-chip:hover .tool-circle {
-    transform: scale(1.35);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    transform: scale(1.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
-  .tool-chip:hover .tool-name {
-    opacity: 1;
-  }
+  .tool-chip:hover .tool-name { opacity: 1; }
 }
 
 /* Mobile tap */
 .tool-chip.is-active .tool-circle {
-  transform: scale(1.35);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+  transform: scale(1.22);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
 }
-.tool-chip.is-active .tool-name {
-  opacity: 1;
-}
+.tool-chip.is-active .tool-name { opacity: 1; }
 
 /* ════════════════════════════════════════
    PRICING
@@ -1572,6 +1562,28 @@ ul { list-style: none; }
 .work-panel { cursor: none; }
 
 /* ════════════════════════════════════════
+   SCREENSAVER
+   ════════════════════════════════════════ */
+#screensaver {
+  position: fixed;
+  inset: 0;
+  background: #0d0d0d;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+#screensaver.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+#screensaver-logo {
+  position: absolute;
+  /* initial position set by JS */
+  will-change: transform;
+}
+
+/* ════════════════════════════════════════
    BOOKING FRAMING
    ════════════════════════════════════════ */
 .booking-framing {
@@ -2057,10 +2069,8 @@ ul { list-style: none; }
 
   /* Full stack banner */
   .fullstack-banner { padding-top: 48px; padding-inline: 20px; text-align: left; }
-  .tools-stage { height: 280px; }
-  .tools-orbit { --r: 160px; }
-  .tool-chip { width: 56px; height: 56px; margin-left: -28px; margin-top: -28px; transform: rotateY(calc(var(--i) * 24deg)) translateZ(160px); }
-  .tool-circle { width: 56px; height: 56px; }
+  .tools-stage { height: 320px; }
+  .tool-circle { width: 54px; height: 54px; }
 
   /* Ticker */
   .ticker-item { width: 480px; }
