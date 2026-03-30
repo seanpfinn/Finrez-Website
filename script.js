@@ -456,64 +456,182 @@
   resetTimer();
 })();
 
-/* ── Tool cluster: honeycomb layout + hover/tap ── */
+/* ── Tool particles: physics interaction ── */
 (function () {
-  const orbit = document.querySelector('.tools-orbit');
+  const stage = document.querySelector('.tools-stage');
   const chips = Array.from(document.querySelectorAll('.tool-chip'));
-  if (!orbit || !chips.length) return;
+  if (!stage || !chips.length) return;
 
   const isMobile = !window.matchMedia('(hover: hover)').matches;
 
-  // Honeycomb positions — 15 icons arranged like Apple Watch app grid
-  // Row sizes: 3, 4, 4, 3, 1 = 15 total
-  const SIZE    = isMobile ? 54 : 72;
-  const GAP     = isMobile ? 6  : 8;
-  const STEP    = SIZE + GAP;
-  const ROW_H   = STEP * 0.866; // equilateral triangle height
-  const rows    = [3, 4, 4, 3, 1];
-  const maxCols = Math.max(...rows);
-  const positions = [];
+  // Physics constants
+  const WANDER       = 0.055;   // random drift per frame
+  const DAMPING      = 0.96;    // velocity retention per frame
+  const MAX_SPEED    = 2;       // normal max speed
+  const REPEL_R      = 140;     // mouse repulsion radius (px)
+  const REPEL_STR    = 11;      // repulsion force strength
+  const BOUNCE       = 0.45;    // energy kept on wall bounce
 
-  rows.forEach((count, rowIdx) => {
-    const offsetX = (maxCols - count) / 2 * STEP;
-    // Every other row nudged right by half a step (honeycomb stagger)
-    const stagger = (rowIdx % 2 === 1) ? STEP / 2 : 0;
-    for (let col = 0; col < count; col++) {
-      positions.push({
-        x: offsetX + stagger + col * STEP,
-        y: rowIdx * ROW_H,
-      });
-    }
-  });
+  let W, H, CS;  // stage width, height, chip size
+  let particles = [];
+  let mouse = { x: -9999, y: -9999 };
+  let dragging = null, dragVel = { x: 0, y: 0 }, lastPos = { x: 0, y: 0 };
+  let touchId = null, touchStart = null;
 
-  // Size the orbit container to the cluster bounds
-  const totalW = maxCols * STEP - GAP;
-  const totalH = (rows.length - 1) * ROW_H + SIZE;
-  orbit.style.width  = totalW + 'px';
-  orbit.style.height = totalH + 'px';
+  function getCS() { return window.innerWidth < 768 ? 54 : 72; }
 
-  chips.forEach((chip, i) => {
-    const pos = positions[i] || positions[positions.length - 1];
-    chip.style.left = pos.x + 'px';
-    chip.style.top  = pos.y + 'px';
-  });
-
-  // Hover: pause drift animation
-  if (!isMobile) {
-    chips.forEach(chip => {
-      chip.addEventListener('mouseenter', () => { orbit.style.animationPlayState = 'paused'; });
-      chip.addEventListener('mouseleave', () => { orbit.style.animationPlayState = 'running'; });
-    });
-  } else {
-    // Mobile: tap to toggle label
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        const isActive = chip.classList.contains('is-active');
-        chips.forEach(c => c.classList.remove('is-active'));
-        if (!isActive) chip.classList.add('is-active');
-      });
+  function resize() {
+    W  = stage.offsetWidth;
+    H  = stage.offsetHeight;
+    CS = getCS();
+    particles.forEach(p => {
+      p.x = Math.max(0, Math.min(W - CS, p.x));
+      p.y = Math.max(0, Math.min(H - CS, p.y));
     });
   }
+
+  function init() {
+    resize();
+    // Scatter randomly, avoiding the very edges
+    particles = chips.map(el => ({
+      el,
+      x:  CS + Math.random() * (W - CS * 3),
+      y:  CS + Math.random() * (H - CS * 3),
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: (Math.random() - 0.5) * 0.8,
+    }));
+    chips.forEach(c => { c.style.left = '0'; c.style.top = '0'; });
+  }
+
+  function tick() {
+    const cs = CS;
+    particles.forEach(p => {
+      if (p === dragging) return;
+
+      // Brownian wander
+      p.vx += (Math.random() - 0.5) * WANDER;
+      p.vy += (Math.random() - 0.5) * WANDER;
+
+      // Mouse repulsion
+      const cx = p.x + cs / 2, cy = p.y + cs / 2;
+      const dx = cx - mouse.x,  dy = cy - mouse.y;
+      const distSq = dx * dx + dy * dy;
+      if (distSq < REPEL_R * REPEL_R && distSq > 0.1) {
+        const dist = Math.sqrt(distSq);
+        const str  = (REPEL_R - dist) / REPEL_R * REPEL_STR;
+        p.vx += dx / dist * str;
+        p.vy += dy / dist * str;
+      }
+
+      // Damping + soft speed cap (allow repulsion bursts above cap)
+      p.vx *= DAMPING;
+      p.vy *= DAMPING;
+      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (spd > MAX_SPEED * 4) { p.vx = p.vx / spd * MAX_SPEED * 4; p.vy = p.vy / spd * MAX_SPEED * 4; }
+
+      // Update & bounce
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0)      { p.x = 0;      p.vx =  Math.abs(p.vx) * BOUNCE; }
+      if (p.x > W - cs) { p.x = W - cs; p.vx = -Math.abs(p.vx) * BOUNCE; }
+      if (p.y < 0)      { p.y = 0;      p.vy =  Math.abs(p.vy) * BOUNCE; }
+      if (p.y > H - cs) { p.y = H - cs; p.vy = -Math.abs(p.vy) * BOUNCE; }
+
+      p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    });
+    requestAnimationFrame(tick);
+  }
+
+  // ── Mouse position (relative to stage) ──
+  stage.addEventListener('mousemove', e => {
+    const r = stage.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  stage.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  // ── Desktop drag ──
+  chips.forEach(chip => {
+    chip.addEventListener('mousedown', e => {
+      e.preventDefault();
+      const p = particles.find(q => q.el === chip);
+      if (!p) return;
+      dragging = p;
+      lastPos = { x: e.clientX, y: e.clientY };
+      dragVel = { x: 0, y: 0 };
+      chip.style.zIndex = '10';
+    });
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastPos.x, dy = e.clientY - lastPos.y;
+    dragVel = { x: dx, y: dy };
+    dragging.x = Math.max(0, Math.min(W - CS, dragging.x + dx));
+    dragging.y = Math.max(0, Math.min(H - CS, dragging.y + dy));
+    dragging.el.style.transform = `translate(${dragging.x}px, ${dragging.y}px)`;
+    lastPos = { x: e.clientX, y: e.clientY };
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging.vx = dragVel.x * 0.75;
+    dragging.vy = dragVel.y * 0.75;
+    dragging.el.style.zIndex = '';
+    dragging = null;
+  });
+
+  // ── Touch drag / swipe ──
+  chips.forEach(chip => {
+    chip.addEventListener('touchstart', e => {
+      if (dragging) return;
+      const t = e.changedTouches[0];
+      const p = particles.find(q => q.el === chip);
+      if (!p) return;
+      touchId    = t.identifier;
+      touchStart = { x: t.clientX, y: t.clientY };
+      dragging   = p;
+      lastPos    = { x: t.clientX, y: t.clientY };
+      dragVel    = { x: 0, y: 0 };
+      chip.style.zIndex = '10';
+    }, { passive: true });
+  });
+
+  window.addEventListener('touchmove', e => {
+    if (!dragging || touchId === null) return;
+    const t = Array.from(e.changedTouches).find(t => t.identifier === touchId);
+    if (!t) return;
+    const movedFar = Math.hypot(t.clientX - touchStart.x, t.clientY - touchStart.y) > 5;
+    if (movedFar) e.preventDefault();
+    const dx = t.clientX - lastPos.x, dy = t.clientY - lastPos.y;
+    dragVel = { x: dx, y: dy };
+    dragging.x = Math.max(0, Math.min(W - CS, dragging.x + dx));
+    dragging.y = Math.max(0, Math.min(H - CS, dragging.y + dy));
+    dragging.el.style.transform = `translate(${dragging.x}px, ${dragging.y}px)`;
+    lastPos = { x: t.clientX, y: t.clientY };
+  }, { passive: false });
+
+  window.addEventListener('touchend', e => {
+    if (!dragging || touchId === null) return;
+    const t = Array.from(e.changedTouches).find(t => t.identifier === touchId);
+    if (!t) return;
+    // Tap (minimal movement) → toggle label
+    if (Math.hypot(t.clientX - touchStart.x, t.clientY - touchStart.y) < 8) {
+      const chip = dragging.el;
+      const isActive = chip.classList.contains('is-active');
+      chips.forEach(c => c.classList.remove('is-active'));
+      if (!isActive) chip.classList.add('is-active');
+    }
+    dragging.vx = dragVel.x * 0.75;
+    dragging.vy = dragVel.y * 0.75;
+    dragging.el.style.zIndex = '';
+    dragging = null;
+    touchId  = null;
+  });
+
+  window.addEventListener('resize', resize);
+  init();
+  tick();
 })();
 
 /* ── ASCII Waveform Hero ── */
