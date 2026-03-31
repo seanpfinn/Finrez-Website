@@ -1545,7 +1545,7 @@ ul { list-style: none; }
 #screensaver {
   position: fixed;
   inset: 0;
-  background: #0d0d0d;
+  background: rgba(13,13,13,0.75);
   z-index: 99999;
   opacity: 0;
   pointer-events: none;
