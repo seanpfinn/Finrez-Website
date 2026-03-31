@@ -870,7 +870,7 @@ ul { list-style: none; }
 .tools-stage {
   position: relative;
   height: 500px;
-  margin-top: 56px;
+  margin-top: 24px;
   overflow: hidden;
   cursor: grab;
   user-select: none;
