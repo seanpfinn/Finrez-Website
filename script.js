@@ -456,181 +456,201 @@
   resetTimer();
 })();
 
-/* ── Tool particles: physics interaction ── */
+/* ── Tool sphere: 3D rotating group ── */
 (function () {
   const stage = document.querySelector('.tools-stage');
   const chips = Array.from(document.querySelectorAll('.tool-chip'));
   if (!stage || !chips.length) return;
 
-  const isMobile = !window.matchMedia('(hover: hover)').matches;
+  // ── Config ──────────────────────────────
+  const AUTO_ROT_Y   = 0.004;   // radians/frame idle spin
+  const DRAG_SENS    = 0.007;   // drag → rotation rate
+  const INERTIA      = 0.93;    // velocity decay after release
+  const HOVER_SCALE  = 1.45;    // hovered logo scale
+  const PUSH_RADIUS  = 160;     // screen-px push radius around hovered logo
+  const PUSH_STR     = 55;      // max push displacement in px
+  const SPRING_K     = 0.10;    // spring stiffness for push displacement
+  const SPRING_D     = 0.75;    // spring damping
 
-  // Physics constants
-  const WANDER       = 0.055;   // random drift per frame
-  const DAMPING      = 0.96;    // velocity retention per frame
-  const MAX_SPEED    = 2;       // normal max speed
-  const REPEL_R      = 140;     // mouse repulsion radius (px)
-  const REPEL_STR    = 11;      // repulsion force strength
-  const BOUNCE       = 0.45;    // energy kept on wall bounce
+  // ── State ────────────────────────────────
+  let W, H, R;
+  let rotX = -0.25, rotY = 0;
+  let velX = 0, velY = 0;
+  let isDragging = false, lastMX = 0, lastMY = 0;
+  let mouseStageX = -9999, mouseStageY = -9999;
+  let hoveredIdx = -1;
 
-  let W, H, CS;  // stage width, height, chip size
-  let particles = [];
-  let mouse = { x: -9999, y: -9999 };
-  let dragging = null, dragVel = { x: 0, y: 0 }, lastPos = { x: 0, y: 0 };
-  let touchId = null, touchStart = null;
-
-  function getCS() { return window.innerWidth < 768 ? 54 : 72; }
-
-  function resize() {
-    W  = stage.offsetWidth;
-    H  = stage.offsetHeight;
-    CS = getCS();
-    particles.forEach(p => {
-      p.x = Math.max(0, Math.min(W - CS, p.x));
-      p.y = Math.max(0, Math.min(H - CS, p.y));
-    });
+  // Fibonacci sphere — evenly distributes N points on a unit sphere
+  function fibSphere(n) {
+    const pts = [], phi = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < n; i++) {
+      const y = 1 - (i / (n - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const t = phi * i;
+      pts.push([Math.cos(t) * r, y, Math.sin(t) * r]);
+    }
+    return pts;
   }
 
-  function init() {
-    resize();
-    // Scatter randomly, avoiding the very edges
-    particles = chips.map(el => ({
-      el,
-      x:  CS + Math.random() * (W - CS * 3),
-      y:  CS + Math.random() * (H - CS * 3),
-      vx: (Math.random() - 0.5) * 0.8,
-      vy: (Math.random() - 0.5) * 0.8,
-    }));
-    chips.forEach(c => { c.style.left = '0'; c.style.top = '0'; });
+  const base = fibSphere(chips.length);
+
+  // Per-particle: screen-space push displacement, springs toward target
+  const particles = chips.map((el, i) => ({
+    el,
+    base: base[i],   // [x,y,z] on unit sphere
+    // projected screen centre this frame
+    sx: 0, sy: 0, sz: 0,
+    // hover push spring state
+    dspX: 0, dspY: 0,
+    vspX: 0, vspY: 0,
+  }));
+
+  function resize() {
+    W = stage.offsetWidth;
+    H = stage.offsetHeight;
+    R = Math.min(W, H) * 0.36;  // sphere radius
+  }
+
+  // Rotate point [px,py,pz] by rotX (pitch) then rotY (yaw)
+  function rotPt([px, py, pz]) {
+    const cy = Math.cos(rotY), sy = Math.sin(rotY);
+    let x1 =  px * cy + pz * sy;
+    let z1 = -px * sy + pz * cy;
+    const cx = Math.cos(rotX), sx2 = Math.sin(rotX);
+    let y2 =  py * cx - z1 * sx2;
+    let z2 =  py * sx2 + z1 * cx;
+    return [x1, y2, z2];
   }
 
   function tick() {
-    const cs = CS;
+    // Auto-rotate when not dragging, apply inertia after drag
+    if (!isDragging) {
+      rotY += AUTO_ROT_Y + velY;
+      rotX += velX;
+      velX *= INERTIA;
+      velY *= INERTIA;
+    }
+
+    // Project all particles
+    const CS = window.innerWidth < 768 ? 54 : 72;
     particles.forEach(p => {
-      if (p === dragging) return;
-
-      // Brownian wander
-      p.vx += (Math.random() - 0.5) * WANDER;
-      p.vy += (Math.random() - 0.5) * WANDER;
-
-      // Mouse repulsion
-      const cx = p.x + cs / 2, cy = p.y + cs / 2;
-      const dx = cx - mouse.x,  dy = cy - mouse.y;
-      const distSq = dx * dx + dy * dy;
-      if (distSq < REPEL_R * REPEL_R && distSq > 0.1) {
-        const dist = Math.sqrt(distSq);
-        const str  = (REPEL_R - dist) / REPEL_R * REPEL_STR;
-        p.vx += dx / dist * str;
-        p.vy += dy / dist * str;
-      }
-
-      // Damping + soft speed cap (allow repulsion bursts above cap)
-      p.vx *= DAMPING;
-      p.vy *= DAMPING;
-      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      if (spd > MAX_SPEED * 4) { p.vx = p.vx / spd * MAX_SPEED * 4; p.vy = p.vy / spd * MAX_SPEED * 4; }
-
-      // Update & bounce
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0)      { p.x = 0;      p.vx =  Math.abs(p.vx) * BOUNCE; }
-      if (p.x > W - cs) { p.x = W - cs; p.vx = -Math.abs(p.vx) * BOUNCE; }
-      if (p.y < 0)      { p.y = 0;      p.vy =  Math.abs(p.vy) * BOUNCE; }
-      if (p.y > H - cs) { p.y = H - cs; p.vy = -Math.abs(p.vy) * BOUNCE; }
-
-      p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+      const [x, y, z] = rotPt(p.base);
+      p.sx = W / 2 + x * R;
+      p.sy = H / 2 + y * R;
+      p.sz = z; // -1 (back) to +1 (front)
     });
+
+    // Hit-test for hover (front-most particle within radius)
+    hoveredIdx = -1;
+    let bestZ = -Infinity;
+    particles.forEach((p, i) => {
+      const dx = mouseStageX - p.sx, dy = mouseStageY - p.sy;
+      if (Math.hypot(dx, dy) < CS * 0.6 && p.sz > bestZ) {
+        hoveredIdx = i;
+        bestZ = p.sz;
+      }
+    });
+
+    // Compute push target displacements for hover effect
+    particles.forEach((p, i) => {
+      let tx = 0, ty = 0;
+      if (hoveredIdx >= 0 && i !== hoveredIdx) {
+        const h = particles[hoveredIdx];
+        const dx = p.sx - h.sx, dy = p.sy - h.sy;
+        const dist = Math.hypot(dx, dy) || 1;
+        if (dist < PUSH_RADIUS) {
+          const str = (1 - dist / PUSH_RADIUS) * PUSH_STR;
+          tx = dx / dist * str;
+          ty = dy / dist * str;
+        }
+      }
+      // Spring toward target displacement
+      const fx = (tx - p.dspX) * SPRING_K;
+      const fy = (ty - p.dspY) * SPRING_K;
+      p.vspX = p.vspX * SPRING_D + fx;
+      p.vspY = p.vspY * SPRING_D + fy;
+      p.dspX += p.vspX;
+      p.dspY += p.vspY;
+    });
+
+    // Sort back-to-front, then render
+    const order = particles.slice().sort((a, b) => a.sz - b.sz);
+    order.forEach((p, renderOrder) => {
+      const depth  = (p.sz + 1) / 2;                         // 0=back, 1=front
+      const scale  = 0.42 + depth * 0.58;                    // 0.42–1.0
+      const op     = 0.22 + depth * 0.78;                    // 0.22–1.0
+      const isHov  = particles.indexOf(p) === hoveredIdx;
+      const chipSc = isHov ? scale * HOVER_SCALE : scale;
+
+      const finalX = p.sx + p.dspX - CS / 2;
+      const finalY = p.sy + p.dspY - CS / 2;
+
+      p.el.style.transform = `translate(${finalX}px,${finalY}px) scale(${chipSc})`;
+      p.el.style.opacity   = String(Math.min(1, op));
+      p.el.style.zIndex    = String(renderOrder);
+
+      const label = p.el.querySelector('.tool-name');
+      if (label) label.style.opacity = isHov ? '1' : '0';
+    });
+
     requestAnimationFrame(tick);
   }
 
-  // ── Mouse position (relative to stage) ──
+  // ── Mouse hover (no drag) ─────────────────
   stage.addEventListener('mousemove', e => {
+    if (isDragging) return;
     const r = stage.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
+    mouseStageX = e.clientX - r.left;
+    mouseStageY = e.clientY - r.top;
   });
-  stage.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-  // ── Desktop drag ──
-  chips.forEach(chip => {
-    chip.addEventListener('mousedown', e => {
-      e.preventDefault();
-      const p = particles.find(q => q.el === chip);
-      if (!p) return;
-      dragging = p;
-      lastPos = { x: e.clientX, y: e.clientY };
-      dragVel = { x: 0, y: 0 };
-      chip.style.zIndex = '10';
-    });
+  stage.addEventListener('mouseleave', () => {
+    mouseStageX = -9999; mouseStageY = -9999; hoveredIdx = -1;
   });
 
+  // ── Mouse drag → rotate ───────────────────
+  stage.addEventListener('mousedown', e => {
+    isDragging = true;
+    lastMX = e.clientX; lastMY = e.clientY;
+    velX = 0; velY = 0;
+    mouseStageX = -9999; hoveredIdx = -1; // suppress hover while dragging
+    stage.classList.add('is-dragging');
+  });
   window.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    const dx = e.clientX - lastPos.x, dy = e.clientY - lastPos.y;
-    dragVel = { x: dx, y: dy };
-    dragging.x = Math.max(0, Math.min(W - CS, dragging.x + dx));
-    dragging.y = Math.max(0, Math.min(H - CS, dragging.y + dy));
-    dragging.el.style.transform = `translate(${dragging.x}px, ${dragging.y}px)`;
-    lastPos = { x: e.clientX, y: e.clientY };
+    if (!isDragging) return;
+    const dx = e.clientX - lastMX, dy = e.clientY - lastMY;
+    velY = dx * DRAG_SENS;
+    velX = dy * DRAG_SENS;
+    rotY += velY; rotX += velX;
+    lastMX = e.clientX; lastMY = e.clientY;
   });
-
   window.addEventListener('mouseup', () => {
-    if (!dragging) return;
-    dragging.vx = dragVel.x * 0.75;
-    dragging.vy = dragVel.y * 0.75;
-    dragging.el.style.zIndex = '';
-    dragging = null;
+    if (!isDragging) return;
+    isDragging = false;
+    stage.classList.remove('is-dragging');
   });
 
-  // ── Touch drag / swipe ──
-  chips.forEach(chip => {
-    chip.addEventListener('touchstart', e => {
-      if (dragging) return;
-      const t = e.changedTouches[0];
-      const p = particles.find(q => q.el === chip);
-      if (!p) return;
-      touchId    = t.identifier;
-      touchStart = { x: t.clientX, y: t.clientY };
-      dragging   = p;
-      lastPos    = { x: t.clientX, y: t.clientY };
-      dragVel    = { x: 0, y: 0 };
-      chip.style.zIndex = '10';
-    }, { passive: true });
-  });
-
-  window.addEventListener('touchmove', e => {
-    if (!dragging || touchId === null) return;
-    const t = Array.from(e.changedTouches).find(t => t.identifier === touchId);
-    if (!t) return;
-    const movedFar = Math.hypot(t.clientX - touchStart.x, t.clientY - touchStart.y) > 5;
-    if (movedFar) e.preventDefault();
-    const dx = t.clientX - lastPos.x, dy = t.clientY - lastPos.y;
-    dragVel = { x: dx, y: dy };
-    dragging.x = Math.max(0, Math.min(W - CS, dragging.x + dx));
-    dragging.y = Math.max(0, Math.min(H - CS, dragging.y + dy));
-    dragging.el.style.transform = `translate(${dragging.x}px, ${dragging.y}px)`;
-    lastPos = { x: t.clientX, y: t.clientY };
+  // ── Touch drag → rotate ───────────────────
+  let lastTX = 0, lastTY = 0, touchVX = 0, touchVY = 0;
+  stage.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    lastTX = t.clientX; lastTY = t.clientY;
+    touchVX = 0; touchVY = 0; velX = 0; velY = 0;
+  }, { passive: true });
+  stage.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    const dx = t.clientX - lastTX, dy = t.clientY - lastTY;
+    touchVY = dx * DRAG_SENS; touchVX = dy * DRAG_SENS;
+    rotY += touchVY; rotX += touchVX;
+    lastTX = t.clientX; lastTY = t.clientY;
   }, { passive: false });
-
-  window.addEventListener('touchend', e => {
-    if (!dragging || touchId === null) return;
-    const t = Array.from(e.changedTouches).find(t => t.identifier === touchId);
-    if (!t) return;
-    // Tap (minimal movement) → toggle label
-    if (Math.hypot(t.clientX - touchStart.x, t.clientY - touchStart.y) < 8) {
-      const chip = dragging.el;
-      const isActive = chip.classList.contains('is-active');
-      chips.forEach(c => c.classList.remove('is-active'));
-      if (!isActive) chip.classList.add('is-active');
-    }
-    dragging.vx = dragVel.x * 0.75;
-    dragging.vy = dragVel.y * 0.75;
-    dragging.el.style.zIndex = '';
-    dragging = null;
-    touchId  = null;
+  stage.addEventListener('touchend', () => {
+    velX = touchVX; velY = touchVY; // release with inertia
   });
 
   window.addEventListener('resize', resize);
-  init();
+  chips.forEach(c => { c.style.left = '0'; c.style.top = '0'; });
+  resize();
   tick();
 })();
 
