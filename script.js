@@ -662,21 +662,20 @@
   const ctx    = canvas.getContext('2d');
   const ASPECT = 176.772 / 874.84;
 
-  // Physics
-  const SPRING_K    = 0.08;
-  const DAMPING     = 0.70;
+  const SPRING_K    = 0.09;
+  const DAMPING     = 0.72;
   const SCATTER_MIN = 50;
   const SCATTER_MAX = 160;
   const P_RADIUS    = 1.1;
   const SAMPLE_STEP = 2;
+  const HOVER_R     = 80;   // px radius around cursor that activates particles
 
-  let particles  = [];
-  let isHovered  = false;
+  let particles = [];
   let canvasW, canvasH;
-  let rafId      = null;
-  let logoImg    = null;  // cached Image
-  // state: 'solid' | 'exploding' | 'gathering'
-  let state      = 'solid';
+  let rafId    = null;
+  let logoImg  = null;
+  let mouseX   = -9999, mouseY = -9999;
+  let active   = false;   // true while mouse is over canvas or particles still moving
 
   function sizeCanvas() {
     canvasW = canvas.parentElement.offsetWidth;
@@ -685,119 +684,129 @@
     canvas.height = canvasH;
   }
 
-  function drawSolid() {
-    ctx.clearRect(0, 0, canvasW, canvasH);
-    if (logoImg) ctx.drawImage(logoImg, 0, 0, canvasW, canvasH);
-  }
-
   function buildParticles() {
-    const sW = Math.min(canvasW, 900);
-    const sH = Math.round(sW * ASPECT);
+    const sW  = Math.min(canvasW, 900);
+    const sH  = Math.round(sW * ASPECT);
     const off = document.createElement('canvas');
     off.width = sW; off.height = sH;
     const octx = off.getContext('2d');
     octx.drawImage(logoImg, 0, 0, sW, sH);
-
     const px  = octx.getImageData(0, 0, sW, sH).data;
     const scX = canvasW / sW, scY = canvasH / sH;
-    const cx  = canvasW / 2,  cy  = canvasH / 2;
 
     particles = [];
     for (let y = 0; y < sH; y += SAMPLE_STEP) {
       for (let x = 0; x < sW; x += SAMPLE_STEP) {
         if (px[(y * sW + x) * 4 + 3] < 80) continue;
-        const hx    = x * scX, hy = y * scY;
-        const angle = Math.atan2(hy - cy, hx - cx) + (Math.random() - 0.5) * 1.4;
-        const dist  = SCATTER_MIN + Math.random() * (SCATTER_MAX - SCATTER_MIN);
         particles.push({
-          hx, hy,
-          x: hx, y: hy,   // start at home; JS will move to scatter target
+          hx: x * scX, hy: y * scY,
+          x:  x * scX, y:  y * scY,
           vx: 0, vy: 0,
-          sx: hx + Math.cos(angle) * dist,
-          sy: hy + Math.sin(angle) * dist,
+          rf: Math.random(), // random factor for scatter distance, stable per particle
         });
       }
     }
   }
 
   function tick() {
-    ctx.clearRect(0, 0, canvasW, canvasH);
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-
-    const target = isHovered ? 'sx' : 'hx';
-    let settled = true;
+    let anyDisplaced = false;
 
     particles.forEach(p => {
-      const tx = isHovered ? p.sx : p.hx;
-      const ty = isHovered ? p.sy : p.hy;
-      p.vx = p.vx * DAMPING + (tx - p.x) * SPRING_K;
-      p.vy = p.vy * DAMPING + (ty - p.y) * SPRING_K;
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (Math.abs(p.vx) > 0.08 || Math.abs(p.vy) > 0.08 ||
-          Math.abs(p.x - tx) > 0.8 || Math.abs(p.y - ty) > 0.8) {
-        settled = false;
+      // Is this particle's home within cursor radius?
+      const dx   = p.hx - mouseX, dy = p.hy - mouseY;
+      const dist = Math.hypot(dx, dy);
+      let tx, ty;
+      if (dist < HOVER_R && mouseX > -999) {
+        // scatter away from cursor
+        const angle = Math.atan2(dy, dx) + (p.rf - 0.5) * 1.2;
+        const sd    = SCATTER_MIN + p.rf * (SCATTER_MAX - SCATTER_MIN);
+        tx = p.hx + Math.cos(angle) * sd;
+        ty = p.hy + Math.sin(angle) * sd;
+      } else {
+        tx = p.hx; ty = p.hy;
       }
 
+      p.vx = p.vx * DAMPING + (tx - p.x) * SPRING_K;
+      p.vy = p.vy * DAMPING + (ty - p.y) * SPRING_K;
+      p.x += p.vx; p.y += p.vy;
+
+      if (Math.abs(p.x - p.hx) > 0.8 || Math.abs(p.y - p.hy) > 0.8) anyDisplaced = true;
+    });
+
+    // 1. Draw solid logo base
+    ctx.clearRect(0, 0, canvasW, canvasH);
+    ctx.drawImage(logoImg, 0, 0, canvasW, canvasH);
+
+    // 2. Punch holes at home positions of displaced particles
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,1)';
+    particles.forEach(p => {
+      if (Math.abs(p.x - p.hx) < 0.8 && Math.abs(p.y - p.hy) < 0.8) return;
+      ctx.beginPath();
+      ctx.arc(p.hx, p.hy, P_RADIUS + 0.8, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 3. Draw particle dots at current positions
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    particles.forEach(p => {
+      if (Math.abs(p.x - p.hx) < 0.8 && Math.abs(p.y - p.hy) < 0.8) return;
       ctx.beginPath();
       ctx.arc(p.x, p.y, P_RADIUS, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    if (settled && !isHovered) {
-      // Gathering complete — restore solid logo image
-      state = 'solid';
-      rafId = null;
-      drawSolid();
-    } else {
+    // Keep ticking while cursor is over canvas or particles are still moving
+    if (active || anyDisplaced) {
       rafId = requestAnimationFrame(tick);
+    } else {
+      rafId = null;
+      // Fully settled — redraw clean solid image
+      ctx.clearRect(0, 0, canvasW, canvasH);
+      ctx.drawImage(logoImg, 0, 0, canvasW, canvasH);
     }
   }
 
-  function onEnter() {
-    if (isHovered) return;
-    isHovered = true;
-    // Rebuild particles each time so home positions match current canvas size
-    buildParticles();
-    // Reset all particles to home before launching scatter
-    particles.forEach(p => { p.x = p.hx; p.y = p.hy; p.vx = 0; p.vy = 0; });
-    state = 'exploding';
+  function startTick() {
     if (!rafId) rafId = requestAnimationFrame(tick);
   }
 
-  function onLeave() {
-    if (!isHovered) return;
-    isHovered = false;
-    state = 'gathering';
-    if (!rafId) rafId = requestAnimationFrame(tick);
-  }
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    // Scale from CSS px to canvas px
+    mouseX = (e.clientX - r.left) * (canvasW / r.width);
+    mouseY = (e.clientY - r.top)  * (canvasH / r.height);
+    active = true;
+    startTick();
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    mouseX = -9999; mouseY = -9999;
+    active = false;
+    startTick(); // let particles return home
+  });
 
   function init() {
     sizeCanvas();
-    if (logoImg) {
-      drawSolid();
-      return;
+    if (!logoImg) {
+      const img = new Image();
+      img.src = 'images/finrez-logo-light.svg';
+      img.onload = () => {
+        logoImg = img;
+        buildParticles();
+        ctx.drawImage(logoImg, 0, 0, canvasW, canvasH);
+      };
+    } else {
+      buildParticles();
+      ctx.drawImage(logoImg, 0, 0, canvasW, canvasH);
     }
-    const img = new Image();
-    img.src = 'images/finrez-logo-light.svg';
-    img.onload = () => {
-      logoImg = img;
-      drawSolid();
-    };
   }
 
-  canvas.addEventListener('mouseenter', onEnter);
-  canvas.addEventListener('mouseleave', onLeave);
-
-  // Mobile: tap to trigger / release
-  let tapped = false;
-  canvas.addEventListener('click', () => {
-    tapped = !tapped;
-    tapped ? onEnter() : onLeave();
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    if (logoImg) { buildParticles(); ctx.drawImage(logoImg, 0, 0, canvasW, canvasH); }
   });
-
-  window.addEventListener('resize', () => { sizeCanvas(); if (state === 'solid') drawSolid(); });
 
   init();
 })();
