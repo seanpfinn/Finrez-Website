@@ -1692,6 +1692,7 @@ ul { list-style: none; }
   background: #cc3210;
   color: rgba(255,255,255,0.9);
   border-bottom-color: rgba(255,255,255,0.15);
+  font-weight: 700;
 }
 
 /* Desktop: row groups are transparent to the grid */

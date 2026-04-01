@@ -667,8 +667,8 @@
   const DAMPING     = 0.70;
   const SCATTER_MIN = 50;
   const SCATTER_MAX = 160;
-  const P_RADIUS    = 1.6;
-  const SAMPLE_STEP = 4;
+  const P_RADIUS    = 1.1;
+  const SAMPLE_STEP = 2;
 
   let particles  = [];
   let isHovered  = false;
@@ -691,7 +691,7 @@
   }
 
   function buildParticles() {
-    const sW = Math.min(canvasW, 500);
+    const sW = Math.min(canvasW, 900);
     const sH = Math.round(sW * ASPECT);
     const off = document.createElement('canvas');
     off.width = sW; off.height = sH;
