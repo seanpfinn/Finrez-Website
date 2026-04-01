@@ -1228,6 +1228,8 @@ ul { list-style: none; }
   grid-template-columns: 1fr;
   gap: 48px;
   align-items: start;
+  max-width: 860px;
+  margin-inline: auto;
 }
 
 .about-person {
