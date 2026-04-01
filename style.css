@@ -658,6 +658,182 @@ ul { list-style: none; }
 }
 
 /* ════════════════════════════════════════
+   CASE STUDY — body copy, quote, CTA, nav
+   ════════════════════════════════════════ */
+.cs-body {
+  padding: 72px 48px;
+  max-width: 760px;
+}
+
+.cs-body-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.cs-body p {
+  font-family: 'Geist', sans-serif;
+  font-size: 16.1px;
+  font-weight: 400;
+  color: #3a3a3a;
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.cs-body p:last-child { margin-bottom: 0; }
+
+.cs-body-quote {
+  border-left: 3px solid var(--accent);
+  padding-left: 24px;
+  margin: 8px 0 20px;
+}
+
+.cs-body-quote p {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--dark);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.cs-body-quote cite {
+  display: block;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  font-style: normal;
+  margin-bottom: 0;
+}
+
+/* Closing CTA */
+.cs-end-cta {
+  padding: 80px 48px;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cs-end-cta-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.cs-end-cta-heading {
+  font-family: 'VG5000', monospace;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--dark);
+  line-height: 1.15;
+  max-width: 500px;
+  margin-bottom: 8px;
+}
+
+.cs-end-cta-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cs-end-cta-secondary {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+.cs-end-cta-secondary:hover { color: var(--dark); }
+
+/* Prev / next project navigation */
+.cs-project-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--gray-200);
+}
+
+.cs-project-nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 36px 48px;
+  transition: background var(--transition);
+  color: inherit;
+}
+
+.cs-project-nav-item:hover { background: var(--gray-100); }
+
+.cs-project-nav-item--next {
+  border-left: 1px solid var(--gray-200);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.cs-project-nav-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.cs-project-nav-thumb {
+  width: 96px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cs-project-nav-item--next .cs-project-nav-thumb { margin-left: auto; }
+
+.cs-project-nav-title {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.cs-project-nav-desc {
+  font-family: 'Geist', sans-serif;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .cs-body { padding: 48px 20px; }
+  .cs-end-cta { padding: 56px 20px; }
+  .cs-end-cta-heading { font-size: 24px; }
+  .cs-project-nav { grid-template-columns: 1fr; }
+  .cs-project-nav-item { padding: 28px 20px; }
+  .cs-project-nav-item--next {
+    border-left: none;
+    border-top: 1px solid var(--gray-200);
+    align-items: flex-start;
+    text-align: left;
+  }
+  .cs-project-nav-item--next .cs-project-nav-thumb { margin-left: 0; }
+}
+
+/* ════════════════════════════════════════
    TESTIMONIALS — 3-column row
    ════════════════════════════════════════ */
 .testimonials {
