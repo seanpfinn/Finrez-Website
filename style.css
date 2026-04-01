@@ -1731,23 +1731,11 @@ ul { list-style: none; }
   opacity: 1;
 }
 
-.footer-logo-img {
+.footer-logo-canvas {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-}
-
-.footer-logo-clear {
-  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
-  mask-image: linear-gradient(to bottom, black 30%, transparent 75%);
-}
-
-.footer-logo-blurred {
-  position: absolute;
-  inset: 0;
-  filter: blur(18px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 30%, black 75%);
-  mask-image: linear-gradient(to bottom, transparent 30%, black 75%);
+  cursor: default;
 }
 
 .footer-nav {
