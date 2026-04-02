@@ -660,6 +660,23 @@ ul { list-style: none; }
 /* ════════════════════════════════════════
    CASE STUDY — body copy, quote, CTA, nav
    ════════════════════════════════════════ */
+.cs-live-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--transition);
+}
+
+.cs-live-link:hover {
+  text-decoration-color: var(--accent);
+}
 .cs-body {
   padding: 72px 48px;
   max-width: 760px;
