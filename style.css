@@ -1422,7 +1422,7 @@ ul { list-style: none; }
   grid-template-columns: 1fr;
   gap: 48px;
   align-items: start;
-  max-width: 860px;
+  max-width: 1080px;
   margin-inline: auto;
 }
 
