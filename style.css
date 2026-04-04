@@ -404,11 +404,12 @@ ul { list-style: none; }
 
 /* Cycling begins once JS adds .cycling after the expansion */
 .hero-cycle.cycling .hero-cycle-word {
-  animation: cycle-word 9s ease-in-out infinite;
+  animation: cycle-word 12s ease-in-out infinite;
 }
 .hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation-delay: 0s; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 3s; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 6s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 9s; }
 
 @keyframes cycle-word {
   0%, 5%  { opacity: 0; transform: translateY(0.1em); }
@@ -1434,7 +1435,7 @@ ul { list-style: none; }
 
 .about-photo {
   flex-shrink: 0;
-  width: 45%;
+  width: 55%;
 }
 
 .about-photo {
