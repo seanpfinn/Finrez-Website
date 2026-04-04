@@ -347,16 +347,19 @@
   /* ── Footer logo: scroll reveal ── */
   const footerLogoWrap = document.querySelector('.footer-logo-wrap');
   if (footerLogoWrap) {
-    const checkPageEnd = () => {
-      const scrolled = window.scrollY + window.innerHeight;
-      const total    = document.documentElement.scrollHeight;
-      if (scrolled >= total - 4) {
-        footerLogoWrap.classList.add('logo-revealed');
-        window.removeEventListener('scroll', checkPageEnd);
-      }
-    };
-    window.addEventListener('scroll', checkPageEnd, { passive: true });
-    checkPageEnd();
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            footerLogoWrap.classList.add('logo-revealed');
+            obs.unobserve(footerLogoWrap);
+          }
+        });
+      }, { threshold: 0 });
+      obs.observe(footerLogoWrap);
+    } else {
+      footerLogoWrap.classList.add('logo-revealed');
+    }
   }
 
   /* ── Work panel cursor pill ── */
