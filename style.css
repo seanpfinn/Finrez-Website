@@ -412,10 +412,10 @@ ul { list-style: none; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 9s; }
 
 @keyframes cycle-word {
-  0%, 5%  { opacity: 0; transform: translateY(0.1em); }
-  13%     { opacity: 1; transform: translateY(0); }
-  30%     { opacity: 1; transform: translateY(0); }
-  38%     { opacity: 0; transform: translateY(-0.1em); }
+  0%, 4%  { opacity: 0; transform: translateY(0.1em); }
+  10%     { opacity: 1; transform: translateY(0); }
+  23%     { opacity: 1; transform: translateY(0); }
+  29%     { opacity: 0; transform: translateY(-0.1em); }
   100%    { opacity: 0; transform: translateY(0.1em); }
 }
 
