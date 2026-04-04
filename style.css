@@ -1383,7 +1383,7 @@ ul { list-style: none; }
 }
 
 .logo-strip-item img {
-  height: 28px;
+  height: 29px;
   width: auto;
   max-width: 160px;
   display: block;
@@ -1394,8 +1394,8 @@ ul { list-style: none; }
 
 .logo-strip-item img:hover { filter: grayscale(0) opacity(1); }
 
-.logo-strip-item img.logo-lg { height: 38px; }
-.logo-strip-item img.logo-xs { height: 24px; }
+.logo-strip-item img.logo-lg { height: 40px; }
+.logo-strip-item img.logo-xs { height: 25px; }
 
 /* ════════════════════════════════════════
    ABOUT
@@ -2286,7 +2286,7 @@ ul { list-style: none; }
 
   /* Logo strip */
   .logo-strip-list { gap: 28px 32px; padding-inline: 20px; }
-  .logo-strip-item img { height: 22px; }
+  .logo-strip-item img { height: 23px; }
 
   /* About */
   .about { padding-block: 64px; }
