@@ -1455,7 +1455,6 @@ ul { list-style: none; }
 /* Hover swap for Sean's photo */
 .about-photo--hover {
   position: relative;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
 .about-photo--hover .about-photo-hover {
@@ -1468,6 +1467,10 @@ ul { list-style: none; }
 .about-photo--hover:hover .about-photo-default {
   opacity: 0;
   transition: opacity 0.35s ease;
+}
+
+.about-photo--hover .about-photo-default {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.10));
 }
 
 .about-photo--hover:hover .about-photo-hover {
