@@ -311,16 +311,21 @@
       heroSlides[prev].classList.remove('hero-slide--active');
       heroSlides[prev].classList.add('hero-slide--exit');
 
-      // Enter the next slide (reset to right first, then transition in)
-      heroSlides[currentSlide].style.transition = 'none';
-      heroSlides[currentSlide].style.transform = 'translateX(100%)';
-      heroSlides[currentSlide].style.opacity = '0';
+      // Enter the next slide: snap to right without transition, then animate in
+      const next = heroSlides[currentSlide];
+      next.style.transition = 'none';
+      next.style.transform = 'translateX(100%)';
+      next.style.opacity = '0';
 
-      // Force reflow so the reset sticks before re-enabling transition
-      heroSlides[currentSlide].getBoundingClientRect();
-
-      heroSlides[currentSlide].style.transition = '';
-      heroSlides[currentSlide].classList.add('hero-slide--active');
+      // Double rAF: first frame commits the reset, second frame triggers the transition
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          next.style.transition = '';
+          next.style.transform = '';
+          next.style.opacity = '';
+          next.classList.add('hero-slide--active');
+        });
+      });
 
       // Clean up exit class after transition ends
       const exitSlide = heroSlides[prev];
