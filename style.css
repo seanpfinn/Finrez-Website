@@ -295,8 +295,8 @@ ul { list-style: none; }
   padding-block: calc(var(--nav-h) + 80px) 80px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   position: relative;
   overflow: hidden;
 }
@@ -320,7 +320,7 @@ ul { list-style: none; }
 .hero-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   max-width: 900px;
   padding-inline: 48px;
@@ -370,7 +370,7 @@ ul { list-style: none; }
 
 .hero-title {
   font-family: 'Figtree', sans-serif;
-  font-size: clamp(2.5rem, 5.5vw, 3.8rem);
+  font-size: clamp(3rem, 6.6vw, 4.56rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -379,6 +379,11 @@ ul { list-style: none; }
   flex-wrap: wrap;
   align-items: baseline;
   column-gap: 0.25em;
+}
+
+/* "design partner" forced to second line */
+.hero-dp {
+  flex-basis: 100%;
 }
 
 /* "anything" in VG5000 accent */
