@@ -320,11 +320,11 @@ ul { list-style: none; }
 .hero-content {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 48px;
   width: 100%;
-  max-width: 1200px;
-  padding-inline: 48px;
+  padding-inline-start: 48px;
+  padding-inline-end: 0;
 }
 
 .hero-copy {
@@ -336,13 +336,13 @@ ul { list-style: none; }
   min-width: 0;
 }
 
-/* Image slideshow panel */
+/* Image slideshow panel — 50% of hero, flush to right edge */
 .hero-images {
-  flex: 0 0 420px;
-  aspect-ratio: 4 / 3;
+  flex: 0 0 50%;
+  align-self: stretch;
   position: relative;
   overflow: hidden;
-  border-radius: 4px;
+  min-height: 400px;
 }
 
 .hero-slide {
