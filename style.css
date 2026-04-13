@@ -491,6 +491,26 @@ ul { list-style: none; }
   margin-top: 4px;
 }
 
+.hero-clients {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.hero-client-logo {
+  height: 18px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.45);
+  transition: filter 0.25s ease;
+}
+
+.hero-client-logo:hover {
+  filter: grayscale(0) opacity(1);
+}
+
 /* ════════════════════════════════════════
    PROJECTS TICKER
    ════════════════════════════════════════ */
