@@ -298,6 +298,40 @@
     }
   }
 
+  /* ── Hero image slideshow ── */
+  const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
+  if (heroSlides.length > 1) {
+    let currentSlide = 0;
+
+    setInterval(() => {
+      const prev = currentSlide;
+      currentSlide = (currentSlide + 1) % heroSlides.length;
+
+      // Exit the current slide
+      heroSlides[prev].classList.remove('hero-slide--active');
+      heroSlides[prev].classList.add('hero-slide--exit');
+
+      // Enter the next slide (reset to right first, then transition in)
+      heroSlides[currentSlide].style.transition = 'none';
+      heroSlides[currentSlide].style.transform = 'translateX(100%)';
+      heroSlides[currentSlide].style.opacity = '0';
+
+      // Force reflow so the reset sticks before re-enabling transition
+      heroSlides[currentSlide].getBoundingClientRect();
+
+      heroSlides[currentSlide].style.transition = '';
+      heroSlides[currentSlide].classList.add('hero-slide--active');
+
+      // Clean up exit class after transition ends
+      const exitSlide = heroSlides[prev];
+      exitSlide.addEventListener('transitionend', () => {
+        exitSlide.classList.remove('hero-slide--exit');
+        exitSlide.style.transform = '';
+        exitSlide.style.opacity = '';
+      }, { once: true });
+    }, 5000);
+  }
+
   /* ── Ticker: touch swipe with seamless resume ── */
   const tickerList = document.querySelector('.ticker-list');
   if (tickerList) {
