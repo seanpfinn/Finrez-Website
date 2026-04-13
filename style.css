@@ -494,8 +494,14 @@ ul { list-style: none; }
 .hero-clients {
   display: flex;
   align-items: center;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 20px 28px;
   margin-top: 8px;
+}
+
+.hero-client-item {
+  display: flex;
+  align-items: center;
 }
 
 .hero-client-logo {
@@ -507,7 +513,10 @@ ul { list-style: none; }
   transition: filter 0.25s ease;
 }
 
-.hero-client-logo:hover {
+.hero-client-logo.logo-lg { height: 24px; }
+.hero-client-logo.logo-xs { height: 14px; }
+
+.hero-client-item:hover .hero-client-logo {
   filter: grayscale(0) opacity(1);
 }
 
