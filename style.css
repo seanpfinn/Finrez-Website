@@ -407,11 +407,17 @@ ul { list-style: none; }
   opacity: 0;
 }
 
+/* First word visible immediately (before cycling starts) */
+.hero-cycle-word:first-child {
+  opacity: 1;
+}
+
 /* Cycling begins once JS adds .cycling after the expansion */
 .hero-cycle.cycling .hero-cycle-word {
   animation: cycle-word 12s ease-in-out infinite;
 }
-.hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation-delay: 0s; }
+/* Negative delay: start word 1 at the 10% keyframe (fully visible) so there's no flash */
+.hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation-delay: -1.2s; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 3s; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 6s; }
 .hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 9s; }
