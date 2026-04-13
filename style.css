@@ -418,11 +418,15 @@ ul { list-style: none; }
 .hero-cycle.cycling .hero-cycle-word {
   animation: cycle-word 12s ease-in-out infinite;
 }
-/* Negative delay: start word 1 mid-cycle (fully visible) so there's no flash on handoff */
+/* Delays offset so each word becomes visible exactly 3s after the previous.
+   The keyframe reaches full opacity at 10% (1.2s), so animation-start = visibility-target − 1.2s.
+   Word 1: −1.2s → visible at 0s | Word 2: 1.8s → visible at 3s
+   Word 3: 4.8s → visible at 6s | Word 4: 7.8s → visible at 9s
+   At each handoff, the outgoing word hits opacity 0 exactly when the incoming word starts fading in. */
 .hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation: cycle-word 12s ease-in-out -1.2s infinite; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 3s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 6s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 9s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 1.8s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 4.8s; }
+.hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 7.8s; }
 
 @keyframes cycle-word {
   0%, 4%  { opacity: 0; transform: translateY(0.1em); }
