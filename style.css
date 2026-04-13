@@ -2176,7 +2176,7 @@ ul { list-style: none; }
   }
 
   @keyframes wsubItemIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -2240,18 +2240,18 @@ ul { list-style: none; }
   .work-submenu.is-open { display: flex; }
 
   /* Case study item open animations */
-  .work-submenu.is-open .wsub-item:nth-child(1) { animation: wsubItemIn 0.35s ease-in-out 0.03s both; }
-  .work-submenu.is-open .wsub-item:nth-child(2) { animation: wsubItemIn 0.35s ease-in-out 0.09s both; }
-  .work-submenu.is-open .wsub-item:nth-child(3) { animation: wsubItemIn 0.35s ease-in-out 0.15s both; }
-  .work-submenu.is-open .wsub-item:nth-child(4) { animation: wsubItemIn 0.35s ease-in-out 0.21s both; }
-  .work-submenu.is-open .wsub-item:nth-child(5) { animation: wsubItemIn 0.35s ease-in-out 0.27s both; }
+  .work-submenu.is-open .wsub-item:nth-child(1) { animation: wsubItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.03s both; }
+  .work-submenu.is-open .wsub-item:nth-child(2) { animation: wsubItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both; }
+  .work-submenu.is-open .wsub-item:nth-child(3) { animation: wsubItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both; }
+  .work-submenu.is-open .wsub-item:nth-child(4) { animation: wsubItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both; }
+  .work-submenu.is-open .wsub-item:nth-child(5) { animation: wsubItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.23s both; }
 
   /* Case study item close animations (overrides open, listed after for cascade priority) */
-  .work-submenu.is-closing .wsub-item:nth-child(1) { animation: wsubItemOut 0.22s ease-in-out 0.12s both; }
-  .work-submenu.is-closing .wsub-item:nth-child(2) { animation: wsubItemOut 0.22s ease-in-out 0.08s both; }
-  .work-submenu.is-closing .wsub-item:nth-child(3) { animation: wsubItemOut 0.22s ease-in-out 0.04s both; }
-  .work-submenu.is-closing .wsub-item:nth-child(4) { animation: wsubItemOut 0.22s ease-in-out 0.02s both; }
-  .work-submenu.is-closing .wsub-item:nth-child(5) { animation: wsubItemOut 0.22s ease-in-out 0s    both; }
+  .work-submenu.is-closing .wsub-item:nth-child(1) { animation: wsubItemOut 0.3s cubic-bezier(0.4, 0, 1, 1) 0.10s both; }
+  .work-submenu.is-closing .wsub-item:nth-child(2) { animation: wsubItemOut 0.3s cubic-bezier(0.4, 0, 1, 1) 0.07s both; }
+  .work-submenu.is-closing .wsub-item:nth-child(3) { animation: wsubItemOut 0.3s cubic-bezier(0.4, 0, 1, 1) 0.04s both; }
+  .work-submenu.is-closing .wsub-item:nth-child(4) { animation: wsubItemOut 0.3s cubic-bezier(0.4, 0, 1, 1) 0.02s both; }
+  .work-submenu.is-closing .wsub-item:nth-child(5) { animation: wsubItemOut 0.3s cubic-bezier(0.4, 0, 1, 1) 0s    both; }
 
   .wsub-item {
     display: flex;
