@@ -569,7 +569,7 @@ ul { list-style: none; }
 
 .mission-text {
   font-family: 'VG5000', monospace;
-  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+  font-size: clamp(1.9rem, 3.8vw, 3.2rem);
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.01em;
