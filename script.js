@@ -288,16 +288,13 @@
         heroCycle.parentElement.removeChild(clone);
       }
 
-      // Start after the title blur-in finishes (0.18s delay + 0.65s duration)
-      setTimeout(() => {
-        heroCycle.style.transition = 'width 1.1s cubic-bezier(0.33, 1, 0.68, 1)';
-        heroCycle.style.width = naturalWidth + 'px';
+      // Set width immediately so "brand" is visible as soon as "Your" fades in.
+      heroCycle.style.width = naturalWidth + 'px';
 
-        // Use transitionend so cycling starts at exactly the right moment
-        heroCycle.addEventListener('transitionend', () => {
-          heroCycle.classList.add('cycling');
-        }, { once: true });
-      }, 850);
+      // Start cycling after the title has fully faded in (~0.18s delay + 0.65s duration + buffer)
+      setTimeout(() => {
+        heroCycle.classList.add('cycling');
+      }, 2000);
     }
   }
 
