@@ -96,7 +96,7 @@
         workSubmenu.classList.add('is-closing');
         setTimeout(() => {
           workSubmenu.classList.remove('is-open', 'is-closing');
-        }, 360);
+        }, 420);
       } else {
         workSubmenu.classList.add('is-open');
       }
