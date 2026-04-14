@@ -334,7 +334,7 @@
         exitSlide.style.transform = '';
         exitSlide.style.opacity = '';
       }, { once: true });
-    }, 5000);
+    }, 3000);
   }
 
   /* ── Ticker: touch swipe with seamless resume ── */
