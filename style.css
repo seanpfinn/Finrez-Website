@@ -563,7 +563,7 @@ ul { list-style: none; }
    MISSION
    ════════════════════════════════════════ */
 .mission {
-  padding-block: 80px;
+  padding-block: 200px 80px;
   overflow: hidden;
 }
 
