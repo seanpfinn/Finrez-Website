@@ -579,72 +579,23 @@
       p.sz = z; // -1 (back) to +1 (front)
     });
 
-    // Hit-test for hover (front-most particle within radius)
-    hoveredIdx = -1;
-    let bestZ = -Infinity;
-    particles.forEach((p, i) => {
-      const dx = mouseStageX - p.sx, dy = mouseStageY - p.sy;
-      if (Math.hypot(dx, dy) < CS * 0.6 && p.sz > bestZ) {
-        hoveredIdx = i;
-        bestZ = p.sz;
-      }
-    });
-
-    // Compute push target displacements for hover effect
-    particles.forEach((p, i) => {
-      let tx = 0, ty = 0;
-      if (hoveredIdx >= 0 && i !== hoveredIdx) {
-        const h = particles[hoveredIdx];
-        const dx = p.sx - h.sx, dy = p.sy - h.sy;
-        const dist = Math.hypot(dx, dy) || 1;
-        if (dist < PUSH_RADIUS) {
-          const str = (1 - dist / PUSH_RADIUS) * PUSH_STR;
-          tx = dx / dist * str;
-          ty = dy / dist * str;
-        }
-      }
-      // Spring toward target displacement
-      const fx = (tx - p.dspX) * SPRING_K;
-      const fy = (ty - p.dspY) * SPRING_K;
-      p.vspX = p.vspX * SPRING_D + fx;
-      p.vspY = p.vspY * SPRING_D + fy;
-      p.dspX += p.vspX;
-      p.dspY += p.vspY;
-    });
-
     // Sort back-to-front, then render
     const order = particles.slice().sort((a, b) => a.sz - b.sz);
     order.forEach((p, renderOrder) => {
       const depth  = (p.sz + 1) / 2;                         // 0=back, 1=front
       const scale  = 0.42 + depth * 0.58;                    // 0.42–1.0
       const op     = 0.22 + depth * 0.78;                    // 0.22–1.0
-      const isHov  = particles.indexOf(p) === hoveredIdx;
-      const chipSc = isHov ? scale * HOVER_SCALE : scale;
 
-      const finalX = p.sx + p.dspX - CS / 2;
-      const finalY = p.sy + p.dspY - CS / 2;
+      const finalX = p.sx - CS / 2;
+      const finalY = p.sy - CS / 2;
 
-      p.el.style.transform = `translate(${finalX}px,${finalY}px) scale(${chipSc})`;
+      p.el.style.transform = `translate(${finalX}px,${finalY}px) scale(${scale})`;
       p.el.style.opacity   = String(Math.min(1, op));
       p.el.style.zIndex    = String(renderOrder);
-
-      const label = p.el.querySelector('.tool-name');
-      if (label) label.style.opacity = isHov ? '1' : '0';
     });
 
     requestAnimationFrame(tick);
   }
-
-  // ── Mouse hover (no drag) ─────────────────
-  stage.addEventListener('mousemove', e => {
-    if (isDragging) return;
-    const r = stage.getBoundingClientRect();
-    mouseStageX = e.clientX - r.left;
-    mouseStageY = e.clientY - r.top;
-  });
-  stage.addEventListener('mouseleave', () => {
-    mouseStageX = -9999; mouseStageY = -9999; hoveredIdx = -1;
-  });
 
   // ── Mouse drag → rotate ───────────────────
   stage.addEventListener('mousedown', e => {

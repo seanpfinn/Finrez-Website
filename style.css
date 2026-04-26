@@ -2015,6 +2015,7 @@ ul { list-style: none; }
   margin-inline: 48px;
   position: relative;
   margin-top: auto;
+  padding-bottom: 48px;
   opacity: 0;
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2028,6 +2029,7 @@ ul { list-style: none; }
   width: 100%;
   height: auto;
   cursor: default;
+  pointer-events: none;
 }
 
 .footer-nav {
@@ -2397,6 +2399,7 @@ ul { list-style: none; }
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-person { flex-direction: column; }
   .about-photo { width: 100%; }
+  .about-body { text-align: left; }
 
   /* Results */
   .results { padding-block: 48px; }
