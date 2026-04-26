@@ -2397,7 +2397,7 @@ ul { list-style: none; }
   .about { padding-block: 64px; }
   .about-section-title { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .about-person { flex-direction: column; }
+  .about-person { flex-direction: column; align-items: stretch; }
   .about-photo { width: 100%; }
   .about-body { text-align: left; }
 
