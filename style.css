@@ -2324,7 +2324,8 @@ ul { list-style: none; }
   .hero-title   { animation-delay: 0.2s;  }
   .hero-sub     { animation-delay: 0.35s; }
 
-  .hero-btns { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
+  .hero-btns    { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s  both; }
+  .hero-clients { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
 
   @keyframes hero-blur-in {
     from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
