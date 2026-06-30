@@ -1708,7 +1708,7 @@ ul { list-style: none; }
   text-align: left;
 }
 
-.services .sect-sub { text-align: left; }
+.services .sect-sub { text-align: left; margin-inline: 0; }
 
 .services-grid {
   display: grid;
