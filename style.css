@@ -482,7 +482,7 @@ ul { list-style: none; }
   font-family: 'Geist', sans-serif;
   font-size: 1.2rem;
   color: var(--gray-700);
-  max-width: 560px;
+  max-width: 720px;
   line-height: 1.7;
   letter-spacing: -0.384px;
 }
@@ -627,7 +627,7 @@ ul { list-style: none; }
   margin-top: 16px;
   margin-bottom: 48px;
   text-align: center;
-  max-width: 560px;
+  max-width: 720px;
   margin-inline: auto;
 }
 
@@ -1156,7 +1156,7 @@ ul { list-style: none; }
   font-size: 1.125rem;
   color: var(--gray-700);
   line-height: 1.6;
-  max-width: 560px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
@@ -1441,7 +1441,7 @@ ul { list-style: none; }
   font-size: 1.125rem;
   color: var(--gray-700);
   line-height: 1.6;
-  max-width: 560px;
+  max-width: 720px;
 }
 
 .booking-cal {
@@ -1928,7 +1928,7 @@ ul { list-style: none; }
   font-size: 1.125rem;
   color: var(--gray-700);
   line-height: 1.6;
-  max-width: 560px;
+  max-width: 720px;
   margin-inline: auto;
 }
 
@@ -2006,7 +2006,7 @@ ul { list-style: none; }
 
 .vs-footnote {
   margin-top: 40px;
-  max-width: 560px;
+  max-width: 720px;
   margin-inline: auto;
 }
 
