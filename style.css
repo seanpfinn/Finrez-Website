@@ -1384,6 +1384,11 @@ ul { list-style: none; }
   margin-top: auto;
 }
 
+.pc-footer .pc-toggle {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
 .pc-price-wrap {
   display: flex;
   flex-direction: column;
