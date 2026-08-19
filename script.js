@@ -427,6 +427,21 @@
     });
   }
 
+  /* ── About photo: fetch the hover-state image only when it's needed ── */
+  document.querySelectorAll('.about-photo--hover').forEach(photo => {
+    const hoverImg = photo.querySelector('img[data-src]');
+    if (!hoverImg) return;
+
+    const load = () => {
+      hoverImg.src = hoverImg.dataset.src;
+      hoverImg.removeAttribute('data-src');
+    };
+
+    ['pointerenter', 'focusin', 'touchstart'].forEach(evt =>
+      photo.addEventListener(evt, load, { once: true, passive: true })
+    );
+  });
+
 })();
 
 /* ── Screensaver ── */
