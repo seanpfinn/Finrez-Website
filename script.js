@@ -433,6 +433,7 @@
     if (!hoverImg) return;
 
     const load = () => {
+      if (!hoverImg.dataset.src) return;
       hoverImg.src = hoverImg.dataset.src;
       hoverImg.removeAttribute('data-src');
     };
