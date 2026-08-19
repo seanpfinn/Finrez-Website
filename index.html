@@ -243,7 +243,8 @@
           <div class="about-person sect-blur" data-delay="1">
             <div class="about-photo about-photo--hover">
               <img src="images/sf-finrez-hover.webp" alt="Sean Finn" class="about-photo-img about-photo-default" width="1600" height="1711" loading="lazy" decoding="async" />
-              <img src="images/sf-finrez-dither.webp" alt="" class="about-photo-img about-photo-hover" aria-hidden="true" width="1600" height="1711" loading="lazy" decoding="async" />
+              <!-- Hover state only: src is attached on first hover/focus (see script.js) -->
+              <img data-src="images/sf-finrez-dither.webp" alt="" class="about-photo-img about-photo-hover" aria-hidden="true" width="1600" height="1711" loading="lazy" decoding="async" />
             </div>
             <div class="about-person-text">
               <h3 class="about-name">Sean Finn</h3>
