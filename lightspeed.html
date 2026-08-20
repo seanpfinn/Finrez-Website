@@ -4,13 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lightspeed — Finrez</title>
-  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <meta name="description" content="A brand design language for high-speed internet — a bold visual identity built to communicate speed, reliability, and modernity. A Finrez case study." />
+  <link rel="canonical" href="https://www.finrez.xyz/lightspeed" />
 
-  <!-- Fonts -->
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Finrez" />
+  <meta property="og:title" content="Lightspeed — Finrez" />
+  <meta property="og:description" content="A brand design language for high-speed internet — a bold visual identity built to communicate speed, reliability, and modernity. A Finrez case study." />
+  <meta property="og:url" content="https://www.finrez.xyz/lightspeed" />
+  <meta property="og:image" content="https://www.finrez.xyz/images/finrez-opengraph.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Finrez — your anything design partner" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lightspeed — Finrez" />
+  <meta name="twitter:description" content="A brand design language for high-speed internet — a bold visual identity built to communicate speed, reliability, and modernity. A Finrez case study." />
+  <meta name="twitter:image" content="https://www.finrez.xyz/images/finrez-opengraph.png" />
+
+  <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css) -->
+  <link rel="preload" href="/fonts/vg5000-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.cdnfonts.com/css/vg5000" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -23,76 +46,12 @@
 
     gtag('config', 'G-PNG6PXY9C7');
   </script>
-  <style>
-    .cs-intro {
-      display: flex;
-      flex-direction: column;
-      height: auto;
-      padding-top: calc(var(--nav-h) + 64px);
-      padding-bottom: 48px;
-      padding-inline: 48px;
-      gap: 16px;
-    }
-
-    .cs-intro-title {
-      font-family: 'VG5000', monospace;
-      font-size: 45px;
-      font-weight: 400;
-      color: var(--ink);
-      line-height: 1;
-    }
-
-    .cs-intro-sub {
-      font-family: 'Geist', sans-serif;
-      font-size: 16.1px;
-      font-weight: 400;
-      color: #5e5e5e;
-      line-height: 1.6;
-      max-width: 100%;
-    }
-
-    .cs-hero {
-      width: 100%;
-      aspect-ratio: 1440 / 840;
-      display: block;
-      object-fit: cover;
-      margin-bottom: -2px;
-    }
-
-    .cs-panel {
-      width: 100%;
-      aspect-ratio: 1440 / 840;
-      display: block;
-      object-fit: cover;
-      margin-bottom: -2px;
-    }
-
-    .cs-hero,
-    .cs-panel {
-      opacity: 0;
-      transform: translateY(32px) scale(0.98);
-      transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .cs-hero.in-view,
-    .cs-panel.in-view {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    @media (max-width: 767px) {
-      .cs-intro { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 32px; padding-inline: 20px; }
-      .cs-intro-title { font-size: 31px; }
-      .cs-intro-sub { max-width: 100%; }
-    }
-  </style>
 </head>
 <body>
 
   <header class="header" id="header">
     <div class="nav-wrap">
-      <a href="index.html" class="logo">
+      <a href="/" class="logo">
         <img src="images/finrez-logo.svg" alt="Finrez" class="logo-img" width="125" height="25" decoding="async" />
       </a>
       <div class="nav-links-desktop">
@@ -104,35 +63,35 @@
             </svg>
           </button>
           <div class="work-dropdown" id="workDropdown">
-            <a href="minded.html" class="wdrop-item">
+            <a href="/minded" class="wdrop-item">
               <img src="images/minded-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">MiNDED</span>
                 <span class="wsub-desc">Branding a migraine relief supplement.</span>
               </div>
             </a>
-            <a href="vesperia-films.html" class="wdrop-item">
+            <a href="/vesperia-films" class="wdrop-item">
               <img src="images/vesperia-films-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Vesperia Films</span>
                 <span class="wsub-desc">A web experience for an independent film studio.</span>
               </div>
             </a>
-            <a href="lightspeed.html" class="wdrop-item">
+            <a href="/lightspeed" class="wdrop-item">
               <img src="images/lightspeed-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Lightspeed</span>
                 <span class="wsub-desc">A brand design language for high-speed internet.</span>
               </div>
             </a>
-            <a href="rockbridge.html" class="wdrop-item">
+            <a href="/rockbridge" class="wdrop-item">
               <img src="images/rockbridge-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">RockBridge</span>
                 <span class="wsub-desc">Bringing a trusted brand to property management.</span>
               </div>
             </a>
-            <a href="benchmark.html" class="wdrop-item">
+            <a href="/benchmark" class="wdrop-item">
               <img src="images/benchmark-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Benchmark Independent</span>
@@ -141,7 +100,7 @@
             </a>
           </div>
         </div>
-        <a href="index.html#pricing" class="nav-link">Pricing</a>
+        <a href="/#pricing" class="nav-link">Pricing</a>
       </div>
       <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -158,35 +117,35 @@
         </svg>
       </button>
       <div class="work-submenu" id="workSubmenu">
-        <a href="minded.html" class="wsub-item">
+        <a href="/minded" class="wsub-item">
           <img src="images/minded-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">MiNDED</span>
             <span class="wsub-desc">Branding a migraine relief supplement.</span>
           </div>
         </a>
-        <a href="vesperia-films.html" class="wsub-item">
+        <a href="/vesperia-films" class="wsub-item">
           <img src="images/vesperia-films-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Vesperia Films</span>
             <span class="wsub-desc">A web experience for an independent film studio.</span>
           </div>
         </a>
-        <a href="lightspeed.html" class="wsub-item">
+        <a href="/lightspeed" class="wsub-item">
           <img src="images/lightspeed-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Lightspeed</span>
             <span class="wsub-desc">A brand design language for high-speed internet.</span>
           </div>
         </a>
-        <a href="rockbridge.html" class="wsub-item">
+        <a href="/rockbridge" class="wsub-item">
           <img src="images/rockbridge-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">RockBridge</span>
             <span class="wsub-desc">Bringing a trusted brand to property management.</span>
           </div>
         </a>
-        <a href="benchmark.html" class="wsub-item">
+        <a href="/benchmark" class="wsub-item">
           <img src="images/benchmark-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Benchmark Independent</span>
@@ -195,8 +154,8 @@
         </a>
       </div>
     </div>
-    <a href="index.html#pricing" class="nav-link">Pricing</a>
-    <a href="index.html#booking" class="nav-cta">Book a call</a>
+    <a href="/#pricing" class="nav-link">Pricing</a>
+    <a href="/#booking" class="nav-cta">Book a call</a>
   </nav>
 
   <div id="cursor" aria-hidden="true"></div>
@@ -259,20 +218,20 @@
     <span class="cs-end-cta-label">Start a project</span>
     <p class="cs-end-cta-heading">Building a brand that needs to work at every scale?</p>
     <div class="cs-end-cta-actions">
-      <a href="index.html#booking" class="btn-dark">Book a call</a>
-      <a href="index.html#work" class="cs-end-cta-secondary">See more work</a>
+      <a href="/#booking" class="btn-dark">Book a call</a>
+      <a href="/#work" class="cs-end-cta-secondary">See more work</a>
     </div>
   </div>
 
   <!-- ── PROJECT NAV ── -->
   <nav class="cs-project-nav" aria-label="Project navigation">
-    <a href="vesperia-films.html" class="cs-project-nav-item cs-project-nav-item--prev">
+    <a href="/vesperia-films" class="cs-project-nav-item cs-project-nav-item--prev">
       <span class="cs-project-nav-label">← Previous</span>
       <img src="images/vesperia-films-1.webp" alt="" class="cs-project-nav-thumb" width="1440" height="800" loading="lazy" decoding="async" />
       <span class="cs-project-nav-title">Vesperia Films</span>
       <span class="cs-project-nav-desc">A web experience for an independent film studio.</span>
     </a>
-    <a href="rockbridge.html" class="cs-project-nav-item cs-project-nav-item--next">
+    <a href="/rockbridge" class="cs-project-nav-item cs-project-nav-item--next">
       <span class="cs-project-nav-label">Next →</span>
       <img src="images/rockbridge-1.webp" alt="" class="cs-project-nav-thumb" width="1440" height="800" loading="lazy" decoding="async" />
       <span class="cs-project-nav-title">RockBridge</span>
@@ -284,10 +243,10 @@
   <footer class="footer">
     <div class="footer-inner">
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="index.html#work" class="footer-nav-link">Work</a>
-        <a href="index.html#services" class="footer-nav-link">Services</a>
-        <a href="index.html#pricing" class="footer-nav-link">Pricing</a>
-        <a href="index.html#contact" class="footer-nav-link">FAQ</a>
+        <a href="/#work" class="footer-nav-link">Work</a>
+        <a href="/#services" class="footer-nav-link">Services</a>
+        <a href="/#pricing" class="footer-nav-link">Pricing</a>
+        <a href="/#contact" class="footer-nav-link">FAQ</a>
         <a href="mailto:hello@finrez.xyz" class="footer-nav-link">hello@finrez.xyz</a>
         <a href="https://linkedin.com/company/finrez" class="footer-nav-link" target="_blank" rel="noopener">LinkedIn</a>
       </nav>

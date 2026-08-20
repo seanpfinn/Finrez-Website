@@ -4,21 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finrez — your "anything" design partner</title>
-  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <meta name="description" content="From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand." />
+  <link rel="canonical" href="https://www.finrez.xyz/" />
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Finrez — your &quot;anything&quot; design partner" />
-  <meta property="og:image" content="images/finrez-opengraph.png" />
   <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="images/finrez-opengraph.png" />
+  <meta property="og:site_name" content="Finrez" />
+  <meta property="og:title" content="Finrez — your &quot;anything&quot; design partner" />
+  <meta property="og:description" content="From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand." />
+  <meta property="og:url" content="https://www.finrez.xyz/" />
+  <meta property="og:image" content="https://www.finrez.xyz/images/finrez-opengraph.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Finrez — your anything design partner" />
 
-  <!-- Fonts -->
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Finrez — your &quot;anything&quot; design partner" />
+  <meta name="twitter:description" content="From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand." />
+  <meta name="twitter:image" content="https://www.finrez.xyz/images/finrez-opengraph.png" />
+
+  <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css); IBM Plex Mono is used by the hero canvas -->
+  <link rel="preload" href="/fonts/vg5000-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.cdnfonts.com/css/vg5000" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -37,7 +52,7 @@
   <!-- ───────────── HEADER ───────────── -->
   <header class="header" id="header">
     <div class="nav-wrap">
-      <a href="#" class="logo">
+      <a href="/" class="logo">
         <img src="images/finrez-logo.svg" alt="Finrez" class="logo-img" width="125" height="25" decoding="async" />
       </a>
 
@@ -51,35 +66,35 @@
             </svg>
           </button>
           <div class="work-dropdown" id="workDropdown">
-            <a href="minded.html" class="wdrop-item">
+            <a href="/minded" class="wdrop-item">
               <img src="images/minded-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">MiNDED</span>
                 <span class="wsub-desc">Branding a migraine relief supplement.</span>
               </div>
             </a>
-            <a href="vesperia-films.html" class="wdrop-item">
+            <a href="/vesperia-films" class="wdrop-item">
               <img src="images/vesperia-films-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Vesperia Films</span>
                 <span class="wsub-desc">A web experience for an independent film studio.</span>
               </div>
             </a>
-            <a href="lightspeed.html" class="wdrop-item">
+            <a href="/lightspeed" class="wdrop-item">
               <img src="images/lightspeed.webp" alt="" class="wsub-thumb wdrop-thumb" width="1600" height="900" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Lightspeed</span>
                 <span class="wsub-desc">A brand design language for high-speed internet.</span>
               </div>
             </a>
-            <a href="rockbridge.html" class="wdrop-item">
+            <a href="/rockbridge" class="wdrop-item">
               <img src="images/rockbridge.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">RockBridge</span>
                 <span class="wsub-desc">Bringing a trusted brand to property management.</span>
               </div>
             </a>
-            <a href="benchmark.html" class="wdrop-item">
+            <a href="/benchmark" class="wdrop-item">
               <img src="images/benchmark-1.webp" alt="" class="wsub-thumb wdrop-thumb" width="1440" height="800" loading="lazy" decoding="async" />
               <div class="wsub-info">
                 <span class="wsub-title">Benchmark Independent</span>
@@ -109,35 +124,35 @@
         </svg>
       </button>
       <div class="work-submenu" id="workSubmenu">
-        <a href="minded.html" class="wsub-item">
+        <a href="/minded" class="wsub-item">
           <img src="images/minded-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">MiNDED</span>
             <span class="wsub-desc">Branding a migraine relief supplement.</span>
           </div>
         </a>
-        <a href="vesperia-films.html" class="wsub-item">
+        <a href="/vesperia-films" class="wsub-item">
           <img src="images/vesperia-films-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Vesperia Films</span>
             <span class="wsub-desc">A web experience for an independent film studio.</span>
           </div>
         </a>
-        <a href="lightspeed.html" class="wsub-item">
+        <a href="/lightspeed" class="wsub-item">
           <img src="images/lightspeed.webp" alt="" class="wsub-thumb" width="1600" height="900" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Lightspeed</span>
             <span class="wsub-desc">A brand design language for high-speed internet.</span>
           </div>
         </a>
-        <a href="rockbridge.html" class="wsub-item">
+        <a href="/rockbridge" class="wsub-item">
           <img src="images/rockbridge.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">RockBridge</span>
             <span class="wsub-desc">Bringing a trusted brand to property management.</span>
           </div>
         </a>
-        <a href="benchmark.html" class="wsub-item">
+        <a href="/benchmark" class="wsub-item">
           <img src="images/benchmark-1.webp" alt="" class="wsub-thumb" width="1440" height="800" loading="lazy" decoding="async" />
           <div class="wsub-info">
             <span class="wsub-title">Benchmark Independent</span>
@@ -169,11 +184,11 @@
             <a href="#contact" class="btn-dark">Book a call</a>
           </div>
           <div class="hero-clients">
-            <a href="minded.html" class="hero-client-item"><img src="images/minded-logo.png" alt="MiNDED" class="hero-client-logo logo-lg" width="145" height="44" decoding="async" /></a>
-            <a href="rockbridge.html" class="hero-client-item"><img src="images/rockbridge-logo.png" alt="RockBridge" class="hero-client-logo" width="512" height="89" decoding="async" /></a>
-            <a href="lightspeed.html" class="hero-client-item"><img src="images/lightspeed-logo.webp" alt="Lightspeed" class="hero-client-logo logo-lg" width="1380" height="302" decoding="async" /></a>
-            <a href="vesperia-films.html" class="hero-client-item"><img src="images/vesperia-logo.webp" alt="Vesperia Films" class="hero-client-logo" width="1471" height="252" decoding="async" /></a>
-            <a href="benchmark.html" class="hero-client-item"><img src="images/benchmark-logo.webp" alt="Benchmark Independent" class="hero-client-logo logo-xs" width="1444" height="240" decoding="async" /></a>
+            <a href="/minded" class="hero-client-item"><img src="images/minded-logo.png" alt="MiNDED" class="hero-client-logo logo-lg" width="145" height="44" decoding="async" /></a>
+            <a href="/rockbridge" class="hero-client-item"><img src="images/rockbridge-logo.png" alt="RockBridge" class="hero-client-logo" width="512" height="89" decoding="async" /></a>
+            <a href="/lightspeed" class="hero-client-item"><img src="images/lightspeed-logo.webp" alt="Lightspeed" class="hero-client-logo logo-lg" width="1380" height="302" decoding="async" /></a>
+            <a href="/vesperia-films" class="hero-client-item"><img src="images/vesperia-logo.webp" alt="Vesperia Films" class="hero-client-logo" width="1471" height="252" decoding="async" /></a>
+            <a href="/benchmark" class="hero-client-item"><img src="images/benchmark-logo.webp" alt="Benchmark Independent" class="hero-client-logo logo-xs" width="1444" height="240" decoding="async" /></a>
           </div>
         </div>
         <div class="hero-images" aria-hidden="true">
@@ -191,7 +206,7 @@
     <!-- ───────────── WORK ───────────── -->
     <section id="work">
 
-      <a href="minded.html" class="work-panel work-panel--minded">
+      <a href="/minded" class="work-panel work-panel--minded">
         <img src="images/minded-1.webp" alt="MiNDED project" class="work-panel-img" width="1440" height="800" loading="lazy" decoding="async" />
         <div class="work-panel-labels">
           <div class="work-label-name">MiNDED</div>
@@ -199,7 +214,7 @@
         </div>
       </a>
 
-      <a href="vesperia-films.html" class="work-panel">
+      <a href="/vesperia-films" class="work-panel">
         <img src="images/vesperia-films-1.webp" alt="Vesperia Films project" class="work-panel-img" width="1440" height="800" loading="lazy" decoding="async" />
         <div class="work-panel-labels">
           <div class="work-label-name">Vesperia Films</div>
@@ -207,7 +222,7 @@
         </div>
       </a>
 
-      <a href="lightspeed.html" class="work-panel">
+      <a href="/lightspeed" class="work-panel">
         <img src="images/lightspeed.webp" alt="Lightspeed project" class="work-panel-img" width="1600" height="900" loading="lazy" decoding="async" />
         <div class="work-panel-labels">
           <div class="work-label-name">Lightspeed</div>
@@ -215,7 +230,7 @@
         </div>
       </a>
 
-      <a href="rockbridge.html" class="work-panel">
+      <a href="/rockbridge" class="work-panel">
         <img src="images/rockbridge.webp" alt="RockBridge project" class="work-panel-img" width="1440" height="800" loading="lazy" decoding="async" />
         <div class="work-panel-labels">
           <div class="work-label-name">RockBridge</div>
@@ -223,7 +238,7 @@
         </div>
       </a>
 
-      <a href="benchmark.html" class="work-panel">
+      <a href="/benchmark" class="work-panel">
         <img src="images/benchmark-1.webp" alt="Benchmark Independent project" class="work-panel-img" width="1440" height="800" loading="lazy" decoding="async" />
         <div class="work-panel-labels">
           <div class="work-label-name">Benchmark Independent</div>
@@ -560,7 +575,7 @@
                 <span class="pc-price-label">Starting at</span>
                 <span class="pc-price">$1,999</span>
               </div>
-              <a href="mailto:support@finrez.xyz" class="btn-dark pc-cta">Select plan</a>
+              <a href="mailto:hello@finrez.xyz?subject=Website%20Design%20%26%20Build%20inquiry&amp;body=Hi%20Finrez%2C%0A%0AI'd%20like%20to%20start%20a%20Website%20Design%20%26%20Build%20project.%0A%0AWhat%20we%20do%3A%0AWhat%20we%20need%3A%0ATimeline%3A%0A" class="btn-dark pc-cta">Select plan</a>
             </div>
           </div>
 
