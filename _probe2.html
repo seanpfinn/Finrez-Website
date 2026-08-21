@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><body style="margin:0">
+<iframe id="f" src="/" style="width:1280px;height:900px;border:0"></iframe>
+<pre id="p" style="position:fixed;top:0;left:0;background:#fff;font:12px monospace;margin:0;z-index:9"></pre>
+<script>
+const f=document.getElementById('f');
+f.addEventListener('load',()=>setTimeout(()=>{
+  const d=f.contentDocument, out=[];
+  const t=d.querySelector('.pc-toggle'), o=d.querySelectorAll('.pct-opt');
+  const r=t.getBoundingClientRect(), b=o[0].getBoundingClientRect();
+  out.push('DESKTOP track='+Math.round(r.width)+'x'+Math.round(r.height)+' opt='+Math.round(b.width)+'x'+Math.round(b.height)+' lh='+getComputedStyle(o[0]).lineHeight);
+  // interaction test
+  const card=d.querySelector('[data-pc="retainer"]');
+  o[1].click();
+  out.push('after click: active='+card.dataset.planActive+' pressed=['+[...o].map(x=>x.getAttribute('aria-pressed'))+'] on=['+[...o].map(x=>x.classList.contains('pct-opt--on'))+']');
+  setTimeout(()=>{
+    const shown=[...card.querySelectorAll('.pc-price')].filter(p=>p.offsetParent!==null).map(p=>p.textContent);
+    out.push('visible price='+shown.join('|')+' features='+card.querySelectorAll('.pc-features[data-show="basic"]')[0].offsetParent!==null);
+    o[0].click();
+    out.push('back to pro: active='+card.dataset.planActive+' pressed=['+[...o].map(x=>x.getAttribute('aria-pressed'))+']');
+    document.getElementById('p').textContent='RESULT '+out.join(' || ');
+  },900);
+},2500));
+</script></body></html>

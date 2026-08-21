@@ -1381,10 +1381,22 @@ ul { list-style: none; }
   font-weight: 500;
   color: var(--gray-500);
   padding: 6px 12px;
+  border: 0;
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
   border-radius: 30px;
   cursor: pointer;
   user-select: none;
+  /* Touch: no double-tap zoom delay, no grey flash on tap */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: background var(--transition), color var(--transition);
+}
+
+.pct-opt:focus-visible {
+  outline: 2px solid var(--dark);
+  outline-offset: 2px;
 }
 
 .pct-opt--on {
@@ -2477,6 +2489,17 @@ ul { list-style: none; }
   .pc:last-child { border-bottom: none; padding-right: 20px; }
   .pc-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
   .pc-cta { width: 100%; justify-content: center; }
+
+  /* Pro/Basic toggle reads as a true segmented control on touch:
+     each option owns half the track, at a 44px minimum tap target. */
+  .pc-footer .pc-toggle { margin-bottom: 0; }
+  .pct-opt {
+    flex: 1 1 0;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.9375rem;
+  }
 
   /* Testimonials */
   .testi-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }

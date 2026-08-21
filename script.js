@@ -261,6 +261,7 @@
 
       opt.closest('.pc-toggle').querySelectorAll('.pct-opt').forEach(o => {
         o.classList.toggle('pct-opt--on', o === opt);
+        o.setAttribute('aria-pressed', String(o === opt));
       });
     });
   });

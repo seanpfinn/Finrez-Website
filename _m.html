@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><body style="margin:0;background:#999">
+<iframe id="f" src="/#pricing" style="width:390px;height:1400px;border:0;background:#fff"></iframe>
+<script>
+const f=document.getElementById('f');
+f.addEventListener('load',()=>setTimeout(()=>{
+  const d=f.contentDocument;
+  const card=d.querySelector('[data-pc="retainer"]');
+  card.scrollIntoView();
+  const t=d.querySelector('.pc-toggle');
+  const r=t.getBoundingClientRect();
+  const o=d.querySelector('.pct-opt').getBoundingClientRect();
+  const box=document.createElement('pre');
+  box.textContent='toggle '+Math.round(r.width)+'x'+Math.round(r.height)+' | opt '+Math.round(o.width)+'x'+Math.round(o.height);
+  box.style.cssText='position:fixed;bottom:0;left:0;background:#fff;margin:0;font:12px monospace';
+  document.body.appendChild(box);
+},2000));
+</script></body></html>
