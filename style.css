@@ -1404,16 +1404,6 @@ ul { list-style: none; }
   color: #fff;
 }
 
-.pct-dot {
-  display: block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #fff;
-  flex-shrink: 0;
-}
-.pct-opt:not(.pct-opt--on) .pct-dot { display: none; }
-
 /* Show only the active plan's content */
 [data-plan-active="pro"]  [data-show="basic"] { display: none !important; }
 [data-plan-active="basic"] [data-show="pro"]  { display: none !important; }
