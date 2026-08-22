@@ -819,6 +819,9 @@ ul { list-style: none; }
 
 .cs-hero {
   width: 100%;
+  /* height:auto is required — the width/height attributes on these <img>
+     tags otherwise pin height to 800px and defeat aspect-ratio entirely. */
+  height: auto;
   aspect-ratio: 1440 / 840;
   display: block;
   object-fit: cover;
@@ -827,6 +830,9 @@ ul { list-style: none; }
 
 .cs-panel {
   width: 100%;
+  /* height:auto is required — the width/height attributes on these <img>
+     tags otherwise pin height to 800px and defeat aspect-ratio entirely. */
+  height: auto;
   aspect-ratio: 1440 / 840;
   display: block;
   object-fit: cover;
