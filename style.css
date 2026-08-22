@@ -1457,18 +1457,22 @@ ul { list-style: none; }
 
 /* Price + button footer */
 .pc-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  /* Grid rather than flex so the toggle can own a full row while its own
+     track still shrink-wraps, and so the CTA can sit on the price's
+     baseline (last baseline = the price line, not the label above it). */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: last baseline;
+  column-gap: 16px;
   padding-top: 20px;
   margin-top: auto;
 }
 
 .pc-footer .pc-toggle {
-  width: 100%;
-  margin-bottom: 4px;
+  grid-column: 1 / -1;
+  justify-self: start;
+  width: auto;
+  margin-bottom: 12px;
 }
 
 .pc-price-wrap {
@@ -2484,12 +2488,12 @@ ul { list-style: none; }
   .pc { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 32px 20px; }
   .pc:first-child { padding-left: 20px; }
   .pc:last-child { border-bottom: none; padding-right: 20px; }
-  .pc-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .pc-footer { grid-template-columns: 1fr; align-items: start; row-gap: 16px; }
   .pc-cta { width: 100%; justify-content: center; }
 
   /* Pro/Basic toggle reads as a true segmented control on touch:
      each option owns half the track, at a 44px minimum tap target. */
-  .pc-footer .pc-toggle { margin-bottom: 0; }
+  .pc-footer .pc-toggle { justify-self: stretch; width: 100%; margin-bottom: 0; }
   .pct-opt {
     flex: 1 1 0;
     justify-content: center;
