@@ -608,6 +608,17 @@ ul { list-style: none; }
   color: var(--accent);
 }
 
+/* Hero entrance cleanup — see script.js.
+   The hero animations use fill-mode:both, so they keep applying after they
+   finish, and their output is filter: blur(0px) rather than no filter at all.
+   Any filter value holds the element on its own composited layer and forces
+   greyscale instead of subpixel antialiasing, which leaves the text looking
+   permanently soft. Dropping the animation returns it to unfiltered text. */
+.hero-anim-done {
+  animation: none !important;
+  filter: none !important;
+}
+
 /* Section heading / copy blur reveal */
 .sect-blur {
   opacity: 0;
@@ -624,7 +635,10 @@ ul { list-style: none; }
 
 .sect-blur.in-view {
   opacity: 1;
-  filter: blur(0);
+  /* none, not blur(0): any filter value keeps the element on its own
+     composited layer and forces greyscale antialiasing, which renders
+     text softer than the unfiltered original. */
+  filter: none;
   transform: translateY(0);
 }
 
@@ -1611,7 +1625,8 @@ ul { list-style: none; }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  /* Two cofounders side by side; collapses to one column under 810px. */
+  grid-template-columns: repeat(2, 1fr);
   gap: 48px;
   align-items: start;
   max-width: 1080px;
@@ -1620,14 +1635,14 @@ ul { list-style: none; }
 
 .about-person {
   display: flex;
-  flex-direction: row;
-  gap: 48px;
-  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  align-items: stretch;
 }
 
 .about-photo {
   flex-shrink: 0;
-  width: 50%;
+  width: 100%;
 }
 
 .about-photo {
@@ -1644,30 +1659,10 @@ ul { list-style: none; }
   display: block;
 }
 
-/* Hover swap for Sean's photo */
-.about-photo--hover {
-  position: relative;
-}
-
-.about-photo--hover .about-photo-hover {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.about-photo--hover:hover .about-photo-default {
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.about-photo--hover .about-photo-default,
-.about-photo:not(.about-photo--hover) .about-photo-img {
+/* Both portraits are cutouts sitting on the page background, so they carry
+   their own shadow rather than relying on the frame. */
+.about-photo-img {
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.10));
-}
-
-.about-photo--hover:hover .about-photo-hover {
-  opacity: 1;
 }
 
 .about-person-text {
@@ -1700,31 +1695,6 @@ ul { list-style: none; }
   font-size: 1rem;
   line-height: 1.7;
   color: var(--gray-700);
-}
-
-.about-social {
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.about-social-link {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--gray-500);
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.about-social-link:hover {
-  color: var(--dark);
-}
-
-.about-social-link--underline {
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .about-tags {
@@ -2200,7 +2170,7 @@ ul { list-style: none; }
 
   @keyframes hero-fade-up {
     from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
-    to   { opacity: 1; filter: blur(0);   transform: translateY(0);    }
+    to   { opacity: 1; filter: none;      transform: translateY(0);    }
   }
 
   @keyframes hero-fade-in {
@@ -2285,7 +2255,7 @@ ul { list-style: none; }
   /* Item keyframes */
   @keyframes navItemIn {
     from { opacity: 0; transform: translateY(16px); filter: blur(6px); }
-    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    to   { opacity: 1; transform: translateY(0);    filter: none; }
   }
 
   @keyframes navItemOut {
@@ -2439,12 +2409,12 @@ ul { list-style: none; }
 
   @keyframes hero-blur-in {
     from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
-    to   { opacity: 1; filter: blur(0);    transform: translateY(0);    }
+    to   { opacity: 1; filter: none;       transform: translateY(0);    }
   }
 
   @keyframes hero-blur-fade {
     from { opacity: 0; filter: blur(12px); }
-    to   { opacity: 1; filter: blur(0);    }
+    to   { opacity: 1; filter: none;       }
   }
 
   /* Full stack banner */

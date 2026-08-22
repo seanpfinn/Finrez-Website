@@ -213,6 +213,23 @@
     revealWords();
   }
 
+  /* ── Hero entrance: drop the animation once it lands ── */
+  /* fill-mode:both keeps the animation applied forever, which leaves
+     filter: blur(0px) on the element and softens the text. Removing the
+     animation on completion restores unfiltered rendering. */
+  /* Not { once: true } — .hero-title contains the cycling word, whose own
+     animationend bubbles up and would consume a one-shot listener before the
+     title's own animation ever finishes. */
+  document.querySelectorAll('.avail-badge, .hero-title, .hero-sub, .hero-btns, .hero-clients')
+    .forEach(el => {
+      const done = (e) => {
+        if (e.target !== el) return;
+        el.classList.add('hero-anim-done');
+        el.removeEventListener('animationend', done);
+      };
+      el.addEventListener('animationend', done);
+    });
+
   /* ── Blur reveal: section headings/copy ── */
   if ('IntersectionObserver' in window) {
     const blurObs = new IntersectionObserver((entries) => {
@@ -427,22 +444,6 @@
       });
     });
   }
-
-  /* ── About photo: fetch the hover-state image only when it's needed ── */
-  document.querySelectorAll('.about-photo--hover').forEach(photo => {
-    const hoverImg = photo.querySelector('img[data-src]');
-    if (!hoverImg) return;
-
-    const load = () => {
-      if (!hoverImg.dataset.src) return;
-      hoverImg.src = hoverImg.dataset.src;
-      hoverImg.removeAttribute('data-src');
-    };
-
-    ['pointerenter', 'focusin', 'touchstart'].forEach(evt =>
-      photo.addEventListener(evt, load, { once: true, passive: true })
-    );
-  });
 
 })();
 
