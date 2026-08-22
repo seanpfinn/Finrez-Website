@@ -1657,7 +1657,8 @@ ul { list-style: none; }
   transition: opacity 0.35s ease;
 }
 
-.about-photo--hover .about-photo-default {
+.about-photo--hover .about-photo-default,
+.about-photo:not(.about-photo--hover) .about-photo-img {
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.10));
 }
 
