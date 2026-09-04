@@ -58,6 +58,11 @@ ul { list-style: none; }
   --max-w:      1280px;
   --nav-h:      56px;
   --transition: 0.22s ease;
+  /* Vertical rhythm between page sections. Adjacent sections each contribute
+     their own padding, so the visible gap is roughly double these values.
+     Overridden once in the <810px block rather than per-section. */
+  --section-pad:    112px;
+  --section-pad-lg: 128px;
 }
 
 /* ── Container ── */
@@ -1049,7 +1054,7 @@ ul { list-style: none; }
    TESTIMONIALS — 3-column row
    ════════════════════════════════════════ */
 .testimonials {
-  padding-block: 80px;
+  padding-block: var(--section-pad);
   background: #fff;
 }
 
@@ -1140,7 +1145,7 @@ ul { list-style: none; }
    PROCESS / FAQ
    ════════════════════════════════════════ */
 .process {
-  padding-block: 80px;
+  padding-block: var(--section-pad);
   background: #fff;
 }
 
@@ -1230,8 +1235,8 @@ ul { list-style: none; }
    FULL STACK BANNER
    ════════════════════════════════════════ */
 .fullstack-banner {
-  padding-top: 80px;
-  padding-bottom: 120px;
+  padding-top: var(--section-pad);
+  padding-bottom: var(--section-pad-lg);
   padding-inline: 48px;
   text-align: center;
 }
@@ -1309,7 +1314,7 @@ ul { list-style: none; }
    PRICING
    ════════════════════════════════════════ */
 .pricing {
-  padding-block: 80px;
+  padding-block: var(--section-pad);
   background: #fff;
 }
 
@@ -1516,7 +1521,7 @@ ul { list-style: none; }
    BOOKING
    ════════════════════════════════════════ */
 .booking {
-  padding-block: 80px;
+  padding-block: var(--section-pad);
 }
 
 .booking-inner {
@@ -1607,7 +1612,7 @@ ul { list-style: none; }
    ABOUT
    ════════════════════════════════════════ */
 .about {
-  padding-block: 100px;
+  padding-block: var(--section-pad-lg);
   background: #fff;
 }
 
@@ -1718,7 +1723,7 @@ ul { list-style: none; }
    RESULTS / METRICS
    ════════════════════════════════════════ */
 .results {
-  padding-block: 80px;
+  padding-block: var(--section-pad);
   background: var(--dark);
 }
 
@@ -1756,7 +1761,7 @@ ul { list-style: none; }
    SERVICES
    ════════════════════════════════════════ */
 .services {
-  padding-block: 100px;
+  padding-block: var(--section-pad-lg);
   background: #fff;
 }
 
@@ -1815,7 +1820,7 @@ ul { list-style: none; }
    PROCESS / HOW IT WORKS
    ════════════════════════════════════════ */
 .steps-section {
-  padding-block: 100px;
+  padding-block: var(--section-pad-lg);
   background: var(--gray-100, #f7f7f7);
   border-top: 1px solid var(--gray-200);
 }
@@ -2080,7 +2085,7 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-block: 80px 0;
+  padding-block: var(--section-pad) 0;
   gap: 64px;
 }
 
@@ -2203,6 +2208,13 @@ ul { list-style: none; }
    RESPONSIVE — Mobile (≤ 809px)
    ════════════════════════════════════════ */
 @media (max-width: 809px) {
+  /* One place to tune the mobile section rhythm — the per-section
+     padding-block overrides that used to live here now inherit these. */
+  :root {
+    --section-pad:    64px;
+    --section-pad-lg: 72px;
+  }
+
 
   /* Nav */
   .nav-wrap { padding-inline: 20px; }
@@ -2426,7 +2438,6 @@ ul { list-style: none; }
   .ticker-item { width: 480px; }
 
   /* Mission */
-  .mission { padding-block: 48px; }
   .mission-text { padding-inline: 20px; max-width: 100%; font-size: 2.4rem; text-align: center; }
 
   /* Work panels */
@@ -2436,13 +2447,11 @@ ul { list-style: none; }
   .work-label-desc { padding-left: 20px; }
 
   /* Testimonials */
-  .testimonials { padding-block: 48px; }
   .testi-grid { grid-template-columns: 1fr; }
   .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 28px 20px; }
   .testi-card:last-child { border-bottom: none; }
 
   /* Process */
-  .process { padding-block: 48px; }
   .faq-grid { flex-direction: column; gap: 0; }
   .faq-col + .faq-col .faq-item:first-child { border-top: none; }
   .faq-q { font-size: 1.1rem; }
@@ -2451,7 +2460,6 @@ ul { list-style: none; }
   .booking-title   { font-size: 2.25rem; }
 
   /* Pricing */
-  .pricing { padding-block: 48px; }
   .pricing-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }
   .pricing-title { font-size: 2.25rem; }
   .pricing-cards { grid-template-columns: 1fr; }
@@ -2477,7 +2485,6 @@ ul { list-style: none; }
   .testi-title { font-size: 2.25rem; }
 
   /* Booking */
-  .booking { padding-block: 48px; }
   .booking-inner { gap: 32px; }
 
 
@@ -2486,7 +2493,6 @@ ul { list-style: none; }
   .logo-strip-item img { height: 23px; }
 
   /* About */
-  .about { padding-block: 64px; }
   .about-section-title { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-person { flex-direction: column; align-items: stretch; }
@@ -2494,18 +2500,15 @@ ul { list-style: none; }
   .about-body { text-align: left; }
 
   /* Results */
-  .results { padding-block: 48px; }
   .results-grid { grid-template-columns: 1fr 1fr; }
   .result-item { padding: 28px 24px; }
 
   /* Services */
-  .services { padding-block: 64px; }
   .services-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { padding: 32px 24px; }
 
   /* Process */
-  .steps-section { padding-block: 64px; }
   .steps-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .steps-list { grid-template-columns: 1fr; }
   .step { padding: 28px 24px; }
@@ -2522,7 +2525,7 @@ ul { list-style: none; }
   .booking-header { align-items: flex-start; text-align: left; }
 
   /* Footer */
-  .footer { padding-block: 56px 0; gap: 48px; }
+  .footer { padding-block: var(--section-pad) 0; gap: 48px; }
   .footer-inner { padding-inline: 20px; }
   .footer-nav { gap: 16px 28px; justify-content: flex-start; }
   .footer-logo-wrap { width: calc(100% - 40px); margin-inline: 20px; opacity: 1; }
