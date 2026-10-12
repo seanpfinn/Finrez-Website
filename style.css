@@ -314,6 +314,7 @@ ul { list-style: none; }
   position: relative;
   isolation: isolate;
   overflow-x: clip;
+  text-align: left;
 }
 
 /* The image field lives inside the page container, so it shares the same
@@ -411,7 +412,7 @@ ul { list-style: none; }
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 42% 47% at 50% 52%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.55) 76%, rgba(255,255,255,0) 100%),
+    radial-gradient(ellipse 46% 50% at 33% 52%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.55) 76%, rgba(255,255,255,0) 100%),
     linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 80%, var(--globe-fade) 100%);
 }
 
@@ -2636,6 +2637,110 @@ ul { list-style: none; }
     flex-shrink: 0;
   }
   .vs-row-group .vs-cell--finrez .vs-cell-col-label { color: rgba(255,255,255,0.6); }
+}
+
+/* ════════════════════════════════════════
+   LEFT-ALIGNED LAYOUT + SECTION TYPE SYSTEM
+   One title size and one supporting-copy size for every section, all set
+   flush left to the container edge. The hero copy follows the same edge.
+   ════════════════════════════════════════ */
+:root {
+  --title-size: 3rem;
+  --sub-size: 1.125rem;
+}
+
+/* Hero */
+.hero-content { justify-content: flex-start; }
+.hero-copy    { align-items: flex-start; }
+.hero-title   { justify-content: flex-start; }
+.hero-sub     { margin-inline: 0; }
+.hero-clients { justify-content: flex-start; }
+
+/* Section titles */
+.about-section-title,
+.testi-title,
+.services-heading,
+.fullstack-title,
+.pricing-title,
+.vs-header h2,
+.booking-title,
+.faq-heading,
+.mission-text {
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-size: var(--title-size);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+  text-align: left;
+}
+
+.about-section-title,
+.testi-title,
+.services-heading,
+.fullstack-title,
+.pricing-title,
+.vs-header h2,
+.faq-heading { margin-bottom: 12px; }
+
+/* Supporting copy under each title */
+.sect-sub,
+.about .sect-sub,
+.services .sect-sub,
+.fullstack-sub,
+.vs-header p,
+.booking-sub {
+  font-family: 'Geist', sans-serif;
+  font-size: var(--sub-size);
+  line-height: 1.6;
+  color: var(--gray-700);
+  text-align: left;
+  max-width: 720px;
+  margin-inline: 0;
+}
+.fullstack-sub,
+.vs-header p { margin-top: 16px; }
+
+/* Section header wrappers */
+.testi-header,
+.pricing-header,
+.vs-header,
+.fullstack-banner { text-align: left; }
+.booking-header { align-items: flex-start; text-align: left; }
+/* Keep the cofounder grid on the same left edge as its title */
+.about-grid { margin-inline: 0; }
+
+/* ── Intro (reuses the mission scroll-fill) ── */
+.intro {
+  padding-block: var(--section-pad) var(--section-pad);
+}
+.intro .mission-text {
+  padding-inline: 0;
+  margin-inline: 0;
+  max-width: 1040px;
+  text-wrap: pretty;
+}
+
+/* ── Full stack. Full stop. — two columns on desktop ── */
+@media (min-width: 1000px) {
+  .fullstack-banner {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: 64px;
+    align-items: center;
+  }
+  .fullstack-copy { max-width: 520px; }
+  .fullstack-banner .tools-stage { margin-top: 0; height: 520px; }
+}
+
+@media (max-width: 809px) {
+  :root { --title-size: 2.25rem; --sub-size: 1rem; }
+  .hero-btns { justify-content: flex-start; }
+  .globe-veil {
+    background:
+      radial-gradient(ellipse 80% 46% at 40% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
+      linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 84%, var(--globe-fade) 100%);
+  }
 }
 
 /* ════════════════════════════════════════
