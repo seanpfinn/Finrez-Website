@@ -347,7 +347,7 @@ ul { list-style: none; }
   touch-action: pan-y;
   /* Ease the cards out toward the container edges: a sine-eased ramp over
      --fade-w on each side, so there's no visible line where it starts */
-  --fade-w: 16%;
+  --fade-w: 8%;
   --edge-fade: linear-gradient(to right,
     transparent calc(var(--fade-w) * 0.000),
     rgba(0,0,0,0.038) calc(var(--fade-w) * 0.125),
@@ -2393,7 +2393,7 @@ ul { list-style: none; }
 
   /* Hero */
   .hero-stage { padding-block: calc(var(--nav-h) + 48px) 72px; }
-  .globe { --fade-w: 24%; }
+  .globe { --fade-w: 12%; }
   .globe-veil {
     background:
       radial-gradient(ellipse 78% 46% at 50% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
