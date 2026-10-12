@@ -345,27 +345,28 @@ ul { list-style: none; }
   opacity: 0;
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   touch-action: pan-y;
-  /* Ease the cards out toward the container edges: a sine-eased ramp over
-     --fade-w on each side, so there's no visible line where it starts */
-  --fade-w: 8%;
+  /* Ease the cards out right at the container edges: an ease-out (sine)
+     ramp over --fade-w, so images stay solid until close to the edge and the
+     fade has no visible starting line */
+  --fade-w: 5%;
   --edge-fade: linear-gradient(to right,
     transparent calc(var(--fade-w) * 0.000),
-    rgba(0,0,0,0.038) calc(var(--fade-w) * 0.125),
-    rgba(0,0,0,0.146) calc(var(--fade-w) * 0.250),
-    rgba(0,0,0,0.309) calc(var(--fade-w) * 0.375),
-    rgba(0,0,0,0.500) calc(var(--fade-w) * 0.500),
-    rgba(0,0,0,0.691) calc(var(--fade-w) * 0.625),
-    rgba(0,0,0,0.854) calc(var(--fade-w) * 0.750),
-    rgba(0,0,0,0.962) calc(var(--fade-w) * 0.875),
+    rgba(0,0,0,0.195) calc(var(--fade-w) * 0.125),
+    rgba(0,0,0,0.383) calc(var(--fade-w) * 0.250),
+    rgba(0,0,0,0.556) calc(var(--fade-w) * 0.375),
+    rgba(0,0,0,0.707) calc(var(--fade-w) * 0.500),
+    rgba(0,0,0,0.831) calc(var(--fade-w) * 0.625),
+    rgba(0,0,0,0.924) calc(var(--fade-w) * 0.750),
+    rgba(0,0,0,0.981) calc(var(--fade-w) * 0.875),
     #000 calc(var(--fade-w) * 1.000),
     #000 calc(100% - var(--fade-w) * 1.000),
-    rgba(0,0,0,0.962) calc(100% - var(--fade-w) * 0.875),
-    rgba(0,0,0,0.854) calc(100% - var(--fade-w) * 0.750),
-    rgba(0,0,0,0.691) calc(100% - var(--fade-w) * 0.625),
-    rgba(0,0,0,0.500) calc(100% - var(--fade-w) * 0.500),
-    rgba(0,0,0,0.309) calc(100% - var(--fade-w) * 0.375),
-    rgba(0,0,0,0.146) calc(100% - var(--fade-w) * 0.250),
-    rgba(0,0,0,0.038) calc(100% - var(--fade-w) * 0.125),
+    rgba(0,0,0,0.981) calc(100% - var(--fade-w) * 0.875),
+    rgba(0,0,0,0.924) calc(100% - var(--fade-w) * 0.750),
+    rgba(0,0,0,0.831) calc(100% - var(--fade-w) * 0.625),
+    rgba(0,0,0,0.707) calc(100% - var(--fade-w) * 0.500),
+    rgba(0,0,0,0.556) calc(100% - var(--fade-w) * 0.375),
+    rgba(0,0,0,0.383) calc(100% - var(--fade-w) * 0.250),
+    rgba(0,0,0,0.195) calc(100% - var(--fade-w) * 0.125),
     transparent calc(100% - var(--fade-w) * 0.000));
   -webkit-mask-image: var(--edge-fade);
           mask-image: var(--edge-fade);
@@ -2393,7 +2394,7 @@ ul { list-style: none; }
 
   /* Hero */
   .hero-stage { padding-block: calc(var(--nav-h) + 48px) 72px; }
-  .globe { --fade-w: 12%; }
+  .globe { --fade-w: 7%; }
   .globe-veil {
     background:
       radial-gradient(ellipse 78% 46% at 50% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),

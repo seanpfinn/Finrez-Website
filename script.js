@@ -860,8 +860,13 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 
-  /* Interleave projects so neighbors on the sphere rarely share a client */
-  const shuffled = IMAGES.slice().sort(() => rand() - 0.5);
+  /* Fresh image order on every load (Fisher–Yates). The ring layout itself
+     stays seeded, so only which image lands where changes. */
+  const shuffled = IMAGES.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const r = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[r]] = [shuffled[r], shuffled[i]];
+  }
 
   let W = 0, H = 0, P = 600, R = 600;
   let cards = [];   // { el, lat, lon, opacity }
