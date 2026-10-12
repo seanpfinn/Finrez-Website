@@ -1853,68 +1853,6 @@ ul { list-style: none; }
 }
 
 /* ════════════════════════════════════════
-   PROCESS / HOW IT WORKS
-   ════════════════════════════════════════ */
-.steps-section {
-  padding-block: var(--section-pad-lg);
-  background: var(--gray-100, #f7f7f7);
-  border-top: 1px solid var(--gray-200);
-}
-
-.steps-heading {
-  font-family: 'VG5000', monospace;
-  font-size: 3rem;
-  font-weight: 400;
-  color: var(--dark);
-  margin-bottom: 12px;
-  line-height: 1;
-  text-align: center;
-}
-
-.steps-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 1px solid var(--gray-200);
-  border-left: 1px solid var(--gray-200);
-}
-
-.step {
-  padding: 40px 36px;
-  border-right: 1px solid var(--gray-200);
-  border-bottom: 1px solid var(--gray-200);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.step-num {
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--gray-700);
-}
-
-.step-name {
-  font-family: 'VG5000', monospace;
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: var(--dark);
-  line-height: 1.2;
-}
-
-.step-desc {
-  font-family: 'Geist', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--gray-700);
-}
-
-/* ════════════════════════════════════════
    WORK PANEL — hover CTA
    ════════════════════════════════════════ */
 #work-cursor {
@@ -2229,7 +2167,6 @@ ul { list-style: none; }
 
   .about-grid { gap: 32px; }
   .results-grid { grid-template-columns: repeat(4, 1fr); }
-  .steps-list { grid-template-columns: repeat(2, 1fr); }
 
   .footer-inner { padding-inline: 40px; }
 
@@ -2541,11 +2478,6 @@ ul { list-style: none; }
   .services-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { padding: 32px 24px; }
-
-  /* Process */
-  .steps-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
-  .steps-list { grid-template-columns: 1fr; }
-  .step { padding: 28px 24px; }
 
   /* Pricing — stack to 1 column */
   .pricing-cards { grid-template-columns: 1fr; }
