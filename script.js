@@ -283,76 +283,46 @@
     });
   });
 
-  /* ── Hero cycle: separate then cycle ── */
+  /* ── Hero cycle: the slot's width follows the visible word ──
+     The title is centered, so a fixed-width slot would leave the line
+     off-balance for short words. Each word's own cycle-word iteration
+     resizes the slot as that word starts to fade in. */
   const heroCycle = document.querySelector('.hero-cycle');
   if (heroCycle) {
     const isMobile = window.matchMedia('(max-width: 809px)').matches;
+    const words = Array.from(heroCycle.querySelectorAll('.hero-cycle-word'));
+    let current = 0;
+    let widths = [];
 
-    if (isMobile) {
-      // On mobile start cycling once the title blur-in finishes (0.2s delay + 0.8s duration)
-      setTimeout(() => heroCycle.classList.add('cycling'), 1000);
-    } else {
-      // Desktop: measure the true rendered width of the widest word.
-      // scrollWidth on the actual element works because overflow:hidden clips
-      // visually but doesn't affect the scrollable content size.
-      let naturalWidth = heroCycle.scrollWidth;
+    const measure = () => {
+      widths = words.map(w => Math.ceil(w.getBoundingClientRect().width));
+      if (!widths[0]) widths = words.map(() => heroCycle.scrollWidth);
+    };
+    const show = (i) => {
+      current = i;
+      heroCycle.style.width = widths[i] + 'px';
+    };
 
-      // Fallback: clone inside hero-title so it inherits the correct font size.
-      if (!naturalWidth) {
-        const clone = heroCycle.cloneNode(true);
-        clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;pointer-events:none';
-        heroCycle.parentElement.appendChild(clone);
-        naturalWidth = clone.scrollWidth;
-        heroCycle.parentElement.removeChild(clone);
-      }
+    measure();
+    show(0);
+    // Turn on the width transition only after the first width has landed
+    requestAnimationFrame(() => requestAnimationFrame(() => heroCycle.classList.add('is-sized')));
 
-      // Set width immediately so "brand" is visible as soon as "Your" fades in.
-      heroCycle.style.width = naturalWidth + 'px';
+    const onCycle = (e) => {
+      const i = words.indexOf(e.target);
+      if (i < 0 || e.animationName !== 'cycle-word') return;
+      show(i);
+    };
+    heroCycle.addEventListener('animationstart', onCycle);
+    heroCycle.addEventListener('animationiteration', onCycle);
 
-      // Start cycling after the title has fully faded in (~0.18s delay + 0.65s duration + buffer)
-      setTimeout(() => {
-        heroCycle.classList.add('cycling');
-      }, 2000);
-    }
-  }
+    // Re-measure once the display face loads and whenever the type scale changes
+    const remeasure = () => { measure(); show(current); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    window.addEventListener('resize', remeasure);
 
-  /* ── Hero image slideshow ── */
-  const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
-  if (heroSlides.length > 1) {
-    let currentSlide = 0;
-
-    setInterval(() => {
-      const prev = currentSlide;
-      currentSlide = (currentSlide + 1) % heroSlides.length;
-
-      // Exit the current slide
-      heroSlides[prev].classList.remove('hero-slide--active');
-      heroSlides[prev].classList.add('hero-slide--exit');
-
-      // Enter the next slide: snap to right without transition, then animate in
-      const next = heroSlides[currentSlide];
-      next.style.transition = 'none';
-      next.style.transform = 'translateX(100%)';
-      next.style.opacity = '0';
-
-      // Double rAF: first frame commits the reset, second frame triggers the transition
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          next.style.transition = '';
-          next.style.transform = '';
-          next.style.opacity = '';
-          next.classList.add('hero-slide--active');
-        });
-      });
-
-      // Clean up exit class after transition ends
-      const exitSlide = heroSlides[prev];
-      exitSlide.addEventListener('transitionend', () => {
-        exitSlide.classList.remove('hero-slide--exit');
-        exitSlide.style.transform = '';
-        exitSlide.style.opacity = '';
-      }, { once: true });
-    }, 3000);
+    // Start cycling once the title entrance has landed
+    setTimeout(() => heroCycle.classList.add('cycling'), isMobile ? 1000 : 2000);
   }
 
   /* ── Ticker: touch swipe with seamless resume ── */
@@ -819,7 +789,6 @@
   init();
 })();
 
-/* ── ASCII Waveform Hero ── */
 /* ── Mobile VS accordion ── */
 if (window.matchMedia('(max-width: 809px)').matches) {
   document.querySelectorAll('.vs-row-group').forEach(group => {
@@ -853,56 +822,301 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   });
 }
 
-/* ── ASCII Waveform Hero ── */
+/* ── Globe hero ──
+   The camera sits at the center of a sphere, looking out. Project imagery is
+   laid on the inside wall in latitude rings, a faint graticule is drawn on the
+   same sphere, and the view drifts, follows the cursor and can be dragged.
+
+   One projection drives both layers: .globe has CSS perspective P and
+   .globe-world is translateZ(P) rotateX(pitch) rotateY(yaw), which puts the
+   eye at the world origin. A point (x, y, z) after rotation lands on screen at
+   center + (x, y) · P / −z, which is exactly what the canvas uses. */
 (function () {
-  const canvas = document.getElementById('ascii-waveform');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const globe = document.querySelector('.hero .globe');
+  if (!globe) return;
+  const world  = globe.querySelector('.globe-world');
+  const canvas = globe.querySelector('.globe-grid');
+  const ctx    = canvas.getContext('2d');
+  const hero   = globe.closest('.hero');
 
-  const chars = '░▒▓█▄▀·:;,.\'"` ~-_=+*#@%&FINREZ';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobileQuery  = window.matchMedia('(max-width: 809px)');
+  const DEG = Math.PI / 180;
 
-  const COL_SIZE = 14;
-  const ROW_SIZE = 18;
+  /* Project imagery — every 480w case-study frame on the site */
+  const SETS = {
+    'spectra': 12, 'minded': 10, 'lightspeed': 10,
+    'vesperia-films': 10, 'rockbridge': 10,
+  };
+  const IMAGES = [];
+  Object.keys(SETS).forEach(name => {
+    for (let i = 1; i <= SETS[name]; i++) IMAGES.push(`images/${name}-${i}-480w.webp`);
+  });
 
-  let W, H, t = 0;
+  /* Seeded PRNG so the arrangement is stable between visits */
+  let seed = 7;
+  const rand = () => {
+    seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 
-  function resize() {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
+  /* Interleave projects so neighbors on the sphere rarely share a client */
+  const shuffled = IMAGES.slice().sort(() => rand() - 0.5);
+
+  let W = 0, H = 0, P = 600, R = 600, dpr = 1;
+  let cards = [];   // { el, lat, lon, opacity }
+
+  /* Rotation helpers, CSS conventions (y points down) */
+  const rotX = (v, a) => {
+    const c = Math.cos(a), s = Math.sin(a);
+    return [v[0], v[1] * c - v[2] * s, v[1] * s + v[2] * c];
+  };
+  const rotY = (v, a) => {
+    const c = Math.cos(a), s = Math.sin(a);
+    return [v[0] * c + v[2] * s, v[1], -v[0] * s + v[2] * c];
+  };
+  /* Same chain as the CSS: card rotateY(lon) rotateX(lat) translateZ(−r),
+     then world rotateX(pitch) rotateY(yaw) */
+  const place = (lat, lon, yaw, pitch, r) =>
+    rotX(rotY(rotY(rotX([0, 0, -r], lat), lon), yaw), pitch);
+
+  function layout() {
+    W = hero.clientWidth;
+    H = hero.clientHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+
+    const mobile = mobileQuery.matches;
+    // Wide, slightly fisheye field of view: edge cards stretch as they curve past you
+    P = mobile ? Math.max(W * 0.62, H * 0.36) : Math.min(W * 0.55, H * 0.62);
+    P = Math.max(P, 260);
+    R = P;
+    globe.style.perspective = P + 'px';
+
+    const rings = mobile
+      ? [{ lat: 0, n: 9 }, { lat: -26, n: 8 }, { lat: 26, n: 8 }, { lat: -50, n: 6 }, { lat: 50, n: 6 }]
+      : [{ lat: 0, n: 11 }, { lat: -22, n: 10 }, { lat: 22, n: 10 }, { lat: -42, n: 8 }, { lat: 42, n: 8 }];
+    const span = (mobile ? 28 : 22) * DEG;            // card angular width
+
+    world.textContent = '';
+    cards = [];
+    seed = 7;
+    let k = 0;
+    rings.forEach((ring, ri) => {
+      const offset = (ri % 2) * 0.5;                   // stagger alternate rings
+      for (let i = 0; i < ring.n; i++) {
+        const lon = ((i + offset) / ring.n) * 360 + (rand() - 0.5) * 8;
+        const lat = ring.lat + (rand() - 0.5) * 6;
+        const scale = 0.86 + rand() * 0.28;
+        const w = 2 * R * Math.tan(span / 2) * scale;
+        const h = w * 9 / 16;
+
+        const el = document.createElement('div');
+        el.className = 'globe-card';
+        el.style.width  = w + 'px';
+        el.style.height = h + 'px';
+        el.style.margin = `${-h / 2}px 0 0 ${-w / 2}px`;
+        el.style.transform = `rotateY(${lon}deg) rotateX(${lat}deg) translateZ(${-R}px)`;
+
+        const img = document.createElement('img');
+        img.src = shuffled[k++ % shuffled.length];
+        img.alt = '';
+        img.decoding = 'async';
+        img.loading = 'lazy';
+        img.draggable = false;
+        el.appendChild(img);
+        world.appendChild(el);
+        cards.push({ el, lat: lat * DEG, lon: lon * DEG, opacity: -1 });
+      }
+    });
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
+  /* ── Camera state ── */
+  let yaw = -38, pitch = 0;          // degrees
+  let spin = 34;                     // deg/s, eases down to DRIFT for the entrance
+  const DRIFT = 2.4;
+  let lookX = 0, lookY = 0, aimX = 0, aimY = 0;
+  let scrollTilt = 0;
+  let dragging = false, dragX = 0, dragY = 0, dragPitch = 0, lastMove = 0;
 
-    const cols = Math.ceil(W / COL_SIZE);
-    const rows = Math.ceil(H / ROW_SIZE);
+  function render() {
+    const yawR = (yaw + lookX * 12) * DEG;
+    const pitchR = (pitch + dragPitch - lookY * 7 + scrollTilt) * DEG;
+    world.style.transform =
+      `translateZ(${P}px) rotateX(${pitchR / DEG}deg) rotateY(${yawR / DEG}deg)`;
 
-    ctx.font = `${ROW_SIZE * 0.7}px "IBM Plex Mono", monospace`;
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const nx = col / cols;
-        const ny = row / rows;
-
-        const wave1 = Math.sin(nx * 8  + t * 0.8)               * 0.5 + 0.5;
-        const wave2 = Math.sin(ny * 6  - t * 0.5 + nx * 4)      * 0.5 + 0.5;
-        const wave3 = Math.sin((nx + ny) * 10 + t * 1.2)         * 0.5 + 0.5;
-
-        const combined = wave1 * 0.4 + wave2 * 0.4 + wave3 * 0.2;
-
-        const charIdx = Math.floor(combined * (chars.length - 1));
-        const alpha   = combined * 0.12 + 0.02;
-
-        ctx.fillStyle = `rgba(17, 17, 17, ${alpha})`;
-        ctx.fillText(chars[charIdx], col * COL_SIZE, row * ROW_SIZE + ROW_SIZE * 0.75);
+    /* Fade cards as they swing toward the edge of the hemisphere */
+    for (const c of cards) {
+      const v = place(c.lat, c.lon, yawR, pitchR, 1);
+      const facing = -v[2];
+      let o = (facing - 0.12) / 0.3;
+      o = o < 0 ? 0 : o > 1 ? 1 : o;
+      if (Math.abs(o - c.opacity) > 0.01) {
+        c.opacity = o;
+        c.el.style.opacity = o.toFixed(3);
+        c.el.style.visibility = o === 0 ? 'hidden' : 'visible';
       }
     }
 
-    t += 0.015;
-    requestAnimationFrame(draw);
+    drawGrid(yawR, pitchR);
   }
 
-  resize();
-  window.addEventListener('resize', resize);
-  draw();
+  function drawGrid(yawR, pitchR) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const cx = W / 2, cy = H / 2;
+    const near = 0.08;
+
+    const trace = (pts) => {
+      let pen = false;
+      ctx.beginPath();
+      for (const [lat, lon] of pts) {
+        const v = place(lat, lon, yawR, pitchR, 1);
+        const d = -v[2];
+        if (d < near) { pen = false; continue; }
+        const x = cx + v[0] * P / d, y = cy + v[1] * P / d;
+        if (pen) ctx.lineTo(x, y); else { ctx.moveTo(x, y); pen = true; }
+      }
+      ctx.stroke();
+    };
+
+    ctx.lineWidth = 1;
+    // Parallels
+    for (let lat = -75; lat <= 75; lat += 15) {
+      if (lat === 0) continue;
+      ctx.strokeStyle = 'rgba(27, 27, 27, 0.07)';
+      const pts = [];
+      for (let lon = 0; lon <= 360; lon += 3) pts.push([lat * DEG, lon * DEG]);
+      trace(pts);
+    }
+    // Meridians
+    for (let lon = 0; lon < 360; lon += 15) {
+      ctx.strokeStyle = lon % 90 === 0 ? 'rgba(27, 27, 27, 0.11)' : 'rgba(27, 27, 27, 0.06)';
+      const pts = [];
+      for (let lat = -84; lat <= 84; lat += 3) pts.push([lat * DEG, lon * DEG]);
+      trace(pts);
+    }
+    // Equator in the accent
+    ctx.strokeStyle = 'rgba(255, 64, 26, 0.38)';
+    const eq = [];
+    for (let lon = 0; lon <= 360; lon += 2) eq.push([0, lon * DEG]);
+    trace(eq);
+
+    // Longitude ticks along the equator
+    ctx.font = '10px "IBM Plex Mono", monospace';
+    ctx.textAlign = 'center';
+    for (let lon = 0; lon < 360; lon += 30) {
+      const v = place(0, lon * DEG, yawR, pitchR, 1);
+      const d = -v[2];
+      if (d < 0.35) continue;
+      const x = cx + v[0] * P / d, y = cy + v[1] * P / d;
+      ctx.fillStyle = `rgba(255, 64, 26, ${Math.min(0.6, (d - 0.35) * 1.4)})`;
+      const label = lon === 0 ? '000°' : lon <= 180
+        ? String(lon).padStart(3, '0') + '°E'
+        : String(360 - lon).padStart(3, '0') + '°W';
+      ctx.fillText(label, x, y - 8);
+    }
+  }
+
+  /* ── Loop ── */
+  let running = false, visible = true, last = 0;
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min((now - last) / 1000 || 0, 0.05);
+    last = now;
+
+    if (!dragging) {
+      spin += (DRIFT - spin) * Math.min(1, dt * 1.6);   // ease toward drift
+      yaw += spin * dt;
+      dragPitch *= Math.pow(0.1, dt);                    // settle back level
+    }
+    lookX += (aimX - lookX) * Math.min(1, dt * 3);
+    lookY += (aimY - lookY) * Math.min(1, dt * 3);
+    pitch = Math.sin(now / 9000) * 3;
+
+    render();
+    requestAnimationFrame(frame);
+  }
+  function start() {
+    if (running || reduceMotion.matches || !visible || document.hidden) return;
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+  function stop() { running = false; }
+
+  /* ── Input ── */
+  hero.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = hero.getBoundingClientRect();
+    aimX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    aimY = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  });
+  hero.addEventListener('pointerleave', () => { aimX = 0; aimY = 0; });
+
+  // Drag to look around (horizontal on touch so vertical scroll still works)
+  globe.addEventListener('pointerdown', (e) => {
+    if (reduceMotion.matches) return;
+    dragging = true;
+    dragX = e.clientX; dragY = e.clientY; lastMove = performance.now();
+    spin = 0;
+    globe.classList.add('is-dragging');
+    globe.setPointerCapture(e.pointerId);
+  });
+  globe.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const now = performance.now();
+    const dx = e.clientX - dragX, dy = e.clientY - dragY;
+    const degPerPx = 57.3 / P;                 // 1 px ≈ 1 px of arc at the wall
+    yaw -= dx * degPerPx;
+    if (e.pointerType === 'mouse') {
+      dragPitch = Math.max(-18, Math.min(18, dragPitch + dy * degPerPx));
+    }
+    const dtm = Math.max(now - lastMove, 1) / 1000;
+    spin = (-dx * degPerPx) / dtm;             // fling velocity
+    spin = Math.max(-180, Math.min(180, spin));
+    dragX = e.clientX; dragY = e.clientY; lastMove = now;
+  });
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    if (performance.now() - lastMove > 80) spin = 0;
+    globe.classList.remove('is-dragging');
+  };
+  globe.addEventListener('pointerup', endDrag);
+  globe.addEventListener('pointercancel', endDrag);
+
+  // Look up slightly as the hero scrolls away, so the sphere lags the page
+  window.addEventListener('scroll', () => {
+    const p = Math.min(Math.max(window.scrollY / (H || 1), 0), 1);
+    scrollTilt = p * 14;
+    if (!running) render();
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      visible = entries[0].isIntersecting;
+      visible ? start() : stop();
+    }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { layout(); render(); }, 120);
+  });
+
+  const init = () => {
+    if (reduceMotion.matches) { yaw = 0; spin = 0; }
+    layout();
+    render();
+    requestAnimationFrame(() => globe.classList.add('is-ready'));
+    start();
+  };
+  // Wait for the mono face so the first frame's labels don't swap fonts
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(init);
 })();
