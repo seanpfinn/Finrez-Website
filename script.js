@@ -822,21 +822,19 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   });
 }
 
-/* ── Globe hero ──
+/* ── Hero image field ──
    The camera sits at the center of a sphere, looking out. Project imagery is
-   laid on the inside wall in latitude rings, a faint graticule is drawn on the
-   same sphere, and the view drifts, follows the cursor and can be dragged.
+   laid on the inside wall in latitude rings, and the view drifts, follows the
+   cursor and can be dragged. The field is clipped to the page container.
 
-   One projection drives both layers: .globe has CSS perspective P and
-   .globe-world is translateZ(P) rotateX(pitch) rotateY(yaw), which puts the
-   eye at the world origin. A point (x, y, z) after rotation lands on screen at
-   center + (x, y) · P / −z, which is exactly what the canvas uses. */
+   .globe has CSS perspective P and .globe-world is
+   translateZ(P) rotateX(pitch) rotateY(yaw), which puts the eye at the world
+   origin; the same rotation chain is mirrored in JS to fade cards as they swing
+   toward the edge of view. */
 (function () {
   const globe = document.querySelector('.hero .globe');
   if (!globe) return;
   const world  = globe.querySelector('.globe-world');
-  const canvas = globe.querySelector('.globe-grid');
-  const ctx    = canvas.getContext('2d');
   const hero   = globe.closest('.hero');
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -865,7 +863,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   /* Interleave projects so neighbors on the sphere rarely share a client */
   const shuffled = IMAGES.slice().sort(() => rand() - 0.5);
 
-  let W = 0, H = 0, P = 600, R = 600, dpr = 1;
+  let W = 0, H = 0, P = 600, R = 600;
   let cards = [];   // { el, lat, lon, opacity }
 
   /* Rotation helpers, CSS conventions (y points down) */
@@ -883,11 +881,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     rotX(rotY(rotY(rotX([0, 0, -r], lat), lon), yaw), pitch);
 
   function layout() {
-    W = hero.clientWidth;
-    H = hero.clientHeight;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width  = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
+    W = globe.clientWidth;
+    H = globe.clientHeight;
 
     const mobile = mobileQuery.matches;
     // Wide, slightly fisheye field of view: edge cards stretch as they curve past you
@@ -959,65 +954,6 @@ if (window.matchMedia('(max-width: 809px)').matches) {
         c.el.style.opacity = o.toFixed(3);
         c.el.style.visibility = o === 0 ? 'hidden' : 'visible';
       }
-    }
-
-    drawGrid(yawR, pitchR);
-  }
-
-  function drawGrid(yawR, pitchR) {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    const cx = W / 2, cy = H / 2;
-    const near = 0.08;
-
-    const trace = (pts) => {
-      let pen = false;
-      ctx.beginPath();
-      for (const [lat, lon] of pts) {
-        const v = place(lat, lon, yawR, pitchR, 1);
-        const d = -v[2];
-        if (d < near) { pen = false; continue; }
-        const x = cx + v[0] * P / d, y = cy + v[1] * P / d;
-        if (pen) ctx.lineTo(x, y); else { ctx.moveTo(x, y); pen = true; }
-      }
-      ctx.stroke();
-    };
-
-    ctx.lineWidth = 1;
-    // Parallels
-    for (let lat = -75; lat <= 75; lat += 15) {
-      if (lat === 0) continue;
-      ctx.strokeStyle = 'rgba(27, 27, 27, 0.07)';
-      const pts = [];
-      for (let lon = 0; lon <= 360; lon += 3) pts.push([lat * DEG, lon * DEG]);
-      trace(pts);
-    }
-    // Meridians
-    for (let lon = 0; lon < 360; lon += 15) {
-      ctx.strokeStyle = lon % 90 === 0 ? 'rgba(27, 27, 27, 0.11)' : 'rgba(27, 27, 27, 0.06)';
-      const pts = [];
-      for (let lat = -84; lat <= 84; lat += 3) pts.push([lat * DEG, lon * DEG]);
-      trace(pts);
-    }
-    // Equator in the accent
-    ctx.strokeStyle = 'rgba(255, 64, 26, 0.38)';
-    const eq = [];
-    for (let lon = 0; lon <= 360; lon += 2) eq.push([0, lon * DEG]);
-    trace(eq);
-
-    // Longitude ticks along the equator
-    ctx.font = '10px "IBM Plex Mono", monospace';
-    ctx.textAlign = 'center';
-    for (let lon = 0; lon < 360; lon += 30) {
-      const v = place(0, lon * DEG, yawR, pitchR, 1);
-      const d = -v[2];
-      if (d < 0.35) continue;
-      const x = cx + v[0] * P / d, y = cy + v[1] * P / d;
-      ctx.fillStyle = `rgba(255, 64, 26, ${Math.min(0.6, (d - 0.35) * 1.4)})`;
-      const label = lon === 0 ? '000°' : lon <= 180
-        ? String(lon).padStart(3, '0') + '°E'
-        : String(360 - lon).padStart(3, '0') + '°W';
-      ctx.fillText(label, x, y - 8);
     }
   }
 
@@ -1117,6 +1053,5 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     requestAnimationFrame(() => globe.classList.add('is-ready'));
     start();
   };
-  // Wait for the mono face so the first frame's labels don't swap fonts
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(init);
+  init();
 })();

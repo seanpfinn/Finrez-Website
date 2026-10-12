@@ -307,23 +307,35 @@ ul { list-style: none; }
 .hero {
   --globe-fade: #fff;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  isolation: isolate;
+}
+
+/* The image field lives inside the page container, so it shares the same
+   side margins as every other section. */
+.hero-container {
+  display: flex;
+  width: 100%;
+}
+
+.hero-stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
   min-height: 100vh;
   min-height: 100svh;
   padding-block: calc(var(--nav-h) + 72px) 104px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
 }
 
-/* ── Globe: the viewer stands at the center of a sphere ──
-   .globe gets its CSS perspective from script.js so the projection matches the
-   graticule canvas exactly. .globe-world carries the camera rotation; each
-   .globe-card is pushed out to the sphere wall facing inward. */
+/* ── Image field: the viewer stands at the center of a sphere ──
+   script.js sets .globe's perspective; .globe-world carries the camera
+   rotation; each .globe-card is pushed out to the sphere wall facing inward. */
 .globe {
   position: absolute;
   inset: 0;
@@ -333,16 +345,12 @@ ul { list-style: none; }
   opacity: 0;
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   touch-action: pan-y;
+  /* Soften the container edges so cards don't hard-cut at the margin */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
 }
 
 .globe.is-ready { opacity: 1; }
-
-.globe-grid {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
 
 .globe-world {
   position: absolute;
@@ -372,7 +380,7 @@ ul { list-style: none; }
   -webkit-user-drag: none;
 }
 
-/* Clears a calm pocket for the copy, and dissolves the sphere into the nav
+/* Clears a calm pocket for the copy, and dissolves the field into the nav
    above and the next section below. */
 .globe-veil {
   position: absolute;
@@ -385,14 +393,13 @@ ul { list-style: none; }
 
 .globe.is-dragging { cursor: grabbing; }
 
-/* Ensure hero content sits above the globe */
+/* Ensure hero content sits above the image field */
 .hero-content {
   position: relative;
   z-index: 1;
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-inline: 48px;
   pointer-events: none;
 }
 
@@ -2364,8 +2371,7 @@ ul { list-style: none; }
   .container { padding-inline: 20px; }
 
   /* Hero */
-  .hero { padding-block: calc(var(--nav-h) + 48px) 72px; }
-  .hero-content { padding-inline: 20px; }
+  .hero-stage { padding-block: calc(var(--nav-h) + 48px) 72px; }
   .globe-veil {
     background:
       radial-gradient(ellipse 78% 46% at 50% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),

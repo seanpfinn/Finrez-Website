@@ -29,11 +29,11 @@
   <meta name="twitter:description" content="From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand." />
   <meta name="twitter:image" content="https://www.finrez.xyz/images/finrez-opengraph.png" />
 
-  <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css); IBM Plex Mono labels the hero globe graticule -->
+  <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css) -->
   <link rel="preload" href="/fonts/vg5000-regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -170,33 +170,35 @@
   <main>
 
     <!-- ───────────── HERO ───────────── -->
-    <!-- The background is a camera at the center of a sphere: project imagery is
-         mapped onto the inside of the globe and drifts past. Cards are built and
-         positioned by script.js (see "Globe hero"); without JS the copy still
-         renders centered on white. -->
+    <!-- Project imagery floats on the inside of a sphere around the viewer, clipped
+         to the page container. Cards are built and positioned by script.js (see
+         "Hero image field"); without JS the copy still renders centered on white. -->
     <section class="hero">
-      <div class="globe" aria-hidden="true">
-        <canvas class="globe-grid"></canvas>
-        <div class="globe-world"></div>
-        <div class="globe-veil"></div>
-      </div>
-      <div class="hero-content">
-        <div class="hero-copy">
-          <div class="avail-badge">
-            <span class="avail-dot" aria-hidden="true"></span>
-            Available for new projects
+      <div class="container hero-container">
+        <div class="hero-stage">
+          <div class="globe" aria-hidden="true">
+            <div class="globe-world"></div>
+            <div class="globe-veil"></div>
           </div>
-          <h1 class="hero-title"><span>Your</span><span class="hero-accent-vg hero-cycle" aria-label="brand, website, product, and AI"><span class="hero-cycle-word">brand</span><span class="hero-cycle-word">website</span><span class="hero-cycle-word">product</span><span class="hero-cycle-word">AI</span></span><span class="hero-dp">design partner.</span></h1>
-          <p class="hero-sub">From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand.</p>
-          <div class="hero-btns">
-            <a href="#contact" class="btn-dark">Book a call</a>
-          </div>
-          <div class="hero-clients">
-            <a href="/minded" class="hero-client-item"><img src="images/minded-logo.webp" alt="MiNDED" class="hero-client-logo logo-lg" width="145" height="44" decoding="async" /></a>
-            <a href="/rockbridge" class="hero-client-item"><img src="images/rockbridge-logo.webp" alt="RockBridge" class="hero-client-logo" width="240" height="42" decoding="async" /></a>
-            <a href="/lightspeed" class="hero-client-item"><img src="images/lightspeed-logo.webp" alt="Lightspeed" class="hero-client-logo logo-lg" width="240" height="53" decoding="async" /></a>
-            <a href="/vesperia-films" class="hero-client-item"><img src="images/vesperia-logo.webp" alt="Vesperia Films" class="hero-client-logo" width="240" height="41" decoding="async" /></a>
+          <div class="hero-content">
+            <div class="hero-copy">
+              <div class="avail-badge">
+                <span class="avail-dot" aria-hidden="true"></span>
+                Available for new projects
+              </div>
+              <h1 class="hero-title"><span>Your</span><span class="hero-accent-vg hero-cycle" aria-label="brand, website, product, and AI"><span class="hero-cycle-word">brand</span><span class="hero-cycle-word">website</span><span class="hero-cycle-word">product</span><span class="hero-cycle-word">AI</span></span><span class="hero-dp">design partner.</span></h1>
+              <p class="hero-sub">From impactful branding and stunning websites to engaging products that drive results, Finrez offers a full range of design services to elevate your brand.</p>
+              <div class="hero-btns">
+                <a href="#contact" class="btn-dark">Book a call</a>
+              </div>
+              <div class="hero-clients">
+                <a href="/minded" class="hero-client-item"><img src="images/minded-logo.webp" alt="MiNDED" class="hero-client-logo logo-lg" width="145" height="44" decoding="async" /></a>
+                <a href="/rockbridge" class="hero-client-item"><img src="images/rockbridge-logo.webp" alt="RockBridge" class="hero-client-logo" width="240" height="42" decoding="async" /></a>
+                <a href="/lightspeed" class="hero-client-item"><img src="images/lightspeed-logo.webp" alt="Lightspeed" class="hero-client-logo logo-lg" width="240" height="53" decoding="async" /></a>
+                <a href="/vesperia-films" class="hero-client-item"><img src="images/vesperia-logo.webp" alt="Vesperia Films" class="hero-client-logo" width="240" height="41" decoding="async" /></a>
+                </div>
             </div>
+          </div>
         </div>
       </div>
     </section>
