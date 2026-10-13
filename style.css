@@ -2712,7 +2712,9 @@ ul { list-style: none; }
 
 /* ── Intro (reuses the mission scroll-fill) ── */
 .intro {
-  padding-block: var(--section-pad) var(--section-pad);
+  /* Extra air around the intro statement: 1.75× the standard section padding
+     (≈196px desktop, ≈112px on phones) */
+  padding-block: calc(var(--section-pad) * 1.75);
 }
 .intro .mission-text {
   padding-inline: 0;
