@@ -2445,7 +2445,19 @@ ul { list-style: none; }
   .mission-text { padding-inline: 20px; max-width: 100%; font-size: 2.4rem; text-align: center; }
 
   /* Work panels */
-  .work-panel { aspect-ratio: 1 / 1; }   /* square tiles on phones; images crop from center */
+  .work-panel { aspect-ratio: 1 / 1; }   /* square tiles on phones */
+  /* Fill the square exactly and crop around the image's center. The image is
+     taken out of flow so its height comes from the tile, not its own aspect
+     ratio (mobile Safari can leave height:100% unresolved otherwise). */
+  .work-panel-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+  .work-panel--minded .work-panel-img { transform-origin: center; }
   .work-panel-labels { left: 0; }
   .work-label-name { padding-left: 20px; }
   .work-label-desc { padding-left: 20px; }
