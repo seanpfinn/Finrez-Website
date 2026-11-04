@@ -204,7 +204,7 @@
   /* Not { once: true } — .hero-title contains the cycling word, whose own
      animationend bubbles up and would consume a one-shot listener before the
      title's own animation ever finishes. */
-  document.querySelectorAll('.avail-badge, .hero-title, .hero-sub, .hero-btns')
+  document.querySelectorAll('.hero-title, .hero-btns')
     .forEach(el => {
       const done = (e) => {
         if (e.target !== el) return;
@@ -1015,7 +1015,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   hero.addEventListener('pointermove', (e) => {
     if (e.pointerType !== 'mouse') return;
     // Ignore the pointer while it's over the copy, so frames behind the text don't light up
-    const overCopy = e.target.closest && e.target.closest('.hero-copy a, .hero-title, .hero-sub, .avail-badge');
+    const overCopy = e.target.closest && e.target.closest('.hero-copy a, .hero-title, .hero-hint');
     pointer = overCopy ? null : { x: e.clientX, y: e.clientY };
     if (!pointer) setHover(null);
     else if (!running && !dragging) setHover(pick(pointer.x, pointer.y));
