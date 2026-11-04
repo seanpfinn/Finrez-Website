@@ -36,7 +36,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
 button { cursor: pointer; border: none; background: none; }
@@ -310,7 +309,6 @@ ul { list-style: none; }
   background: #fff;
   display: flex;
   flex-direction: column;
-  text-align: center;
   position: relative;
   isolation: isolate;
   overflow-x: clip;
@@ -739,7 +737,6 @@ ul { list-style: none; }
   overflow: hidden;
   text-decoration: none;
 }
-
 
 .work-panel-img {
   width: 100%;
@@ -1217,7 +1214,6 @@ ul { list-style: none; }
   background: #fff;
 }
 
-
 .faq-heading {
   font-family: 'VG5000', 'Courier New', monospace;
   font-size: 3rem;
@@ -1297,34 +1293,6 @@ ul { list-style: none; }
 
 .faq-a.is-open > div {
   padding-bottom: 20px;
-}
-
-/* ════════════════════════════════════════
-   FULL STACK BANNER
-   ════════════════════════════════════════ */
-.fullstack-banner {
-  padding-top: var(--section-pad);
-  padding-bottom: var(--section-pad-lg);
-  padding-inline: 48px;
-  text-align: center;
-}
-
-.fullstack-title {
-  font-family: 'VG5000', monospace;
-  font-size: 3rem;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 16px;
-}
-
-.fullstack-sub {
-  font-family: 'Geist', sans-serif;
-  font-size: 1.125rem;
-  color: var(--gray-700);
-  line-height: 1.6;
-  max-width: 720px;
-  margin: 0 auto;
 }
 
 /* Tools sphere */
@@ -1454,53 +1422,6 @@ ul { list-style: none; }
   line-height: 1.2;
 }
 
-/* Pro/Basic toggle */
-.pc-toggle {
-  display: inline-flex;
-  align-items: center;
-  background: #eae9e9;
-  border-radius: 50px;
-  padding: 2px;
-  gap: 2px;
-  flex-shrink: 0;
-}
-
-.pct-opt {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--gray-500);
-  padding: 6px 12px;
-  border: 0;
-  background: none;
-  -webkit-appearance: none;
-  appearance: none;
-  border-radius: 30px;
-  cursor: pointer;
-  user-select: none;
-  /* Touch: no double-tap zoom delay, no grey flash on tap */
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: background var(--transition), color var(--transition);
-}
-
-.pct-opt:focus-visible {
-  outline: 2px solid var(--dark);
-  outline-offset: 2px;
-}
-
-.pct-opt--on {
-  background: var(--accent);
-  color: #fff;
-}
-
-/* Show only the active plan's content */
-[data-plan-active="pro"]  [data-show="basic"] { display: none !important; }
-[data-plan-active="basic"] [data-show="pro"]  { display: none !important; }
-
 .pc-tagline {
   font-family: 'Geist', sans-serif;
   font-size: 0.9rem;
@@ -1553,13 +1474,6 @@ ul { list-style: none; }
   column-gap: 16px;
   padding-top: 20px;
   margin-top: auto;
-}
-
-.pc-footer .pc-toggle {
-  grid-column: 1 / -1;
-  justify-self: start;
-  width: auto;
-  margin-bottom: 12px;
 }
 
 .pc-price-wrap {
@@ -1636,8 +1550,6 @@ ul { list-style: none; }
   display: block;
 }
 
-
-
 /* ════════════════════════════════════════
    CLIENT LOGO STRIP
    ════════════════════════════════════════ */
@@ -1675,155 +1587,6 @@ ul { list-style: none; }
 
 .logo-strip-item img.logo-lg { height: 40px; }
 .logo-strip-item img.logo-xs { height: 25px; }
-
-/* ════════════════════════════════════════
-   ABOUT
-   ════════════════════════════════════════ */
-.about {
-  padding-block: var(--section-pad-lg);
-  background: #fff;
-}
-
-.about-section-title {
-  font-family: 'VG5000', monospace;
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--dark);
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.about .sect-sub { text-align: center; }
-
-.about-grid {
-  display: grid;
-  /* Two cofounders side by side; collapses to one column under 810px. */
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px;
-  align-items: start;
-  max-width: 1080px;
-  margin-inline: auto;
-}
-
-.about-person {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: stretch;
-}
-
-.about-photo {
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.about-photo {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid #e0e0e0;
-}
-
-.about-photo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  display: block;
-}
-
-/* Both portraits are cutouts sitting on the page background, so they carry
-   their own shadow rather than relying on the frame. */
-.about-photo-img {
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.10));
-}
-
-.about-person-text {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.about-name {
-  font-family: 'VG5000', monospace;
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--dark);
-}
-
-.about-role {
-  font-family: 'Geist', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gray-500);
-  margin-bottom: 8px;
-}
-
-.about-body {
-  font-family: 'Geist', sans-serif;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--gray-700);
-}
-
-.about-tags {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-}
-
-.about-tag {
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--dark);
-  background: var(--gray-100, #f5f5f5);
-  padding: 6px 14px;
-  border: 1px solid var(--gray-200);
-}
-
-/* ════════════════════════════════════════
-   RESULTS / METRICS
-   ════════════════════════════════════════ */
-.results {
-  padding-block: var(--section-pad);
-  background: var(--dark);
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-left: 1px solid rgba(255,255,255,0.12);
-}
-
-.result-item {
-  padding: 40px 36px;
-  border-right: 1px solid rgba(255,255,255,0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.result-number {
-  font-family: 'VG5000', monospace;
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 400;
-  color: #fff;
-  line-height: 1;
-}
-
-.result-label {
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.55);
-}
 
 /* ════════════════════════════════════════
    SERVICES
@@ -2192,15 +1955,12 @@ ul { list-style: none; }
 @media (max-width: 1199px) {
   .container { padding-inline: 40px; }
   .hero { --gutter: 40px; }
-  .mission-text { padding-inline: 40px; }
 
   .testi-grid { grid-template-columns: 1fr; }
 
   .pricing-cards { gap: 0; }
 
-  .about-grid { gap: 32px; }
-  .results-grid { grid-template-columns: repeat(4, 1fr); }
-
+    
   .footer-inner { padding-inline: 40px; }
 
   .faq-q { font-size: 1.2rem; }
@@ -2216,7 +1976,6 @@ ul { list-style: none; }
     --section-pad:    64px;
     --section-pad-lg: 72px;
   }
-
 
   /* Nav */
   .nav-wrap { padding-inline: 20px; }
@@ -2433,8 +2192,7 @@ ul { list-style: none; }
     to   { opacity: 1; filter: none;       }
   }
 
-  /* Full stack banner */
-  .fullstack-banner { padding-top: 48px; padding-inline: 20px; text-align: left; }
+  /* Services: tools orbit */
   .tools-stage { height: 420px; }
   .tool-circle { width: 54px; height: 54px; }
 
@@ -2442,7 +2200,6 @@ ul { list-style: none; }
   .ticker-item { width: 480px; }
 
   /* Mission */
-  .mission-text { padding-inline: 20px; max-width: 100%; font-size: 2.4rem; text-align: center; }
 
   /* Work panels */
   .work-panel { aspect-ratio: 1 / 1; }   /* square tiles on phones */
@@ -2472,8 +2229,7 @@ ul { list-style: none; }
   .faq-col + .faq-col .faq-item:first-child { border-top: none; }
   .faq-q { font-size: 1.1rem; }
   .faq-heading { font-size: 2.25rem; text-align: left; }
-  .fullstack-title { font-size: 2.25rem; }
-  .booking-title   { font-size: 2.25rem; }
+    .booking-title   { font-size: 2.25rem; }
 
   /* Pricing */
   .pricing-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }
@@ -2487,15 +2243,7 @@ ul { list-style: none; }
 
   /* Pro/Basic toggle reads as a true segmented control on touch:
      each option owns half the track, at a 44px minimum tap target. */
-  .pc-footer .pc-toggle { justify-self: stretch; width: 100%; margin-bottom: 0; }
-  .pct-opt {
-    flex: 1 1 0;
-    justify-content: center;
-    min-height: 44px;
-    padding: 10px 12px;
-    font-size: 0.9375rem;
-  }
-
+    
   /* Testimonials */
   .testi-header { padding-inline: 20px; margin-bottom: 32px; text-align: left; }
   .testi-title { font-size: 2.25rem; }
@@ -2503,21 +2251,9 @@ ul { list-style: none; }
   /* Booking */
   .booking-inner { gap: 32px; }
 
-
   /* Logo strip */
   .logo-strip-list { gap: 28px 32px; padding-inline: 20px; }
   .logo-strip-item img { height: 23px; }
-
-  /* About */
-  .about-section-title { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .about-person { flex-direction: column; align-items: stretch; }
-  .about-photo { width: 100%; }
-  .about-body { text-align: left; }
-
-  /* Results */
-  .results-grid { grid-template-columns: 1fr 1fr; }
-  .result-item { padding: 28px 24px; }
 
   /* Services */
   .services-heading { font-size: 2.25rem; margin-bottom: 12px; text-align: left; }
@@ -2669,10 +2405,8 @@ ul { list-style: none; }
 .hero-clients { justify-content: flex-start; }
 
 /* Section titles */
-.about-section-title,
 .testi-title,
 .services-heading,
-.fullstack-title,
 .pricing-title,
 .vs-header h2,
 .booking-title,
@@ -2687,19 +2421,15 @@ ul { list-style: none; }
   text-align: left;
 }
 
-.about-section-title,
 .testi-title,
 .services-heading,
-.fullstack-title,
 .pricing-title,
 .vs-header h2,
 .faq-heading { margin-bottom: 12px; }
 
 /* Supporting copy under each title */
 .sect-sub,
-.about .sect-sub,
 .services .sect-sub,
-.fullstack-sub,
 .vs-header p,
 .booking-sub {
   font-family: 'Geist', sans-serif;
@@ -2710,17 +2440,13 @@ ul { list-style: none; }
   max-width: 720px;
   margin-inline: 0;
 }
-.fullstack-sub,
 .vs-header p { margin-top: 16px; }
 
 /* Section header wrappers */
 .testi-header,
 .pricing-header,
-.vs-header,
-.fullstack-banner { text-align: left; }
+.vs-header { text-align: left; }
 .booking-header { align-items: flex-start; text-align: left; }
-/* Keep the cofounder grid on the same left edge as its title */
-.about-grid { margin-inline: 0; }
 
 /* ── Intro (reuses the mission scroll-fill) ── */
 .intro {
@@ -2735,16 +2461,54 @@ ul { list-style: none; }
   text-wrap: pretty;
 }
 
-/* ── Full stack. Full stop. — two columns on desktop ── */
+/* ── Intro: founders ── */
+.intro-founders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  margin-top: 48px;
+}
+.founder {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+}
+.founder-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  background: var(--gray-100);
+}
+.founder figcaption {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.founder-name {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+.founder-role {
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+}
+
+/* ── Services: what we do + the tools orbit ── */
+.services-layout { display: grid; gap: 24px; }
+.services-layout .tools-stage { margin-top: 0; }
 @media (min-width: 1000px) {
-  .fullstack-banner {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    column-gap: 64px;
+  .services-layout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: 48px;
     align-items: center;
   }
-  .fullstack-copy { max-width: 520px; }
-  .fullstack-banner .tools-stage { margin-top: 0; height: 520px; }
+  .services-layout .tools-stage { height: 560px; }
 }
 
 @media (max-width: 809px) {

@@ -244,45 +244,6 @@
     document.querySelectorAll('.sect-blur').forEach(el => blurObs.observe(el));
   }
 
-  /* ── Retainer plan toggle ── */
-  const countPrice = (el, from, to, duration = 480) => {
-    const startTime = performance.now();
-    const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
-    const tick = (now) => {
-      const t = Math.min((now - startTime) / duration, 1);
-      // ease-in-out cubic
-      const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      el.textContent = fmt(from + (to - from) * ease);
-      if (t < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-
-  document.querySelectorAll('[data-pc="retainer"] .pct-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const card = opt.closest('[data-pc="retainer"]');
-      const plan = opt.dataset.plan;
-      if (card.dataset.planActive === plan) return;
-
-      // Animate visible price element
-      const visiblePrice = card.querySelector(`.pc-price[data-show="${card.dataset.planActive}"]`);
-      const targetPrice  = card.querySelector(`.pc-price[data-show="${plan}"]`);
-      if (visiblePrice && targetPrice) {
-        const from = parseInt(visiblePrice.textContent.replace(/\D/g, ''), 10);
-        const to   = parseInt(targetPrice.textContent.replace(/\D/g, ''), 10);
-        card.dataset.planActive = plan;
-        countPrice(targetPrice, from, to);
-      } else {
-        card.dataset.planActive = plan;
-      }
-
-      opt.closest('.pc-toggle').querySelectorAll('.pct-opt').forEach(o => {
-        o.classList.toggle('pct-opt--on', o === opt);
-        o.setAttribute('aria-pressed', String(o === opt));
-      });
-    });
-  });
-
   /* ── Hero cycle: the slot's width follows the visible word ──
      The title is centered, so a fixed-width slot would leave the line
      off-balance for short words. Each word's own cycle-word iteration
