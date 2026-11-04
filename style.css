@@ -537,6 +537,12 @@ ul { list-style: none; }
   100% { box-shadow: 0 0 0 0   rgba(34, 197, 94, 0);    }
 }
 
+/* Forces the cycling word onto the headline's second line */
+.hero-break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .hero-title {
   font-family: 'Figtree', sans-serif;
   font-size: clamp(3rem, 6.6vw, 4.56rem);
@@ -549,11 +555,6 @@ ul { list-style: none; }
   justify-content: center;
   align-items: baseline;
   column-gap: 0.25em;
-}
-
-/* "design partner" forced to second line */
-.hero-dp {
-  flex-basis: 100%;
 }
 
 /* "anything" in VG5000 accent */
@@ -748,81 +749,6 @@ ul { list-style: none; }
   text-align: center;
   max-width: 720px;
   margin-inline: auto;
-}
-
-/* ════════════════════════════════════════
-   WORK — full-width stacked panels
-   ════════════════════════════════════════ */
-.work-panel {
-  display: block;
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 800px;
-  overflow: hidden;
-  text-decoration: none;
-}
-
-.work-panel-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Minded image has a light background at the bottom — zoom in from top to clip it */
-.work-panel--minded .work-panel-img {
-  transform: scale(1.1);
-  transform-origin: top center;
-}
-
-.work-panel-labels {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.work-label-name,
-.work-label-desc {
-  opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.work-panel.labels-visible .work-label-name {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.work-panel.labels-visible .work-label-desc {
-  opacity: 1;
-  transform: translateX(0);
-  transition-delay: 0.12s;
-}
-
-.work-label-name {
-  background: var(--accent);
-  color: #fff;
-  font-family: 'VG5000', 'Courier New', monospace;
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 8px 20px 8px 48px;
-  line-height: 1.2;
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.work-label-desc {
-  background: var(--accent);
-  color: #fff;
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  padding: 6px 20px 6px 48px;
-  line-height: 1.2;
-  white-space: nowrap;
 }
 
 /* Case study context pills */
@@ -1673,36 +1599,6 @@ ul { list-style: none; }
 }
 
 /* ════════════════════════════════════════
-   WORK PANEL — hover CTA
-   ════════════════════════════════════════ */
-#work-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fff;
-  color: var(--dark);
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 999px;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(var(--cx, 0px), var(--cy, 0px)) translate(-50%, -50%) scale(0.85);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  white-space: nowrap;
-  z-index: 9999;
-  will-change: transform;
-}
-
-#work-cursor.visible {
-  opacity: 1;
-  transform: translate(var(--cx, 0px), var(--cy, 0px)) translate(-50%, -50%) scale(1);
-}
-
-.work-panel { cursor: none; }
-
-/* ════════════════════════════════════════
    SCREENSAVER
    ════════════════════════════════════════ */
 #screensaver {
@@ -2222,24 +2118,8 @@ ul { list-style: none; }
 
   /* Mission */
 
-  /* Work panels */
-  .work-panel { aspect-ratio: 1 / 1; }   /* square tiles on phones */
-  /* Fill the square exactly and crop around the image's center. The image is
-     taken out of flow so its height comes from the tile, not its own aspect
-     ratio (mobile Safari can leave height:100% unresolved otherwise). */
-  .work-panel-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
-  }
-  .work-panel--minded .work-panel-img { transform-origin: center; }
-  .work-panel-labels { left: 0; }
-  .work-label-name { padding-left: 20px; }
-  .work-label-desc { padding-left: 20px; }
-
+     /* square tiles on phones */
+          
   /* Testimonials */
   .testi-grid { grid-template-columns: 1fr; }
   .testi-card { border-right: none; border-bottom: 1px solid var(--gray-200); padding: 28px 20px; }
@@ -2547,8 +2427,7 @@ ul { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  .work-label-name, .work-label-desc { opacity: 1; transform: none; }
-  /* Cycling is off, so hold the first word in place */
+    /* Cycling is off, so hold the first word in place */
   .hero-cycle-word:first-child { opacity: 1; }
 }
 

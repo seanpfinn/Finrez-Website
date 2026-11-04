@@ -121,25 +121,9 @@
     });
   });
 
-  /* ── Work panel label animation ── */
-  if ('IntersectionObserver' in window) {
-    const labelObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.closest('.work-panel').classList.add('labels-visible');
-            labelObs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    document.querySelectorAll('.work-panel-labels').forEach(el => labelObs.observe(el));
-  }
-
   /* ── Smooth reveal on scroll (Intersection Observer) ── */
   const revealTargets = document.querySelectorAll(
-    '.testi-card, .work-panel, .pc, .faq-item'
+    '.testi-card, .pc, .faq-item'
   );
 
   if ('IntersectionObserver' in window) {
@@ -349,35 +333,6 @@
     } else {
       footerLogoWrap.classList.add('logo-revealed');
     }
-  }
-
-  /* ── Work panel cursor pill ── */
-  const workCursor = document.getElementById('work-cursor');
-  if (workCursor) {
-    let rafId;
-    const panels = document.querySelectorAll('.work-panel');
-
-    const setCursorPos = (x, y) => {
-      workCursor.style.setProperty('--cx', x + 'px');
-      workCursor.style.setProperty('--cy', y + 'px');
-    };
-
-    const onMove = (e) => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => setCursorPos(e.clientX, e.clientY));
-    };
-
-    panels.forEach(panel => {
-      panel.addEventListener('mouseenter', (e) => {
-        setCursorPos(e.clientX, e.clientY);
-        workCursor.classList.add('visible');
-        document.addEventListener('mousemove', onMove);
-      });
-      panel.addEventListener('mouseleave', () => {
-        workCursor.classList.remove('visible');
-        document.removeEventListener('mousemove', onMove);
-      });
-    });
   }
 
 })();
