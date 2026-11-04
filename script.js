@@ -19,18 +19,6 @@
     onScroll();
   }
 
-  /* ── Nav CTA: slide in once hero CTA leaves viewport ── */
-  const heroCta   = document.querySelector('.hero-btns .btn-dark');
-  const desktopNavCta = document.querySelector('.nav-links-desktop .nav-cta');
-  if (heroCta && desktopNavCta) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        desktopNavCta.classList.toggle('nav-cta--visible', !entry.isIntersecting);
-      });
-    }, { threshold: 0 });
-    obs.observe(heroCta);
-  }
-
   /* ── Mobile menu toggle ── */
   if (menuToggle && navLinks) {
     const closeMenu = (instant = false) => {
@@ -226,52 +214,6 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.sect-blur').forEach(el => blurObs.observe(el));
-  }
-
-  /* ── Hero cycle: the slot's width follows the visible word ──
-     The title is centered, so a fixed-width slot would leave the line
-     off-balance for short words. Each word's own cycle-word iteration
-     resizes the slot as that word starts to fade in. */
-  const heroCycle = document.querySelector('.hero-cycle');
-  if (heroCycle) {
-    const isMobile = window.matchMedia('(max-width: 809px)').matches;
-    const words = Array.from(heroCycle.querySelectorAll('.hero-cycle-word'));
-    let current = 0;
-    let widths = [];
-
-    const measure = () => {
-      widths = words.map(w => Math.ceil(w.getBoundingClientRect().width));
-      if (!widths[0]) widths = words.map(() => heroCycle.scrollWidth);
-    };
-    const show = (i) => {
-      current = i;
-      heroCycle.style.width = widths[i] + 'px';
-      // Tell the hero image field which discipline is on screen
-      const word = words[i].textContent.trim().toLowerCase();
-      heroCycle.dataset.focus = word;
-      document.dispatchEvent(new CustomEvent('hero:focus', { detail: { word } }));
-    };
-
-    measure();
-    show(0);
-    // Turn on the width transition only after the first width has landed
-    requestAnimationFrame(() => requestAnimationFrame(() => heroCycle.classList.add('is-sized')));
-
-    const onCycle = (e) => {
-      const i = words.indexOf(e.target);
-      if (i < 0 || e.animationName !== 'cycle-word') return;
-      show(i);
-    };
-    heroCycle.addEventListener('animationstart', onCycle);
-    heroCycle.addEventListener('animationiteration', onCycle);
-
-    // Re-measure once the display face loads and whenever the type scale changes
-    const remeasure = () => { measure(); show(current); };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
-    window.addEventListener('resize', remeasure);
-
-    // Start cycling once the title entrance has landed
-    setTimeout(() => heroCycle.classList.add('cycling'), isMobile ? 1000 : 2000);
   }
 
   /* ── Ticker: touch swipe with seamless resume ── */
@@ -746,8 +688,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
    The camera sits at the center of a sphere, looking out. Project imagery is
    laid on the inside wall in latitude rings, and the view drifts, follows the
    cursor and can be dragged. The field is clipped to the page container.
-   The headline's cycling word decides which frames come forward, and every
-   frame links to its case study (label on hover, drift slows to let you click).
+   Every frame links to its case study (label on hover, drift slows to let you
+   click).
 
    .globe has CSS perspective P and .globe-world is
    translateZ(P) rotateX(pitch) rotateY(yaw), which puts the eye at the world
@@ -764,9 +706,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   const DEG = Math.PI / 180;
 
   /* Project imagery — every 480w case-study frame on the site, tagged by the
-     discipline it shows. Tags match the headline's cycling words
-     (brand / website / product / ai); when a word is on screen, the frames
-     tagged with it come forward and the rest recede. */
+     discipline it shows. The tags set each frame's hover label (product /
+     website / brand) and are kept for filtering the field by discipline. */
   const PROJECTS = {
     'spectra':        { name: 'Spectra',        n: 12, tags: { brand: [1, 2, 3, 5, 6, 7, 8], website: [9, 10, 11], product: [4, 12], ai: [1, 4, 8, 9, 10, 11, 12] } },
     'minded':         { name: 'MiNDED',         n: 10, tags: { brand: [2, 3, 5, 6, 8, 9], website: [1, 10], product: [4, 7] } },
@@ -805,18 +746,11 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   let W = 0, H = 0, P = 600, R = 600;
   let cards = [];   // { el, lat, lon, latDeg, lonDeg, tags, opacity, hover }
 
-  /* ── Focus: which discipline the headline is showing ── */
-  const cycleEl = document.querySelector('.hero-cycle');
-  let focus = (cycleEl && cycleEl.dataset.focus) || 'brand';
   let hovering = 0;
-  const FOCUS_PULL = 0.86;   // focused frames sit 14% closer to the viewer
-  const HOVER_PULL = 0.78;
+  const HOVER_PULL = 0.86;   // a hovered frame comes 14% closer to the viewer
 
   function applyCard(c) {
-    const match = c.tags.includes(focus);
-    c.el.classList.toggle('is-focus', match);
-    c.el.classList.toggle('is-dim', !match && !c.hover);
-    const r = R * (c.hover ? HOVER_PULL : match ? FOCUS_PULL : 1);
+    const r = R * (c.hover ? HOVER_PULL : 1);
     c.r = r;
     c.el.classList.toggle('is-hover', c.hover);
     c.el.style.transform = `rotateY(${c.lonDeg}deg) rotateX(${c.latDeg}deg) translateZ(${-r}px)`;
@@ -868,10 +802,6 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     globe.classList.toggle('is-pointing', !!c);
   }
 
-  document.addEventListener('hero:focus', (e) => {
-    focus = e.detail.word;
-    cards.forEach(applyCard);
-  });
 
   /* Rotation helpers, CSS conventions (y points down) */
   const rotX = (v, a) => {

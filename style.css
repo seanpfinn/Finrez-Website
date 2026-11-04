@@ -252,27 +252,9 @@ ul { list-style: none; }
 
 .nav-cta:hover { opacity: 0.82; }
 
-/* Desktop nav CTA: slides in from the right, pushing links over */
-.nav-links-desktop .nav-cta {
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  padding-inline: 0;
-  margin-left: -32px; /* cancel the flex gap while hidden */
-  pointer-events: none;
-  transition: max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              padding-inline 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              margin-left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.35s ease;
-}
-.nav-links-desktop .nav-cta.nav-cta--visible {
-  max-width: 200px;
-  opacity: 1;
-  padding-inline: 20px;
-  margin-left: 0;
-  pointer-events: auto;
-}
-.nav-links-desktop .nav-cta.nav-cta--visible:hover { opacity: 0.82; }
+/* The CTA lives in the navbar: always visible on desktop, and on phones it
+   sits in the bar beside the menu button. */
+.nav-cta--bar { display: none; }
 
 /* Hamburger */
 .menu-toggle {
@@ -403,8 +385,7 @@ ul { list-style: none; }
   -webkit-user-drag: none;
 }
 
-/* Frames link to their case study. Focus (driven by the headline word)
-   pulls matching frames forward; the rest recede into grayscale. */
+/* Frames link to their case study; a hovered frame comes forward with a label. */
 .globe-card {
   display: block;
   transition:
@@ -414,14 +395,6 @@ ul { list-style: none; }
 }
 .globe-card img {
   transition: opacity 0.8s ease, filter 0.8s ease;
-}
-.globe-card.is-dim {
-  background: transparent;
-  box-shadow: none;
-}
-.globe-card.is-dim img {
-  opacity: 0.22;
-  filter: grayscale(1);
 }
 .globe.is-dragging .globe-card { cursor: grabbing; }
 
@@ -494,12 +467,6 @@ ul { list-style: none; }
 .hero-copy a,
 .hero-copy .hero-title { pointer-events: auto; }
 
-/* Forces the cycling word onto the headline's second line */
-.hero-break {
-  flex-basis: 100%;
-  height: 0;
-}
-
 .hero-title {
   font-family: 'Figtree', sans-serif;
   font-size: clamp(3rem, 6.6vw, 4.56rem);
@@ -512,62 +479,6 @@ ul { list-style: none; }
   justify-content: center;
   align-items: baseline;
   column-gap: 0.25em;
-}
-
-/* "anything" in VG5000 accent */
-.hero-accent-vg {
-  font-family: 'VG5000', 'Courier New', monospace;
-  color: var(--accent);
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Cycling word animation */
-.hero-cycle {
-  display: grid;
-  justify-items: start;
-  min-width: 0;
-  width: 0;
-  overflow: hidden;
-}
-
-/* Width follows the visible word (script.js) so the centered line re-balances */
-.hero-cycle.is-sized {
-  transition: width 0.62s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.hero-cycle-word {
-  grid-area: 1 / 1;
-  opacity: 0;
-}
-
-/* First word fades in with "Your" on desktop — overridden to cycling below */
-@media (min-width: 810px) {
-  .hero-cycle-word:first-child {
-    animation: hero-fade-up 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.18s both;
-  }
-}
-
-/* Cycling begins once JS adds .cycling after the expansion */
-.hero-cycle.cycling .hero-cycle-word {
-  animation: cycle-word 12s ease-in-out infinite;
-}
-/* Delays offset so each word becomes visible exactly 3s after the previous.
-   The keyframe reaches full opacity at 10% (1.2s), so animation-start = visibility-target − 1.2s.
-   Word 1: −1.2s → visible at 0s | Word 2: 1.8s → visible at 3s
-   Word 3: 4.8s → visible at 6s | Word 4: 7.8s → visible at 9s
-   At each handoff, the outgoing word hits opacity 0 exactly when the incoming word starts fading in. */
-.hero-cycle.cycling .hero-cycle-word:nth-child(1) { animation: cycle-word 12s ease-in-out -1.2s infinite; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(2) { animation-delay: 1.8s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(3) { animation-delay: 4.8s; }
-.hero-cycle.cycling .hero-cycle-word:nth-child(4) { animation-delay: 7.8s; }
-
-@keyframes cycle-word {
-  0%, 4%  { opacity: 0; transform: translateY(0.1em); }
-  10%     { opacity: 1; transform: translateY(0); }
-  23%     { opacity: 1; transform: translateY(0); }
-  29%     { opacity: 0; transform: translateY(-0.1em); }
-  100%    { opacity: 0; transform: translateY(0.1em); }
 }
 
 .hero-btns {
@@ -1851,6 +1762,13 @@ ul { list-style: none; }
   /* Nav */
   .nav-wrap { padding-inline: 20px; }
   .menu-toggle { display: flex; }
+  .nav-cta--bar {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: 12px;
+    padding: 7px 14px;
+    font-size: 0.875rem;
+  }
   .nav-links-desktop { display: none; }
 
   /* Header stays above the menu overlay so logo + close button are always reachable */
@@ -2035,8 +1953,7 @@ ul { list-style: none; }
       linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 84%, var(--globe-fade) 100%);
   }
   .hero-title { font-size: 2.7rem; }
-    .hero-btns { width: 100%; }
-  .hero .btn-dark { width: 100%; }   /* full container width on phones */
+    .hero-btns { width: 100%; }   /* full container width on phones */
   .btn-dark { font-size: 1.3125rem; }
 
   /* Staggered blur-in for each hero element */
@@ -2373,9 +2290,7 @@ ul { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
-    /* Cycling is off, so hold the first word in place */
-  .hero-cycle-word:first-child { opacity: 1; }
-}
+    }
 
 /* ════════════════════════════════════════
    404
