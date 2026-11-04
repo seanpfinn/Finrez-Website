@@ -262,6 +262,10 @@
     const show = (i) => {
       current = i;
       heroCycle.style.width = widths[i] + 'px';
+      // Tell the hero image field which discipline is on screen
+      const word = words[i].textContent.trim().toLowerCase();
+      heroCycle.dataset.focus = word;
+      document.dispatchEvent(new CustomEvent('hero:focus', { detail: { word } }));
     };
 
     measure();
@@ -787,6 +791,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
    The camera sits at the center of a sphere, looking out. Project imagery is
    laid on the inside wall in latitude rings, and the view drifts, follows the
    cursor and can be dragged. The field is clipped to the page container.
+   The headline's cycling word decides which frames come forward, and every
+   frame links to its case study (label on hover, drift slows to let you click).
 
    .globe has CSS perspective P and .globe-world is
    translateZ(P) rotateX(pitch) rotateY(yaw), which puts the eye at the world
@@ -802,14 +808,26 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   const mobileQuery  = window.matchMedia('(max-width: 809px)');
   const DEG = Math.PI / 180;
 
-  /* Project imagery — every 480w case-study frame on the site */
-  const SETS = {
-    'spectra': 12, 'minded': 10, 'lightspeed': 10,
-    'vesperia-films': 10, 'rockbridge': 10,
+  /* Project imagery — every 480w case-study frame on the site, tagged by the
+     discipline it shows. Tags match the headline's cycling words
+     (brand / website / product / ai); when a word is on screen, the frames
+     tagged with it come forward and the rest recede. */
+  const PROJECTS = {
+    'spectra':        { name: 'Spectra',        n: 12, tags: { brand: [1, 2, 3, 5, 6, 7, 8], website: [9, 10, 11], product: [4, 12], ai: [1, 4, 8, 9, 10, 11, 12] } },
+    'minded':         { name: 'MiNDED',         n: 10, tags: { brand: [2, 3, 5, 6, 8, 9], website: [1, 10], product: [4, 7] } },
+    'lightspeed':     { name: 'Lightspeed',     n: 10, tags: { brand: [1, 2, 4, 6, 7, 8, 10], website: [5], product: [3, 9] } },
+    'vesperia-films': { name: 'Vesperia Films', n: 10, tags: { brand: [2, 3, 4, 5, 6, 8, 9, 10], website: [1, 7] } },
+    'rockbridge':     { name: 'RockBridge',     n: 10, tags: { brand: [1, 2, 4, 6, 7, 9, 10], website: [3, 5, 8] } },
   };
+  const LABELS = { product: 'Product design', website: 'Website', brand: 'Brand identity' };
   const IMAGES = [];
-  Object.keys(SETS).forEach(name => {
-    for (let i = 1; i <= SETS[name]; i++) IMAGES.push(`images/${name}-${i}-480w.webp`);
+  Object.keys(PROJECTS).forEach(slug => {
+    const p = PROJECTS[slug];
+    for (let i = 1; i <= p.n; i++) {
+      const tags = Object.keys(p.tags).filter(t => p.tags[t].includes(i));
+      const kind = ['product', 'website', 'brand'].find(t => tags.includes(t)) || 'brand';
+      IMAGES.push({ src: `images/${slug}-${i}-480w.webp`, href: `/${slug}`, name: p.name, label: LABELS[kind], tags });
+    }
   });
 
   /* Seeded PRNG so the arrangement is stable between visits */
@@ -830,7 +848,75 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   }
 
   let W = 0, H = 0, P = 600, R = 600;
-  let cards = [];   // { el, lat, lon, opacity }
+  let cards = [];   // { el, lat, lon, latDeg, lonDeg, tags, opacity, hover }
+
+  /* ── Focus: which discipline the headline is showing ── */
+  const cycleEl = document.querySelector('.hero-cycle');
+  let focus = (cycleEl && cycleEl.dataset.focus) || 'brand';
+  let hovering = 0;
+  const FOCUS_PULL = 0.86;   // focused frames sit 14% closer to the viewer
+  const HOVER_PULL = 0.78;
+
+  function applyCard(c) {
+    const match = c.tags.includes(focus);
+    c.el.classList.toggle('is-focus', match);
+    c.el.classList.toggle('is-dim', !match && !c.hover);
+    const r = R * (c.hover ? HOVER_PULL : match ? FOCUS_PULL : 1);
+    c.r = r;
+    c.el.classList.toggle('is-hover', c.hover);
+    c.el.style.transform = `rotateY(${c.lonDeg}deg) rotateX(${c.latDeg}deg) translateZ(${-r}px)`;
+  }
+  /* ── Picking ──
+     Browsers hit-test 3D-transformed elements unreliably (the camera sits
+     exactly at the perspective point), so we find the frame under the pointer
+     ourselves: project each frame's corners with the same rotation chain the
+     CSS uses and test the point against the resulting quad. */
+  let hoverCard = null, pointer = null, curYaw = 0, curPitch = 0;
+  const inQuad = (x, y, q) => {
+    let sign = 0;
+    for (let i = 0; i < 4; i++) {
+      const [ax, ay] = q[i], [bx, by] = q[(i + 1) % 4];
+      const cross = (bx - ax) * (y - ay) - (by - ay) * (x - ax);
+      if (cross !== 0) {
+        if (sign === 0) sign = Math.sign(cross);
+        else if (Math.sign(cross) !== sign) return false;
+      }
+    }
+    return true;
+  };
+  function pick(clientX, clientY) {
+    const rect = globe.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+    let best = null, bestFacing = -1;
+    for (const c of cards) {
+      if (c.opacity < 0.5) continue;
+      const quad = [];
+      let ok = true;
+      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+        let v = [sx * c.w / 2, sy * c.h / 2, -c.r];
+        v = rotX(rotY(rotY(rotX(v, c.lat), c.lon), curYaw), curPitch);
+        if (v[2] > -1) { ok = false; break; }
+        quad.push([cx + v[0] * P / -v[2], cy + v[1] * P / -v[2]]);
+      }
+      if (!ok || !inQuad(clientX, clientY, quad)) continue;
+      const facing = -place(c.lat, c.lon, curYaw, curPitch, 1)[2];
+      if (facing > bestFacing) { bestFacing = facing; best = c; }
+    }
+    return best;
+  }
+  function setHover(c) {
+    if (c === hoverCard) return;
+    if (hoverCard) { hoverCard.hover = false; applyCard(hoverCard); }
+    hoverCard = c;
+    hovering = c ? 1 : 0;
+    if (c) { c.hover = true; applyCard(c); }
+    globe.classList.toggle('is-pointing', !!c);
+  }
+
+  document.addEventListener('hero:focus', (e) => {
+    focus = e.detail.word;
+    cards.forEach(applyCard);
+  });
 
   /* Rotation helpers, CSS conventions (y points down) */
   const rotX = (v, a) => {
@@ -864,6 +950,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
 
     world.textContent = '';
     cards = [];
+    hovering = 0;
+    hoverCard = null;
     seed = 7;
     let k = 0;
     rings.forEach((ring, ri) => {
@@ -875,22 +963,37 @@ if (window.matchMedia('(max-width: 809px)').matches) {
         const w = 2 * R * Math.tan(span / 2) * scale;
         const h = w * 9 / 16;
 
-        const el = document.createElement('div');
+        const item = shuffled[k++ % shuffled.length];
+
+        // Each frame links to its case study; the whole field is decorative to
+        // screen readers (the Work section carries the same links), so frames
+        // stay out of the tab order.
+        const el = document.createElement('a');
         el.className = 'globe-card';
+        el.href = item.href;
+        el.tabIndex = -1;
+        el.draggable = false;
         el.style.width  = w + 'px';
         el.style.height = h + 'px';
         el.style.margin = `${-h / 2}px 0 0 ${-w / 2}px`;
-        el.style.transform = `rotateY(${lon}deg) rotateX(${lat}deg) translateZ(${-R}px)`;
 
         const img = document.createElement('img');
-        img.src = shuffled[k++ % shuffled.length];
+        img.src = item.src;
         img.alt = '';
         img.decoding = 'async';
         img.loading = 'lazy';
         img.draggable = false;
         el.appendChild(img);
+
+        const label = document.createElement('span');
+        label.className = 'globe-card-label';
+        label.innerHTML = `<b>${item.name}</b> ${item.label} <i aria-hidden="true">→</i>`;
+        el.appendChild(label);
+
         world.appendChild(el);
-        cards.push({ el, lat: lat * DEG, lon: lon * DEG, opacity: -1 });
+        const card = { el, href: item.href, w, h, r: R, lat: lat * DEG, lon: lon * DEG, latDeg: lat, lonDeg: lon, tags: item.tags, opacity: -1, hover: false };
+        applyCard(card);
+        cards.push(card);
       }
     });
   }
@@ -908,6 +1011,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     const pitchR = (pitch + dragPitch - lookY * 7 + scrollTilt) * DEG;
     world.style.transform =
       `translateZ(${P}px) rotateX(${pitchR / DEG}deg) rotateY(${yawR / DEG}deg)`;
+    curYaw = yawR; curPitch = pitchR;
 
     /* Fade cards as they swing toward the edge of the hemisphere */
     for (const c of cards) {
@@ -931,7 +1035,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     last = now;
 
     if (!dragging) {
-      spin += (DRIFT - spin) * Math.min(1, dt * 1.6);   // ease toward drift
+      const target = hovering ? DRIFT * 0.08 : DRIFT;   // near-stop while a frame is hovered
+      spin += (target - spin) * Math.min(1, dt * 1.6);  // ease toward drift
       yaw += spin * dt;
       dragPitch *= Math.pow(0.1, dt);                    // settle back level
     }
@@ -940,6 +1045,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     pitch = Math.sin(now / 9000) * 3;
 
     render();
+    if (pointer && !dragging) setHover(pick(pointer.x, pointer.y));
     requestAnimationFrame(frame);
   }
   function start() {
@@ -953,22 +1059,36 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   /* ── Input ── */
   hero.addEventListener('pointermove', (e) => {
     if (e.pointerType !== 'mouse') return;
+    // Ignore the pointer while it's over the copy, so frames behind the text don't light up
+    const overCopy = e.target.closest && e.target.closest('.hero-copy a, .hero-title, .hero-sub, .avail-badge');
+    pointer = overCopy ? null : { x: e.clientX, y: e.clientY };
+    if (!pointer) setHover(null);
+    else if (!running && !dragging) setHover(pick(pointer.x, pointer.y));
     const r = hero.getBoundingClientRect();
     aimX = ((e.clientX - r.left) / r.width - 0.5) * 2;
     aimY = ((e.clientY - r.top) / r.height - 0.5) * 2;
   });
-  hero.addEventListener('pointerleave', () => { aimX = 0; aimY = 0; });
+  hero.addEventListener('pointerleave', () => { aimX = 0; aimY = 0; pointer = null; setHover(null); });
 
-  // Drag to look around (horizontal on touch so vertical scroll still works)
+  // Drag to look around (horizontal on touch so vertical scroll still works).
+  // A press only becomes a drag after it moves a few pixels, so a plain click
+  // or tap on a frame opens its case study.
+  let pressed = false, pressX = 0, pressY = 0, suppressClick = false;
   globe.addEventListener('pointerdown', (e) => {
-    if (reduceMotion.matches) return;
-    dragging = true;
-    dragX = e.clientX; dragY = e.clientY; lastMove = performance.now();
-    spin = 0;
-    globe.classList.add('is-dragging');
-    globe.setPointerCapture(e.pointerId);
+    if (reduceMotion.matches || e.button > 0) return;
+    pressed = true;
+    pressX = dragX = e.clientX; pressY = dragY = e.clientY;
+    lastMove = performance.now();
   });
   globe.addEventListener('pointermove', (e) => {
+    if (pressed && !dragging) {
+      if (Math.hypot(e.clientX - pressX, e.clientY - pressY) < 6) return;
+      dragging = true;
+      spin = 0;
+      setHover(null);
+      globe.classList.add('is-dragging');
+      try { globe.setPointerCapture(e.pointerId); } catch (_) {}
+    }
     if (!dragging) return;
     const now = performance.now();
     const dx = e.clientX - dragX, dy = e.clientY - dragY;
@@ -983,13 +1103,25 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     dragX = e.clientX; dragY = e.clientY; lastMove = now;
   });
   const endDrag = () => {
+    pressed = false;
     if (!dragging) return;
     dragging = false;
+    suppressClick = true;                      // the click that ends a drag isn't a tap
+    setTimeout(() => { suppressClick = false; }, 0);
     if (performance.now() - lastMove > 80) spin = 0;
     globe.classList.remove('is-dragging');
   };
   globe.addEventListener('pointerup', endDrag);
   globe.addEventListener('pointercancel', endDrag);
+  globe.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (suppressClick) return;
+    const c = pick(e.clientX, e.clientY);
+    if (!c) return;
+    if (e.metaKey || e.ctrlKey) window.open(c.href, '_blank');
+    else window.location.href = c.href;
+  });
+  globe.addEventListener('dragstart', (e) => e.preventDefault());
 
   // Look up slightly as the hero scrolls away, so the sphere lags the page
   window.addEventListener('scroll', () => {

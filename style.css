@@ -403,6 +403,61 @@ ul { list-style: none; }
   -webkit-user-drag: none;
 }
 
+/* Frames link to their case study. Focus (driven by the headline word)
+   pulls matching frames forward; the rest recede into grayscale. */
+.globe-card {
+  display: block;
+  transition:
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.8s ease,
+    box-shadow 0.8s ease;
+}
+.globe-card img {
+  transition: opacity 0.8s ease, filter 0.8s ease;
+}
+.globe-card.is-dim {
+  background: transparent;
+  box-shadow: none;
+}
+.globe-card.is-dim img {
+  opacity: 0.22;
+  filter: grayscale(1);
+}
+.globe.is-dragging .globe-card { cursor: grabbing; }
+
+/* Hover label, styled like the work panel labels */
+.globe-card-label {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 12px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.globe-card-label b {
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+.globe-card-label i { font-style: normal; }
+.globe-card.is-hover .globe-card-label {
+  opacity: 1;
+  transform: none;
+}
+.globe.is-pointing { cursor: pointer; }
+
 /* Clears a calm pocket for the copy, and dissolves the field into the nav
    above and the next section below. */
 .globe-veil {
