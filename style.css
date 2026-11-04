@@ -570,36 +570,6 @@ ul { list-style: none; }
   margin-top: 4px;
 }
 
-.hero-clients {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px 28px;
-  margin-top: 20px;
-}
-
-.hero-client-item {
-  display: flex;
-  align-items: center;
-}
-
-.hero-client-logo {
-  height: 22px;
-  width: auto;
-  max-width: 120px;
-  object-fit: contain;
-  filter: grayscale(1) opacity(0.45);
-  transition: filter 0.25s ease;
-}
-
-.hero-client-logo.logo-lg { height: 30px; }
-.hero-client-logo.logo-xs { height: 18px; }
-
-.hero-client-item:hover .hero-client-logo {
-  filter: grayscale(0) opacity(1);
-}
-
 /* ════════════════════════════════════════
    PROJECTS TICKER
    ════════════════════════════════════════ */
@@ -1934,10 +1904,7 @@ ul { list-style: none; }
     animation: hero-fade-in 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.42s both;
   }
 
-  .hero-clients {
-    animation: hero-fade-in 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.52s both;
-  }
-
+  
   @keyframes hero-fade-up {
     from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
     to   { opacity: 1; filter: none;      transform: translateY(0);    }
@@ -2180,8 +2147,7 @@ ul { list-style: none; }
   .hero-sub     { animation-delay: 0.35s; }
 
   .hero-btns    { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s  both; }
-  .hero-clients { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
-
+  
   @keyframes hero-blur-in {
     from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
     to   { opacity: 1; filter: none;       transform: translateY(0);    }
@@ -2402,7 +2368,6 @@ ul { list-style: none; }
 .hero-copy    { align-items: flex-start; }
 .hero-title   { justify-content: flex-start; }
 .hero-sub     { margin-inline: 0; }
-.hero-clients { justify-content: flex-start; }
 
 /* Section titles */
 .testi-title,

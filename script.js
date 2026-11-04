@@ -220,7 +220,7 @@
   /* Not { once: true } — .hero-title contains the cycling word, whose own
      animationend bubbles up and would consume a one-shot listener before the
      title's own animation ever finishes. */
-  document.querySelectorAll('.avail-badge, .hero-title, .hero-sub, .hero-btns, .hero-clients')
+  document.querySelectorAll('.avail-badge, .hero-title, .hero-sub, .hero-btns')
     .forEach(el => {
       const done = (e) => {
         if (e.target !== el) return;
