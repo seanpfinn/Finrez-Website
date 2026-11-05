@@ -476,6 +476,10 @@ ul { list-style: none; }
 }
 
 .globe.is-dragging { cursor: grabbing; }
+/* At the top of the page the hero keeps vertical swipes for itself (script.js
+   pans the field and only lets a fast flick through to the page). */
+.hero.is-captive .globe { touch-action: none; }
+.hero-container { transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1); }
 
 /* Ensure hero content sits above the image field */
 .hero-content {

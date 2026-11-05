@@ -896,6 +896,44 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   let lookX = 0, lookY = 0, aimX = 0, aimY = 0;
   let scrollTilt = 0;
   let dragging = false, dragX = 0, dragY = 0, dragPitch = 0, lastMove = 0;
+  let pendingYaw = 0;                // wheel pan, eased in over a few frames
+
+  /* ── Scroll capture ──
+     While the page sits at the very top, the hero holds on to scroll: wheel
+     and trackpad scroll pan the field instead of moving the page. Downward
+     scroll also builds "push", which decays quickly, so ordinary scrolling
+     only pans; a hard, fast scroll (or a quick upward flick on touch) breaks
+     through and glides down to the next section. The hero lifts slightly as
+     push builds, so the resistance reads as something to push through. */
+  const ESCAPE = 800;                // px of downward scroll, leaky (see PUSH_DECAY)
+  const PUSH_DECAY = 0.5;            // s — a fast wheel spin or hard trackpad flick gets through
+  let push = 0, escaping = false;
+  const container = hero.querySelector('.hero-container');
+  const nextSection = hero.nextElementSibling;
+  const atTop = () => window.scrollY < 4;
+  const captive = () => !reduceMotion.matches && !escaping && atTop();
+  function escapeHero() {
+    escaping = true;
+    push = 0;
+    applyPull();
+    const top = nextSection
+      ? nextSection.getBoundingClientRect().top + window.scrollY
+      : hero.offsetHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+    setTimeout(() => { escaping = false; syncCaptive(); }, 900);
+  }
+  let lastPull = 0;
+  function applyPull() {
+    const pull = Math.min(push / ESCAPE, 1);
+    if (Math.abs(pull - lastPull) < 0.002) return;
+    lastPull = pull;
+    // eased so the first bit of push barely moves and the last bit resists
+    const lift = (1 - Math.pow(1 - pull, 2)) * 28;
+    container.style.transform = pull > 0.004 ? `translateY(${-lift.toFixed(1)}px)` : '';
+  }
+  function syncCaptive() {
+    hero.classList.toggle('is-captive', !reduceMotion.matches && atTop());
+  }
 
   function render() {
     const yawR = (yaw + lookX * 12) * DEG;
@@ -925,6 +963,16 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     const dt = Math.min((now - last) / 1000 || 0, 0.05);
     last = now;
 
+    if (pendingYaw) {
+      const step = pendingYaw * Math.min(1, dt * 9);
+      yaw += step;
+      pendingYaw = Math.abs(pendingYaw - step) < 0.01 ? 0 : pendingYaw - step;
+    }
+    if (push) {
+      push *= Math.exp(-dt / PUSH_DECAY);
+      if (push < 1) push = 0;
+      applyPull();
+    }
     if (!dragging) {
       const target = hovering ? DRIFT * 0.08 : DRIFT;   // near-stop while a frame is hovered
       spin += (target - spin) * Math.min(1, dt * 1.6);  // ease toward drift
@@ -965,9 +1013,12 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   // A press only becomes a drag after it moves a few pixels, so a plain click
   // or tap on a frame opens its case study.
   let pressed = false, pressX = 0, pressY = 0, suppressClick = false;
+  let touchCaptive = false, samples = [];
   globe.addEventListener('pointerdown', (e) => {
     if (reduceMotion.matches || e.button > 0) return;
     pressed = true;
+    touchCaptive = e.pointerType === 'touch' && captive();
+    samples = [[performance.now(), e.clientY]];
     pressX = dragX = e.clientX; pressY = dragY = e.clientY;
     lastMove = performance.now();
   });
@@ -985,16 +1036,31 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     const dx = e.clientX - dragX, dy = e.clientY - dragY;
     const degPerPx = 57.3 / P;                 // 1 px ≈ 1 px of arc at the wall
     yaw -= dx * degPerPx;
-    if (e.pointerType === 'mouse') {
+    if (e.pointerType === 'mouse' || touchCaptive) {
       dragPitch = Math.max(-18, Math.min(18, dragPitch + dy * degPerPx));
+    }
+    if (touchCaptive) {
+      samples.push([now, e.clientY]);
+      while (samples.length > 2 && now - samples[0][0] > 120) samples.shift();
+      push = Math.max(0, pressY - e.clientY) * 3;   // finger travelling up = scrolling down
+      applyPull();
     }
     const dtm = Math.max(now - lastMove, 1) / 1000;
     spin = (-dx * degPerPx) / dtm;             // fling velocity
     spin = Math.max(-180, Math.min(180, spin));
     dragX = e.clientX; dragY = e.clientY; lastMove = now;
   });
-  const endDrag = () => {
+  const endDrag = (e) => {
     pressed = false;
+    if (touchCaptive && e && e.type === 'pointerup' && samples.length > 1) {
+      // A quick upward flick (or a long upward drag) leaves the hero
+      const [t0, y0] = samples[0];
+      const v = (y0 - e.clientY) / Math.max(performance.now() - t0, 1);   // px/ms, up = +
+      const travel = pressY - e.clientY;
+      if ((v > 1.1 && travel > 70) || travel > H * 0.5) escapeHero();
+    }
+    touchCaptive = false;
+    if (!escaping) { push = 0; applyPull(); }
     if (!dragging) return;
     dragging = false;
     suppressClick = true;                      // the click that ends a drag isn't a tap
@@ -1014,8 +1080,24 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   });
   globe.addEventListener('dragstart', (e) => e.preventDefault());
 
+  window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || !captive()) return;          // ctrl+wheel is pinch-zoom
+    if (escaping) { e.preventDefault(); return; }
+    const k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? (H || 800) : 1;
+    const dx = e.deltaX * k, dy = e.deltaY * k;
+    e.preventDefault();
+    if (dy > 0) {
+      push += dy;
+      if (push > ESCAPE) { escapeHero(); return; }
+      applyPull();
+    }
+    pendingYaw += (dx + dy) * (57.3 / P) * 0.9;
+    start();
+  }, { passive: false });
+
   // Look up slightly as the hero scrolls away, so the sphere lags the page
   window.addEventListener('scroll', () => {
+    syncCaptive();
     const p = Math.min(Math.max(window.scrollY / (H || 1), 0), 1);
     scrollTilt = p * 14;
     if (!running) render();
@@ -1039,6 +1121,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     if (reduceMotion.matches) { yaw = 0; spin = 0; }
     layout();
     render();
+    syncCaptive();
     requestAnimationFrame(() => globe.classList.add('is-ready'));
     start();
   };
