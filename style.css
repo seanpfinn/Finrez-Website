@@ -527,8 +527,10 @@ ul { list-style: none; }
 /* One-line nudge to explore the work; wording follows the input type */
 .hero-hint {
   font-family: 'Figtree', sans-serif;
-  font-size: 0.95rem;
-  color: var(--gray-700);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--gray-500);
   margin: 0;
 }
 .hint-touch { display: none; }
@@ -1993,13 +1995,13 @@ ul { list-style: none; }
   .hero { --gutter: 20px; }
 
   /* Hero */
-  .hero-stage { padding-block: calc(var(--nav-h) + 48px) 72px; }
+  .hero-stage { padding-block: calc(var(--nav-h) + 48px) 36px; }
   .globe-veil {
     background:
       radial-gradient(ellipse 78% 46% at 50% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
       linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 84%, var(--globe-fade) 100%);
   }
-  .hero-title { font-size: 2.7rem; }
+  .hero-title { font-size: 2.25rem; }
     .hero-btns { width: 100%; }   /* full container width on phones */
   .btn-dark { font-size: 1.3125rem; }
 
@@ -2313,13 +2315,19 @@ ul { list-style: none; }
 .services-main .services-list { margin-top: 8px; }
 
 @media (max-width: 809px) {
-  :root { --title-size: 2.25rem; --sub-size: 1rem; }
+  :root { --title-size: 2rem; --sub-size: 1rem; }
   .hero-btns { justify-content: flex-start; }
   .service { grid-template-columns: 1fr; padding: 16px 0; }
   .services-main .tools-stage { height: 380px; }
+  /* Hero copy sits centered at the bottom of the frame on phones */
+  .hero-stage { align-items: flex-end; }
+  .hero-content { justify-content: center; }
+  .hero-copy { align-items: center; text-align: center; gap: 12px; }
+  .hero-title { display: block; text-wrap: balance; }   /* even line lengths if it wraps */
+  .hero-btns { justify-content: center; }
   .globe-veil {
     background:
-      radial-gradient(ellipse 80% 30% at 40% 52%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
+      radial-gradient(ellipse 95% 28% at 50% 86%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
       linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 84%, var(--globe-fade) 100%);
   }
 }
