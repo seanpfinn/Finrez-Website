@@ -2308,22 +2308,15 @@ ul { list-style: none; }
   color: var(--gray-700);
 }
 
-/* ── Services: what we do + the tools orbit ── */
-.services-layout { display: grid; gap: 24px; }
-.services-layout .tools-stage { margin-top: 0; }
-@media (min-width: 1000px) {
-  .services-layout {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: 48px;
-    align-items: center;
-  }
-  .services-layout .tools-stage { height: 460px; }
-}
+/* ── Services: heading, then the tools sphere, then the service list ── */
+.services-main .tools-stage { margin-top: 8px; height: 440px; }
+.services-main .services-list { margin-top: 8px; }
 
 @media (max-width: 809px) {
   :root { --title-size: 2.25rem; --sub-size: 1rem; }
   .hero-btns { justify-content: flex-start; }
   .service { grid-template-columns: 1fr; padding: 16px 0; }
+  .services-main .tools-stage { height: 380px; }
   .globe-veil {
     background:
       radial-gradient(ellipse 80% 30% at 40% 52%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
