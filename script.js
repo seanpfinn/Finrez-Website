@@ -14,6 +14,12 @@
   if (header) {
     const onScroll = () => {
       header.classList.toggle('scrolled', window.scrollY > 10);
+      // Homepage: reveal the wordmark and nav once the visitor starts scrolling
+      // (stays revealed while the mobile menu is open)
+      if (header.hasAttribute('data-reveal-on-scroll')) {
+        const menuOpen = document.getElementById('navLinks')?.classList.contains('open');
+        header.classList.toggle('is-revealed', window.scrollY > 10 || !!menuOpen);
+      }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();

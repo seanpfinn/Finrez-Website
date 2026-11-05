@@ -120,6 +120,39 @@ ul { list-style: none; }
 
 .logo { flex-shrink: 0; display: flex; align-items: center; }
 .logo-img { height: 25px; width: auto; }
+.logo-mark, .logo-word { display: block; height: 25.3px; width: auto; }
+.logo-word-wrap { display: block; overflow: hidden; margin-left: 5.3px; max-width: 90px; }
+
+/* ── Homepage: minimal navbar until the visitor scrolls ──
+   On load only the F-blocks mark and "Book a call" show. Once the page is
+   scrolled (or anything in the header gets keyboard focus), the wordmark slides
+   out of the mark and the Work/Pricing links (desktop) or the menu button
+   (phones) fade in. script.js toggles .is-revealed. */
+.header[data-reveal-on-scroll] .logo-word-wrap,
+.header[data-reveal-on-scroll] .nav-work-desktop,
+.header[data-reveal-on-scroll] .nav-links-desktop > .nav-link,
+.header[data-reveal-on-scroll] .menu-toggle {
+  transition:
+    max-width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    margin 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+.header[data-reveal-on-scroll]:not(.is-revealed):not(:focus-within) .logo-word-wrap {
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+}
+.header[data-reveal-on-scroll]:not(.is-revealed):not(:focus-within) .nav-work-desktop,
+.header[data-reveal-on-scroll]:not(.is-revealed):not(:focus-within) .nav-links-desktop > .nav-link {
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0.35s;
+}
 
 .nav-links-desktop {
   display: flex;
@@ -1770,6 +1803,18 @@ ul { list-style: none; }
     margin-right: 12px;
     padding: 7px 14px;
     font-size: 0.875rem;
+  }
+  .header[data-reveal-on-scroll] .nav-cta--bar {
+    transition: margin 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity var(--transition);
+  }
+  .header[data-reveal-on-scroll]:not(.is-revealed):not(:focus-within) .nav-cta--bar { margin-right: 0; }
+  .header[data-reveal-on-scroll]:not(.is-revealed):not(:focus-within) .menu-toggle {
+    width: 0;
+    opacity: 0;
+    transform: scale(0.6);
+    visibility: hidden;
+    overflow: hidden;
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 0.35s;
   }
   .nav-links-desktop { display: none; }
 
