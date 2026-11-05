@@ -471,7 +471,7 @@ ul { list-style: none; }
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 600px 250px at calc(var(--gutter) + 360px) 52%, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.86) 55%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
+    radial-gradient(ellipse 560px 190px at 50% calc(100% - 66px), rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.86) 55%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
     linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 80%, var(--globe-fade) 100%);
 }
 
@@ -2001,7 +2001,6 @@ ul { list-style: none; }
       radial-gradient(ellipse 78% 46% at 50% 53%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
       linear-gradient(to bottom, var(--globe-fade) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 84%, var(--globe-fade) 100%);
   }
-  .hero-title { font-size: 2.25rem; }
     .hero-btns { width: 100%; }   /* full container width on phones */
   .btn-dark { font-size: 1.3125rem; }
 
@@ -2210,10 +2209,28 @@ ul { list-style: none; }
   --sub-size: 1.125rem;
 }
 
-/* Hero */
-.hero-content { justify-content: flex-start; }
-.hero-copy    { align-items: flex-start; }
-.hero-title   { justify-content: flex-start; }
+/* Hero: a small, centered caption at the bottom of the frame so the work
+   leads (matches the Nov 5 Figma hero). 36px clear below the hint. */
+.hero-stage   { align-items: flex-end; padding-bottom: 36px; }
+.hero-content { justify-content: center; }
+.hero-copy    { align-items: center; text-align: center; gap: 6px; }
+.hero-title {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 54px;
+  letter-spacing: -0.0365em;
+  text-wrap: balance;
+}
+.hero-btns { margin-top: 0; justify-content: center; }
+.hero-hint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #989898;
+}
 
 /* Section titles */
 .testi-title,
@@ -2316,15 +2333,9 @@ ul { list-style: none; }
 
 @media (max-width: 809px) {
   :root { --title-size: 2rem; --sub-size: 1rem; }
-  .hero-btns { justify-content: flex-start; }
   .service { grid-template-columns: 1fr; padding: 16px 0; }
   .services-main .tools-stage { height: 380px; }
-  /* Hero copy sits centered at the bottom of the frame on phones */
-  .hero-stage { align-items: flex-end; }
-  .hero-content { justify-content: center; }
-  .hero-copy { align-items: center; text-align: center; gap: 12px; }
-  .hero-title { display: block; text-wrap: balance; }   /* even line lengths if it wraps */
-  .hero-btns { justify-content: center; }
+  .hero-title { font-size: 2rem; line-height: 1.35; }
   .globe-veil {
     background:
       radial-gradient(ellipse 95% 28% at 50% 86%, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 56%, rgba(255,255,255,0.5) 80%, rgba(255,255,255,0) 100%),
