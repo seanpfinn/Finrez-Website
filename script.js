@@ -720,7 +720,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     'lightspeed':     { name: 'Lightspeed',     n: 10, tags: { brand: [1, 2, 4, 6, 7, 8, 10], website: [5], product: [3, 9] } },
     'vesperia-films': { name: 'Vesperia Films', n: 10, tags: { brand: [2, 3, 4, 5, 6, 8, 9, 10], website: [1, 7] } },
     'rockbridge':     { name: 'RockBridge',     n: 10, tags: { brand: [1, 2, 4, 6, 7, 9, 10], website: [3, 5, 8] } },
-    'mudturtles':     { name: 'Mudturtles',     n: 10, tags: { brand: [1, 3, 4], website: [2, 5, 6, 7], product: [8, 9, 10] } },
+    'mudturtles':     { name: 'Union County Rugby Mudturtles', n: 10, tags: { brand: [1, 3, 4], website: [2, 5, 6, 7], product: [8, 9, 10] } },
   };
   const LABELS = { product: 'Product design', website: 'Website', brand: 'Brand identity' };
   const IMAGES = [];
