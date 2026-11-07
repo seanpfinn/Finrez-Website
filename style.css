@@ -7,6 +7,27 @@
 
 /* ── Self-hosted display face (SIL OFL 1.1 — see /fonts/OFL.txt) ── */
 @font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree-var.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-var.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'VG5000';
   src: url('/fonts/vg5000-regular.woff2') format('woff2');
   font-weight: 400;
@@ -1763,7 +1784,7 @@ ul { list-style: none; }
   }
 
   @keyframes hero-fade-up {
-    from { opacity: 0; filter: blur(6px); transform: translateY(10px); }
+    from { opacity: 0.01; filter: blur(6px); transform: translateY(10px); }   /* 0.01, not 0: counts as painted for LCP */
     to   { opacity: 1; filter: none;      transform: translateY(0);    }
   }
 
@@ -2017,7 +2038,7 @@ ul { list-style: none; }
   .hero-btns    { animation: hero-blur-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s  both; }
 
   @keyframes hero-blur-in {
-    from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
+    from { opacity: 0.01; filter: blur(12px); transform: translateY(14px); }   /* 0.01, not 0: counts as painted for LCP */
     to   { opacity: 1; filter: none;       transform: translateY(0);    }
   }
 

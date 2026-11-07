@@ -36,9 +36,7 @@
 
   <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css) -->
   <link rel="preload" href="/fonts/vg5000-regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/figtree-var.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -296,7 +294,7 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script>
     const imgs = document.querySelectorAll('.cs-hero, .cs-panel');
     if ('IntersectionObserver' in window) {

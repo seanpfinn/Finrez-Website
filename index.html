@@ -37,9 +37,7 @@
 
   <!-- Fonts — VG5000 is self-hosted (see @font-face in style.css) -->
   <link rel="preload" href="/fonts/vg5000-regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/figtree-var.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="style.css" />
 
@@ -529,10 +527,29 @@
         <div class="booking-cal">
           <div id="cal-booking"></div>
           <script type="text/javascript">
-            (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
-            Cal("init", { origin: "https://cal.com" });
-            Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/discovery-call", config: { theme: "light" } });
-            Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true, layout: "month_view" });
+            /* The Cal.com embed is heavy (its script plus a full booking app in an
+               iframe), so it loads only as the booking section nears the viewport. */
+            (function () {
+              var el = document.getElementById('cal-booking');
+              var loaded = false;
+              function load() {
+                if (loaded) return; loaded = true;
+                (function(C,A,L){let p=function(a,ar){a.q.push(ar)};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["-queue",ns])}else p(cal,ar);return}p(cal,ar)};})(window,"https://app.cal.com/embed/embed.js","init");
+                Cal("init", { origin: "https://cal.com" });
+                Cal("inline", { elementOrSelector: "#cal-booking", calLink: "finrez/discovery-call", config: { theme: "light" } });
+                Cal("ui", { styles: { branding: { brandColor: "#000000" } }, hideEventTypeDetails: false, theme: "light", hideBranding: true, layout: "month_view" });
+              }
+              if (!('IntersectionObserver' in window)) return load();
+              var io = new IntersectionObserver(function (es) {
+                if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); load(); }
+              }, { rootMargin: '1200px 0px' });
+              io.observe(el);
+              // Also start as soon as someone heads for it via a "Book a call" link
+              document.addEventListener('click', function (e) {
+                var a = e.target.closest && e.target.closest('a[href$="#booking"]');
+                if (a) load();
+              });
+            })();
           </script>
         </div>
       </div>
@@ -640,6 +657,6 @@
     </div>
   </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

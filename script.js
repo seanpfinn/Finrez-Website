@@ -176,15 +176,17 @@
 
     const wordSpans = Array.from(missionText.querySelectorAll('.mission-word'));
     const missionSection = missionText.closest('.mission');
+    let litCount = 0;
 
     const revealWords = () => {
       const rect     = missionSection.getBoundingClientRect();
       const vh       = window.innerHeight;
       const progress = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height + vh * 0.4)));
       const count    = Math.round(progress * wordSpans.length);
-      wordSpans.forEach((span, i) => {
-        span.classList.toggle('mission-word--lit', i < count);
-      });
+      if (count === litCount) return;
+      const lo = Math.min(count, litCount), hi = Math.max(count, litCount);
+      for (let i = lo; i < hi; i++) wordSpans[i].classList.toggle('mission-word--lit', i < count);
+      litCount = count;
     };
 
     window.addEventListener('scroll', revealWords, { passive: true });
@@ -400,11 +402,18 @@
     vspX: 0, vspY: 0,
   }));
 
+  let CS = 72;                  // chip size, px (read once per resize, not per frame)
   function resize() {
     W = stage.offsetWidth;
     H = stage.offsetHeight;
     R = Math.min(W, H) * 0.36;  // sphere radius
+    CS = window.innerWidth < 768 ? 54 : 72;
   }
+
+  /* Only animate while the sphere is on screen and the tab is visible —
+     it otherwise restyles every chip on every frame for nothing. */
+  let onScreen = false, raf = 0;
+  const run = () => { if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(tick); };
 
   // Rotate point [px,py,pz] by rotX (pitch) then rotY (yaw)
   function rotPt([px, py, pz]) {
@@ -426,8 +435,8 @@
       velY *= INERTIA;
     }
 
+    raf = 0;
     // Project all particles
-    const CS = window.innerWidth < 768 ? 54 : 72;
     particles.forEach(p => {
       const [x, y, z] = rotPt(p.base);
       p.sx = W / 2 + x * R;
@@ -450,7 +459,7 @@
       p.el.style.zIndex    = String(renderOrder);
     });
 
-    requestAnimationFrame(tick);
+    if (onScreen && !document.hidden) raf = requestAnimationFrame(tick);
   }
 
   // ── Mouse drag → rotate ───────────────────
@@ -497,7 +506,11 @@
   window.addEventListener('resize', resize);
   chips.forEach(c => { c.style.left = '0'; c.style.top = '0'; });
   resize();
-  tick();
+  tick();                       // place the chips once, even before it scrolls into view
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }, { rootMargin: '100px 0px' }).observe(stage);
+  } else { onScreen = true; run(); }
+  document.addEventListener('visibilitychange', run);
 })();
 
 /* ── Footer logo particle effect ── */
@@ -729,7 +742,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     for (let i = 1; i <= p.n; i++) {
       const tags = Object.keys(p.tags).filter(t => p.tags[t].includes(i));
       const kind = ['product', 'website', 'brand'].find(t => tags.includes(t)) || 'brand';
-      IMAGES.push({ src: `images/${slug}-${i}-480w.webp`, href: `/${slug}`, name: p.name, label: LABELS[kind], tags });
+      IMAGES.push({ base: `images/${slug}-${i}`, href: `/${slug}`, name: p.name, label: LABELS[kind], tags });
     }
   });
 
@@ -869,11 +882,12 @@ if (window.matchMedia('(max-width: 809px)').matches) {
         el.style.height = h + 'px';
         el.style.margin = `${-h / 2}px 0 0 ${-w / 2}px`;
 
+        // No src yet: render() fills it in the first time the frame turns to
+        // face the viewer, so frames on the far side of the field don't
+        // download until they come around.
         const img = document.createElement('img');
-        img.src = item.src;
         img.alt = '';
         img.decoding = 'async';
-        img.loading = 'lazy';
         img.draggable = false;
         el.appendChild(img);
 
@@ -883,7 +897,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
         el.appendChild(label);
 
         world.appendChild(el);
-        const card = { el, href: item.href, w, h, r: R, lat: lat * DEG, lon: lon * DEG, latDeg: lat, lonDeg: lon, tags: item.tags, opacity: -1, hover: false };
+        const card = { el, img, base: item.base, loaded: false, href: item.href, w, h, r: R, lat: lat * DEG, lon: lon * DEG, latDeg: lat, lonDeg: lon, tags: item.tags, opacity: -1, hover: false };
         applyCard(card);
         cards.push(card);
       }
@@ -949,6 +963,13 @@ if (window.matchMedia('(max-width: 809px)').matches) {
       const facing = -v[2];
       let o = (facing - 0.12) / 0.3;
       o = o < 0 ? 0 : o > 1 ? 1 : o;
+      if (o > 0 && !c.loaded) {
+        c.loaded = true;
+        // Perspective renders frames near the edges larger than their CSS width
+        c.img.sizes = `${Math.round(c.w * 1.6)}px`;
+        c.img.srcset = `${c.base}-240w.webp 240w, ${c.base}-480w.webp 480w`;
+        c.img.src = `${c.base}-480w.webp`;
+      }
       if (Math.abs(o - c.opacity) > 0.01) {
         c.opacity = o;
         c.el.style.opacity = o.toFixed(3);
