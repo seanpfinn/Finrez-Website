@@ -2464,3 +2464,236 @@ ul { list-style: none; }
   .nf { padding-inline: 20px; min-height: calc(100vh - 260px); }
   .nf-title { font-size: 31px; }
 }
+
+/* ════════════════════════════════════════
+   SELECTED WORK — project tiles
+   An editorial grid: rows alternate wide/narrow (7/5, 5/7, then 6/6) at a
+   shared row height, so the six projects read as a sequence, not a wall.
+   Hover crossfades to a second image from the project.
+   ════════════════════════════════════════ */
+.work-grid-section { padding-block: 0 var(--section-pad); background: #fff; }
+.work-heading {
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-size: var(--title-size);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 56px 24px;
+  margin-top: 48px;
+}
+.work-tile { grid-column: span 6; display: block; color: inherit; text-decoration: none; }
+.work-tile:nth-child(1), .work-tile:nth-child(4) { grid-column: span 7; }
+.work-tile:nth-child(2), .work-tile:nth-child(3) { grid-column: span 5; }
+.work-tile-media {
+  position: relative;
+  height: clamp(300px, 34vw, 480px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f1f1f1;
+  isolation: isolate;
+}
+.work-tile-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.work-tile-img--alt { opacity: 0; }
+.work-tile-arrow {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--dark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  opacity: 0;
+  transform: translate(-6px, 6px) scale(.9);
+  transition: opacity .3s ease, transform .4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+  .work-tile:hover .work-tile-img { transform: scale(1.035); }
+  .work-tile:hover .work-tile-img--alt { opacity: 1; }
+  .work-tile:hover .work-tile-arrow { opacity: 1; transform: none; }
+}
+.work-tile:focus-visible { outline: none; }
+.work-tile:focus-visible .work-tile-media { outline: 2px solid var(--accent); outline-offset: 4px; }
+.work-tile-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-top: 18px;
+}
+.work-tile-name {
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--dark);
+}
+.work-tile-tags {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  white-space: nowrap;
+}
+.work-tile-desc {
+  grid-column: 1 / -1;
+  font-family: 'Geist', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--gray-700);
+}
+@media (max-width: 809px) {
+  .work-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
+  .work-tile, .work-tile:nth-child(n) { grid-column: auto; }
+  .work-tile-media { height: auto; aspect-ratio: 4 / 3; border-radius: 12px; }
+  .work-tile-meta { grid-template-columns: 1fr; margin-top: 14px; }
+  .work-tile-tags { order: -1; }
+  .work-tile-name { font-size: 1.25rem; }
+}
+
+/* ════════════════════════════════════════
+   NEW BUSINESS — the closing invitation (replaces pricing)
+   A dark card: the ask on the left, what happens next on the right.
+   ════════════════════════════════════════ */
+.new-biz { padding-block: 0 var(--section-pad); background: #fff; }
+.nb-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 64px;
+  padding: 72px;
+  border-radius: 28px;
+  background: #121212;
+  color: #fff;
+  overflow: hidden;
+}
+/* a soft ember glow in the corner, in the brand red */
+.nb-card::before {
+  content: "";
+  position: absolute;
+  width: 720px;
+  height: 720px;
+  right: -260px;
+  top: -360px;
+  background: radial-gradient(circle, rgba(255,64,26,.28), rgba(255,64,26,0) 62%);
+  pointer-events: none;
+}
+.nb-intro, .nb-steps { position: relative; }
+.nb-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff8a70;
+}
+.nb-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255,64,26,.22);
+}
+.nb-title {
+  margin-top: 20px;
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-size: var(--title-size);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.nb-sub {
+  margin-top: 16px;
+  max-width: 520px;
+  font-family: 'Geist', sans-serif;
+  font-size: var(--sub-size);
+  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+}
+.nb-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 36px; }
+.nb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 26px;
+  border-radius: 10px;
+  background: #fff;
+  color: #121212;
+  font-family: 'Figtree', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.nb-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+.nb-link {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,.35);
+  text-underline-offset: 5px;
+  transition: text-decoration-color .2s ease;
+}
+.nb-link:hover { text-decoration-color: #fff; }
+.nb-steps { list-style: none; margin: 0; padding: 0; align-self: center; }
+.nb-step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  padding-block: 24px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.nb-step:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
+.nb-step-num {
+  font-family: 'VG5000', 'Courier New', monospace;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--accent);
+}
+.nb-step h3 {
+  font-family: 'Figtree', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+}
+.nb-step p {
+  margin-top: 6px;
+  font-family: 'Geist', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,.64);
+}
+@media (max-width: 1023px) {
+  .nb-card { grid-template-columns: 1fr; gap: 40px; padding: 56px 48px; }
+}
+@media (max-width: 809px) {
+  .nb-card { padding: 40px 24px; border-radius: 20px; gap: 32px; }
+  .nb-actions { flex-direction: column; align-items: stretch; }
+  .nb-btn { width: 100%; }
+  .nb-link { text-align: center; }
+  .nb-step { grid-template-columns: 44px 1fr; padding-block: 20px; }
+}
