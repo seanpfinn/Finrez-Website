@@ -891,10 +891,8 @@ if (window.matchMedia('(max-width: 809px)').matches) {
         img.draggable = false;
         el.appendChild(img);
 
-        const label = document.createElement('span');
-        label.className = 'globe-card-label';
-        label.innerHTML = `<b>${item.name}</b> ${item.label} <i aria-hidden="true">→</i>`;
-        el.appendChild(label);
+        // No visible hover label; the link still names its project for screen readers
+        if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', `${item.name}: ${item.label}`);
 
         world.appendChild(el);
         const card = { el, img, base: item.base, loaded: false, href: item.href, w, h, r: R, lat: lat * DEG, lon: lon * DEG, latDeg: lat, lonDeg: lon, tags: item.tags, opacity: -1, hover: false };
