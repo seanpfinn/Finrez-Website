@@ -924,7 +924,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   const container = hero.querySelector('.hero-container');
   const nextSection = hero.nextElementSibling;
   const atTop = () => window.scrollY < 4;
-  const captive = () => !reduceMotion.matches && !escaping && atTop();
+  const captive = () => false;      // the hero no longer holds on to vertical scroll
   function escapeHero() {
     escaping = true;
     push = 0;
@@ -945,7 +945,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     container.style.transform = pull > 0.004 ? `translateY(${-lift.toFixed(1)}px)` : '';
   }
   function syncCaptive() {
-    hero.classList.toggle('is-captive', !reduceMotion.matches && atTop());
+    hero.classList.remove('is-captive');
   }
 
   function render() {
@@ -1100,18 +1100,18 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   });
   globe.addEventListener('dragstart', (e) => e.preventDefault());
 
-  window.addEventListener('wheel', (e) => {
-    if (e.ctrlKey || !captive()) return;          // ctrl+wheel is pinch-zoom
-    if (escaping) { e.preventDefault(); return; }
+  /* Vertical scroll always moves the page (the field just turns a little
+     with it); a sideways trackpad swipe over the hero pans the field. */
+  hero.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || reduceMotion.matches) return;  // ctrl+wheel is pinch-zoom
     const k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? (H || 800) : 1;
     const dx = e.deltaX * k, dy = e.deltaY * k;
-    e.preventDefault();
-    if (dy > 0) {
-      push += dy;
-      if (push > ESCAPE) { escapeHero(); return; }
-      applyPull();
+    if (Math.abs(dx) > Math.abs(dy)) {
+      e.preventDefault();                          // also stops swipe-to-go-back
+      pendingYaw += dx * (57.3 / P) * 0.9;
+    } else {
+      pendingYaw += dy * (57.3 / P) * 0.25;        // page scrolls; field drifts along
     }
-    pendingYaw += (dx + dy) * (57.3 / P) * 0.9;
     start();
   }, { passive: false });
 
