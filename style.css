@@ -2571,129 +2571,240 @@ ul { list-style: none; }
 
 /* ════════════════════════════════════════
    NEW BUSINESS — the closing invitation (replaces pricing)
-   A dark card: the ask on the left, what happens next on the right.
+   A dark stage: oversized ask over two rows of the work drifting past at an
+   angle, a red glow that follows the pointer, and the next steps along the
+   bottom. Marquee pauses off-screen (script.js) and for reduced motion.
    ════════════════════════════════════════ */
 .new-biz { padding-block: 0 var(--section-pad); background: #fff; }
-.nb-card {
+.nb-stage {
+  --mx: 72%;
+  --my: 18%;
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 64px;
-  padding: 72px;
-  border-radius: 28px;
-  background: #121212;
-  color: #fff;
   overflow: hidden;
+  isolation: isolate;
+  border-radius: 32px;
+  background: #0d0d0e;
+  color: #fff;
+  padding: clamp(64px, 8vw, 120px) clamp(28px, 6vw, 96px) clamp(40px, 5vw, 64px);
 }
-/* a soft ember glow in the corner, in the brand red */
-.nb-card::before {
+
+/* ── Drifting work ── */
+.nb-marquee {
+  position: absolute;
+  inset: -10% -20%;
+  z-index: -2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  transform: rotate(-8deg);
+  opacity: .42;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 45%, #000 20%, transparent 75%);
+          mask-image: radial-gradient(ellipse 70% 60% at 70% 45%, #000 20%, transparent 75%);
+}
+.nb-row { overflow: hidden; }
+.nb-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: nb-drift 70s linear infinite;
+}
+.nb-row:nth-child(2) .nb-track { animation-direction: reverse; animation-duration: 85s; }
+.nb-track img {
+  width: 300px;
+  height: 167px;
+  object-fit: cover;
+  border-radius: 12px;
+  filter: saturate(.85);
+}
+@keyframes nb-drift { to { transform: translateX(-50%); } }
+.nb-stage.is-paused .nb-track { animation-play-state: paused; }
+
+/* Darkness behind the copy so it always reads, whatever drifts past */
+.nb-stage::before {
   content: "";
   position: absolute;
-  width: 720px;
-  height: 720px;
-  right: -260px;
-  top: -360px;
-  background: radial-gradient(circle, rgba(255,64,26,.28), rgba(255,64,26,0) 62%);
-  pointer-events: none;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, #0d0d0e 0%, rgba(13,13,14,.94) 34%, rgba(13,13,14,.55) 62%, rgba(13,13,14,.35) 100%),
+    linear-gradient(0deg, #0d0d0e 0%, rgba(13,13,14,0) 38%);
 }
-.nb-intro, .nb-steps { position: relative; }
-.nb-eyebrow {
+.nb-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx) var(--my), rgba(255,64,26,.30), rgba(255,64,26,0) 65%);
+  transition: background-position .2s;
+}
+
+/* ── The ask ── */
+.nb-content { position: relative; max-width: 760px; }
+.nb-status {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding: 7px 14px 7px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
   font-family: 'Geist Mono', monospace;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #ff8a70;
+  color: rgba(255,255,255,.82);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
 }
-.nb-eyebrow::before {
-  content: "";
+.nb-status-dot {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(255,64,26,.22);
+  background: #3ddc84;
 }
+.nb-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid #3ddc84;
+  opacity: 0;
+  animation: nb-ping 2.4s cubic-bezier(0, 0, .2, 1) infinite;
+}
+@keyframes nb-ping { 0% { transform: scale(.6); opacity: .8; } 80%, 100% { transform: scale(1.8); opacity: 0; } }
 .nb-title {
-  margin-top: 20px;
+  margin-top: 28px;
   font-family: 'VG5000', 'Courier New', monospace;
-  font-size: var(--title-size);
+  font-size: clamp(3rem, 7.4vw, 6.5rem);
   font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: .98;
+  letter-spacing: -0.025em;
   color: #fff;
 }
+.nb-title em {
+  font-style: normal;
+  color: transparent;
+  background: linear-gradient(92deg, #ff401a 0%, #ff8a5c 55%, #ffd2bf 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
 .nb-sub {
-  margin-top: 16px;
-  max-width: 520px;
+  margin-top: 28px;
+  max-width: 540px;
   font-family: 'Geist', sans-serif;
   font-size: var(--sub-size);
   line-height: 1.6;
-  color: rgba(255,255,255,.72);
+  color: rgba(255,255,255,.7);
 }
-.nb-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 36px; }
+.nb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 32px;
+  margin-top: 40px;
+}
 .nb-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 14px 26px;
-  border-radius: 10px;
+  gap: 14px;
+  padding: 10px 10px 10px 28px;
+  border-radius: 999px;
   background: #fff;
-  color: #121212;
+  color: #0d0d0e;
   font-family: 'Figtree', sans-serif;
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 0 0 0 rgba(255,64,26,0);
+  transition: box-shadow .35s ease, transform .35s cubic-bezier(.16,1,.3,1);
 }
-.nb-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
-.nb-link {
+.nb-btn-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.nb-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px -8px rgba(255,64,26,.55); }
+.nb-btn:hover .nb-btn-arrow { transform: translateX(4px) rotate(-45deg); }
+.nb-email {
+  position: relative;
   font-family: 'Figtree', sans-serif;
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: #fff;
-  text-decoration: underline;
-  text-decoration-color: rgba(255,255,255,.35);
-  text-underline-offset: 5px;
-  transition: text-decoration-color .2s ease;
+  text-decoration: none;
+  padding-bottom: 4px;
 }
-.nb-link:hover { text-decoration-color: #fff; }
-.nb-steps { list-style: none; margin: 0; padding: 0; align-self: center; }
-.nb-step {
+.nb-email-label { color: rgba(255,255,255,.5); margin-right: 4px; }
+.nb-email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(255,255,255,.3);
+  transform-origin: right;
+  transition: background .3s;
+}
+.nb-email:hover::after { background: var(--accent); }
+
+/* ── Next steps ── */
+.nb-steps {
+  position: relative;
+  list-style: none;
+  margin: clamp(64px, 8vw, 112px) 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 16px;
-  padding-block: 24px;
-  border-top: 1px solid rgba(255,255,255,.12);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
 }
-.nb-step:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
+.nb-step {
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.14);
+}
 .nb-step-num {
+  display: block;
   font-family: 'VG5000', 'Courier New', monospace;
-  font-size: 1.5rem;
-  line-height: 1.2;
+  font-size: 1rem;
   color: var(--accent);
 }
 .nb-step h3 {
+  margin-top: 14px;
   font-family: 'Figtree', sans-serif;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #fff;
 }
 .nb-step p {
-  margin-top: 6px;
+  margin-top: 8px;
+  max-width: 340px;
   font-family: 'Geist', sans-serif;
   font-size: 0.9375rem;
   line-height: 1.55;
-  color: rgba(255,255,255,.64);
+  color: rgba(255,255,255,.6);
 }
-@media (max-width: 1023px) {
-  .nb-card { grid-template-columns: 1fr; gap: 40px; padding: 56px 48px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-track, .nb-status-dot::after { animation: none; }
 }
 @media (max-width: 809px) {
-  .nb-card { padding: 40px 24px; border-radius: 20px; gap: 32px; }
+  .nb-stage { border-radius: 22px; padding: 56px 24px 36px; }
+  .nb-marquee { inset: -18% -60% 40% -60%; opacity: .5;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+            mask-image: linear-gradient(180deg, #000 0%, transparent 70%); }
+  .nb-track img { width: 200px; height: 111px; }
+  .nb-stage::before { background: linear-gradient(180deg, rgba(13,13,14,.15) 0%, rgba(13,13,14,.7) 30%, rgba(13,13,14,.95) 48%, #0d0d0e 62%); }
+  .nb-title { font-size: clamp(2.6rem, 12vw, 3.5rem); }
   .nb-actions { flex-direction: column; align-items: stretch; }
-  .nb-btn { width: 100%; }
-  .nb-link { text-align: center; }
-  .nb-step { grid-template-columns: 44px 1fr; padding-block: 20px; }
+  .nb-btn { justify-content: space-between; }
+  .nb-email { text-align: center; align-self: center; }
+  .nb-steps { grid-template-columns: 1fr; gap: 0; }
+  .nb-step { padding-block: 20px; }
 }

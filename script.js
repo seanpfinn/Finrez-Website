@@ -1149,3 +1149,33 @@ if (window.matchMedia('(max-width: 809px)').matches) {
   };
   init();
 })();
+
+/* ── New Business stage: pointer glow, live month, pause drift off-screen ── */
+(() => {
+  const stage = document.querySelector('.nb-stage');
+  if (!stage) return;
+  const status = stage.querySelector('.nb-status-text');
+  if (status) {
+    const month = new Date().toLocaleString('en-US', { month: 'long' });
+    status.textContent = `Now booking · ${month}`;
+  }
+  if (window.matchMedia('(hover: hover)').matches) {
+    let raf = 0, x = 0, y = 0;
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      x = ((e.clientX - r.left) / r.width) * 100;
+      y = ((e.clientY - r.top) / r.height) * 100;
+      if (!raf) raf = requestAnimationFrame(() => {
+        raf = 0;
+        stage.style.setProperty('--mx', x.toFixed(1) + '%');
+        stage.style.setProperty('--my', y.toFixed(1) + '%');
+      });
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    stage.classList.add('is-paused');
+    new IntersectionObserver(([e]) => stage.classList.toggle('is-paused', !e.isIntersecting))
+      .observe(stage);
+  }
+})();
+
