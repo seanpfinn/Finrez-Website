@@ -918,7 +918,7 @@ if (window.matchMedia('(max-width: 809px)').matches) {
      only pans; a hard, fast scroll (or a quick upward flick on touch) breaks
      through and glides down to the next section. The hero lifts slightly as
      push builds, so the resistance reads as something to push through. */
-  const ESCAPE = 800;                // px of downward scroll, leaky (see PUSH_DECAY)
+  const ESCAPE = 420;                // px of downward scroll, leaky (see PUSH_DECAY)
   const PUSH_DECAY = 0.5;            // s — a fast wheel spin or hard trackpad flick gets through
   let push = 0, escaping = false;
   const container = hero.querySelector('.hero-container');
