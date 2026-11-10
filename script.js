@@ -1117,13 +1117,28 @@ if (window.matchMedia('(max-width: 809px)').matches) {
     start();
   }, { passive: false });
 
-  // Look up slightly as the hero scrolls away, so the sphere lags the page
+  // Look up slightly as the hero scrolls away, so the sphere lags the page,
+  // and fade the caption out over the first ~third of the scroll. (The
+  // wrapper fades, not .hero-copy, whose entrance animation owns opacity.)
+  const heroText = hero.querySelector('.hero-content');
+  let textFade = -1;
+  const fadeText = () => {
+    const f = Math.min(Math.max(window.scrollY / ((H || 800) * 0.32), 0), 1);
+    if (Math.abs(f - textFade) < 0.005) return;
+    textFade = f;
+    if (!heroText) return;
+    heroText.style.opacity = (1 - f).toFixed(3);
+    heroText.style.transform = f ? `translateY(${(-f * 24).toFixed(1)}px)` : '';
+    heroText.style.visibility = f >= 1 ? 'hidden' : '';
+  };
   window.addEventListener('scroll', () => {
     syncCaptive();
     const p = Math.min(Math.max(window.scrollY / (H || 1), 0), 1);
     scrollTilt = p * 14;
+    fadeText();
     if (!running) render();
   }, { passive: true });
+  fadeText();
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
