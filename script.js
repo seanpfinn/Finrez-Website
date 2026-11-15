@@ -728,7 +728,6 @@ if (window.matchMedia('(max-width: 809px)').matches) {
      discipline it shows. The tags set each frame's hover label (product /
      website / brand) and are kept for filtering the field by discipline. */
   const PROJECTS = {
-    'spectra':        { name: 'Spectra',        n: 12, tags: { brand: [1, 2, 3, 5, 6, 7, 8], website: [9, 10, 11], product: [4, 12], ai: [1, 4, 8, 9, 10, 11, 12] } },
     'minded':         { name: 'MiNDED',         n: 10, tags: { brand: [2, 3, 5, 6, 8, 9], website: [1, 10], product: [4, 7] } },
     'lightspeed':     { name: 'Lightspeed',     n: 10, tags: { brand: [1, 2, 4, 6, 7, 8, 10], website: [5], product: [3, 9] } },
     'vesperia-films': { name: 'Vesperia Films', n: 10, tags: { brand: [2, 3, 4, 5, 6, 8, 9, 10], website: [1, 7] } },
