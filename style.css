@@ -2810,3 +2810,31 @@ ul { list-style: none; }
   .nb-steps { grid-template-columns: 1fr; gap: 0; }
   .nb-step { padding-block: 20px; }
 }
+
+/* ════════════════════════════════════════
+   FOLDABLES & SAFE AREAS (iPhone Duo and friends)
+   viewport-fit=cover lets backgrounds run under the Dynamic Island when the
+   phone is held sideways; side padding never drops below the safe-area inset
+   so text and controls stay clear of it.
+   ════════════════════════════════════════ */
+:root { --gx: 48px; }
+@media (max-width: 1199px) { :root { --gx: 40px; } }
+@media (max-width: 809px)  { :root { --gx: 20px; } }
+@supports (padding: max(0px)) {
+  .container, .nav-wrap, .footer-inner, .footer-copy {
+    padding-left: max(var(--gx), env(safe-area-inset-left));
+    padding-right: max(var(--gx), env(safe-area-inset-right));
+  }
+}
+
+/* Unfolded and held tall (~626px wide), small tablets: two columns of work
+   instead of one tall stack; the lead project keeps the full width. */
+@media (min-width: 600px) and (max-width: 809px) {
+  .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 16px; }
+  .work-tile:nth-child(n) { grid-column: auto; }
+  .work-tile:nth-child(1) { grid-column: 1 / -1; }
+  .work-tile:nth-child(1) .work-tile-media { aspect-ratio: 1440 / 800; }
+  .work-tile:nth-child(n+2) .work-tile-media { aspect-ratio: 1 / 1; }
+  .work-tile-name { font-size: 1.125rem; }
+  .work-tile-desc { font-size: 0.9375rem; }
+}
